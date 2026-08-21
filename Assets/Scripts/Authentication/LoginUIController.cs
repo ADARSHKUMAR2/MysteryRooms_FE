@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using KBC.Authentication;
+using MysteryRooms.Authentication;
 
-namespace KBC.UI
+namespace MysteryRooms.UI
 {
     /// <summary>
     /// Controls the login/registration UI with mobile-optimized layout

@@ -3,18 +3,18 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using KBC.Authentication; // ADDED THIS
+using MysteryRooms.Authentication; // ADDED THIS
 
-namespace KBC.Editor
+namespace MysteryRooms.Editor
 {
     /// <summary>
     /// Editor tool to automatically generate professional login UI
     /// Optimized for mobile with 1920x1080 reference resolution
-    /// Menu: Tools → KBC → Generate Login UI
+    /// Menu: Tools → MysteryRooms → Generate Login UI
     /// </summary>
     public class LoginUIGenerator : EditorWindow
     {
-        [MenuItem("Tools/KBC/Generate Login UI")]
+        [MenuItem("Tools/MysteryRooms/Generate Login UI")]
         public static void ShowWindow()
         {
             GetWindow<LoginUIGenerator>("Login UI Generator");
@@ -22,7 +22,7 @@ namespace KBC.Editor
 
         void OnGUI()
         {
-            GUILayout.Label("KBC Login UI Generator", EditorStyles.boldLabel);
+            GUILayout.Label("MysteryRooms Login UI Generator", EditorStyles.boldLabel);
             GUILayout.Space(10);
             
             GUILayout.Label("This will create a complete login screen optimized for mobile devices.");
@@ -213,7 +213,7 @@ namespace KBC.Editor
             CreateErrorToast(parent); // Toast is on canvas, not panel
             
             // Attach controller script
-            var controller = panel.AddComponent<KBC.UI.LoginUIController>();
+            var controller = panel.AddComponent<MysteryRooms.UI.LoginUIController>();
             
             return panel;
         }
@@ -559,7 +559,7 @@ namespace KBC.Editor
         private static GameObject CreateFirebaseAuthManager()
         {
             GameObject authManager = new GameObject("FirebaseAuthManager");
-            authManager.AddComponent<KBC.Authentication.FirebaseAuthManager>();
+            authManager.AddComponent<MysteryRooms.Authentication.FirebaseAuthManager>();
             Debug.Log("✅ FirebaseAuthManager created");
             return authManager;
         }
@@ -570,7 +570,7 @@ namespace KBC.Editor
         /// </summary>
         private static void WireUpUIReferences(GameObject loginPanel, GameObject canvas, GameObject loadingPanel, GameObject mainMenuPanel)
         {
-            var controller = loginPanel.GetComponent<KBC.UI.LoginUIController>();
+            var controller = loginPanel.GetComponent<MysteryRooms.UI.LoginUIController>();
             
             // Use SerializedObject to set private fields
             SerializedObject so = new SerializedObject(controller);

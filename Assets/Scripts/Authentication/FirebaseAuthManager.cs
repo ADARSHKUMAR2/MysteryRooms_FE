@@ -8,7 +8,7 @@ using Firebase.Extensions;
 using Newtonsoft.Json;
 using Google;
 
-namespace KBC.Authentication
+namespace MysteryRooms.Authentication
 {
     /// <summary>
     /// Manages Firebase authentication and backend API communication.
@@ -27,7 +27,7 @@ namespace KBC.Authentication
 
         #region Backend Configuration
         [Header("Configuration")]
-        [SerializeField] private KBC.Config.BackendConfig backendConfig;
+        [SerializeField] private MysteryRooms.Config.BackendConfig backendConfig;
 
         // And update the BackendURL property to read from the config:
         private string BackendURL => backendConfig != null ? backendConfig.CurrentURL : "http://localhost:8000";

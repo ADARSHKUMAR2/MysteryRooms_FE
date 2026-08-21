@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace KBC.Config 
+namespace MysteryRooms.Config 
 {
-    [CreateAssetMenu(fileName = "BackendConfig", menuName = "KBC/Backend Configuration")]
+    [CreateAssetMenu(fileName = "BackendConfig", menuName = "MysteryRooms/Backend Configuration")]
     public class BackendConfig : ScriptableObject
     {
         [Header("Local Development")]
