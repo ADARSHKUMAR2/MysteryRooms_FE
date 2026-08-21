@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "178731502056",
+    "project_id": "kbcai-d2cc8",
+    "storage_bucket": "kbcai-d2cc8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178731502056:android:315b47fbe4b050235f7c5d",
+        "android_client_info": {
+          "package_name": "com.adarsh.kbcai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178731502056-dsqu7bdq6hfgmtvstqob3e12ff4gicuh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwF1qCvu-uROjB0izfeGIIx3Uvaac8xW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178731502056-dsqu7bdq6hfgmtvstqob3e12ff4gicuh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
