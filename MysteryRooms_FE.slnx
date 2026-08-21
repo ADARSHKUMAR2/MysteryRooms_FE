@@ -1,0 +1,7 @@
+﻿<Solution>
+  <Project Path="Firebase.App.Internal.csproj" />
+  <Project Path="Google.GoogleSignIn.csproj" />
+  <Project Path="KBC.Authentication.csproj" />
+  <Project Path="KBC.Config.csproj" />
+  <Project Path="KBC.Editor.csproj" />
+</Solution>

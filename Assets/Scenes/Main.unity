@@ -1975,8 +1975,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6282432723d65426c9d7a5c30fca2dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: KBC.Authentication::KBC.Authentication.FirebaseAuthManager
-  backendConfig: {fileID: 0}
-  webClientId: YOUR_WEB_CLIENT_ID.apps.googleusercontent.com
+  backendConfig: {fileID: 11400000, guid: d05772ee18e114e2985d817a2e9daeca, type: 2}
+  webClientId: 498577537550-0etd3eia90rbe4p8bejrs0eq94jp33ik.apps.googleusercontent.com
 --- !u!4 &1297629355
 Transform:
   m_ObjectHideFlags: 0
