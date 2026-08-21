@@ -23,6 +23,7 @@ namespace MysteryRooms.Authentication
         #region Firebase References
         private FirebaseAuth auth;
         private FirebaseUser currentUser;
+        private string cachedGoogleEmail;
         #endregion
 
         #region Backend Configuration
@@ -95,6 +96,7 @@ namespace MysteryRooms.Authentication
                     GoogleSignIn.Configuration = new GoogleSignInConfiguration
                     {
                         RequestIdToken = true,
+                        RequestEmail = true,  
                         WebClientId = webClientId
                     };
                     Debug.Log("✅ Google Sign-In configured");
@@ -224,6 +226,7 @@ namespace MysteryRooms.Authentication
             }
             
             GoogleSignInUser googleUser = signInTask.Result;
+            cachedGoogleEmail = googleUser.Email;
             Debug.Log($"✅ Google Sign-In successful: {googleUser.Email}");
             
             // 2. Pass Google ID Token to Firebase
@@ -317,7 +320,9 @@ namespace MysteryRooms.Authentication
             // Create request body matching your backend's TokenVerifyRequest model
             var requestBody = new TokenVerifyRequest
             {
-                firebase_token = firebaseToken
+                firebase_token = firebaseToken,
+                email = !string.IsNullOrEmpty(cachedGoogleEmail) ? cachedGoogleEmail : currentUser?.Email,                 
+                display_name = currentUser?.DisplayName   
             };
             
             string json = JsonConvert.SerializeObject(requestBody);
@@ -506,6 +511,8 @@ namespace MysteryRooms.Authentication
     public class TokenVerifyRequest
     {
         public string firebase_token;
+        public string email;                   
+        public string display_name; 
     }
 
     /// <summary>
