@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using MysteryRooms.Game.Data;
+using MysteryRooms.Authentication;  
+using MysteryRooms.Game.Services;
 
 namespace MysteryRooms.Game.Managers
 {
@@ -14,12 +16,19 @@ namespace MysteryRooms.Game.Managers
         [Header("Runtime Data")]
         public List<BasePuzzle> allPuzzles = new List<BasePuzzle>();
         public Dictionary<string, BasePuzzle> puzzleRegistry = new Dictionary<string, BasePuzzle>();
+
+        [Header("Session Tracking")]
+        private MysteryAPIService apiService;
+        private string currentSessionId;
+        private string currentPlayerId;         private float sessionStartTime;
         
         private MysteryConfigData currentMystery;
         private HashSet<string> solvedPuzzleIds = new HashSet<string>();
 
         private void Awake()
         {
+            GetUserID();
+
             // Find all puzzles in scene
             if (puzzleContainer != null)
             {
@@ -30,7 +39,28 @@ namespace MysteryRooms.Game.Managers
                 allPuzzles = FindObjectsOfType<BasePuzzle>(true).ToList();
             }
 
+            apiService = FindObjectOfType<MysteryAPIService>();
+            if (apiService == null)
+            {
+                Debug.LogWarning("MysteryAPIService not found! Session tracking disabled.");
+            }
+
             Debug.Log($"🧩 Found {allPuzzles.Count} puzzles in scene");
+        }
+
+        private void GetUserID()
+        {
+            // Get real user ID from UserSession
+            if (UserSession.Instance != null)
+            {
+                currentPlayerId = UserSession.Instance.UserId;
+                Debug.Log($"🎮 Player identified: {UserSession.Instance.Username} ({currentPlayerId})");
+            }
+            else
+            {
+                currentPlayerId = "guest_" + System.Guid.NewGuid().ToString();
+                Debug.LogWarning("⚠️ No UserSession found. Using guest ID.");
+            }
         }
 
         /// <summary>
@@ -41,6 +71,7 @@ namespace MysteryRooms.Game.Managers
             currentMystery = mystery;
             puzzleRegistry.Clear();
             solvedPuzzleIds.Clear();
+            sessionStartTime = Time.time;
 
             Debug.Log($"⚙️ Configuring {mystery.puzzles.Count} puzzles...");
 
@@ -62,7 +93,33 @@ namespace MysteryRooms.Game.Managers
                 puzzle.OnPuzzleSolved += OnPuzzleSolved;
             }
 
+            StartSessionTracking();
+
             Debug.Log($"✅ All puzzles configured!");
+        }
+
+        private void StartSessionTracking()
+        {
+            if (apiService == null || currentMystery == null) return;
+
+            StartSessionRequest request = new StartSessionRequest
+            {
+                mystery_id = currentMystery.mystery_id,
+                player_ids = new List<string> { currentPlayerId },
+                max_players = 1
+            };
+
+            StartCoroutine(apiService.StartSession(
+                request,
+                OnSessionStarted,
+                (error) => Debug.LogError($"Failed to start session: {error}")
+            ));
+        }
+
+        private void OnSessionStarted(GameSessionData session)
+        {
+            currentSessionId = session.session_id;
+            Debug.Log($"📊 Session tracking started: {currentSessionId}");
         }
 
         private void ConfigurePuzzle(PuzzleConfigData data)
@@ -127,6 +184,9 @@ namespace MysteryRooms.Game.Managers
             solvedPuzzleIds.Add(puzzleID);
             Debug.Log($"🎯 Puzzle solved: {puzzleID} ({solvedPuzzleIds.Count}/{currentMystery.puzzles.Count})");
 
+            // Report to backend
+            ReportPuzzleSolved(puzzleID);
+
             // Check and unlock dependent puzzles
             UnlockDependentPuzzles(puzzleID);
 
@@ -135,6 +195,25 @@ namespace MysteryRooms.Game.Managers
             {
                 OnAllPuzzlesSolved();
             }
+        }
+
+        private void ReportPuzzleSolved(string puzzleID)
+        {
+            if (apiService == null || string.IsNullOrEmpty(currentSessionId)) return;
+
+            UpdateSessionRequest request = new UpdateSessionRequest
+            {
+                session_id = currentSessionId,
+                puzzle_solved = puzzleID,
+                player_id = currentPlayerId,
+                time_elapsed_seconds = (int)(Time.time - sessionStartTime)
+            };
+
+            StartCoroutine(apiService.UpdateSession(
+                request,
+                (session) => Debug.Log($"✅ Progress saved: {puzzleID}"),
+                (error) => Debug.LogWarning($"Failed to update session: {error}")
+            ));
         }
 
         private void UnlockDependentPuzzles(string solvedPuzzleId)
@@ -164,6 +243,26 @@ namespace MysteryRooms.Game.Managers
             {
                 exitDoor.UnlockDoor();
             }
+
+            CompleteSessionTracking("completed");
+        }
+
+        private void CompleteSessionTracking(string status)
+        {
+            if (apiService == null || string.IsNullOrEmpty(currentSessionId)) return;
+
+            CompleteSessionRequest request = new CompleteSessionRequest
+            {
+                session_id = currentSessionId,
+                status = status,
+                difficulty_rating = currentMystery.difficulty
+            };
+
+            StartCoroutine(apiService.CompleteSession(
+                request,
+                (session) => Debug.Log($"🏁 Session completed and saved to database!"),
+                (error) => Debug.LogWarning($"Failed to complete session: {error}")
+            ));
         }
 
         private void OnDestroy()

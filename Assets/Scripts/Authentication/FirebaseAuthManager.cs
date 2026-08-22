@@ -351,7 +351,28 @@ namespace MysteryRooms.Authentication
                         
                         // Store locally for offline access
                         SaveUserProfileLocally(profile);
-                        
+
+                        // --- NEW: Initialize UserSession ---
+                        if (UserSession.Instance == null)
+                        {
+                            GameObject sessionObj = new GameObject("UserSession");
+                            sessionObj.AddComponent<UserSession>();
+                        }
+
+                        // Determine display name (fallback to email prefix if null)
+                        string displayName = !string.IsNullOrEmpty(profile.display_name) 
+                            ? profile.display_name 
+                            : profile.email.Split('@')[0];
+
+                        // Store data in singleton so the Game scene can use it
+                        UserSession.Instance.SetUserData(
+                            userId: profile.firebase_uid, 
+                            username: displayName, 
+                            email: profile.email, 
+                            token: firebaseToken
+                        );
+                        // ------------------------------------
+
                         // Notify listeners
                         OnAuthenticationSuccess?.Invoke(profile);
                         
@@ -360,6 +381,11 @@ namespace MysteryRooms.Authentication
                         Debug.Log($"   Coins: {profile.coins}");
                         Debug.Log($"   Games Played: {profile.games_played}");
                         Debug.Log($"   Games Won: {profile.games_won}");
+
+                        // --- NEW: Load Game Scene ---
+                        Debug.Log("🚀 Loading Game Scene...");
+                        UnityEngine.SceneManagement.SceneManager.LoadScene("Game"); // Ensure "Game" is in your Build Settings!
+                    
                     }
                     catch (Exception e)
                     {

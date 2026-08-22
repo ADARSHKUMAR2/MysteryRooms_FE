@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using MysteryRooms.Config;
 using MysteryRooms.Game.Data;
+using MysteryRooms.Authentication;
 
 namespace MysteryRooms.Game.Services
 {
@@ -122,6 +123,163 @@ namespace MysteryRooms.Game.Services
                     string error = $"Failed to fetch mystery: {webRequest.error}";
                     Debug.LogError(error);
                     onError?.Invoke(error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Start a new game session
+        /// </summary>
+        public IEnumerator StartSession(
+            StartSessionRequest request,
+            Action<GameSessionData> onSuccess,
+            Action<string> onError)
+        {
+            string url = $"{GameServiceURL}/sessions/start";
+            string jsonBody = JsonUtility.ToJson(request);
+
+            using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
+            {
+                byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+
+                string token = UserSession.Instance?.FirebaseToken ?? PlayerPrefs.GetString("FirebaseToken", "");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    webRequest.SetRequestHeader("Authorization", "Bearer " + token);
+                }
+
+                Debug.Log("<color=cyan>[UNITY-API] 📤 Starting Session</color>");
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.Success)
+                {
+                    string jsonResponse = webRequest.downloadHandler.text;
+                    Debug.Log("<color=green>[UNITY-API] ✅ Session Started!</color>");
+
+                    try
+                    {
+                        GameSessionData session = JsonUtility.FromJson<GameSessionData>(jsonResponse);
+                        onSuccess?.Invoke(session);
+                    }
+                    catch (Exception e)
+                    {
+                        string error = $"Failed to parse session JSON: {e.Message}";
+                        Debug.LogError(error);
+                        onError?.Invoke(error);
+                    }
+                }
+                else
+                {
+                    string error = $"Session start failed: {webRequest.error}";
+                    Debug.LogError(error);
+                    onError?.Invoke(error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Update session progress (puzzle solved/attempted)
+        /// </summary>
+        public IEnumerator UpdateSession(
+            UpdateSessionRequest request,
+            Action<GameSessionData> onSuccess,
+            Action<string> onError)
+        {
+            string url = $"{GameServiceURL}/sessions/update";
+            string jsonBody = JsonUtility.ToJson(request);
+
+            using (UnityWebRequest webRequest = new UnityWebRequest(url, "PUT"))
+            {
+                byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+
+                string token = UserSession.Instance?.FirebaseToken ?? PlayerPrefs.GetString("FirebaseToken", "");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    webRequest.SetRequestHeader("Authorization", "Bearer " + token);
+                }
+
+                Debug.Log($"<color=yellow>[UNITY-API] 🔄 Updating Session: {request.puzzle_solved ?? request.puzzle_attempted}</color>");
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.Success)
+                {
+                    string jsonResponse = webRequest.downloadHandler.text;
+                    
+                    try
+                    {
+                        GameSessionData session = JsonUtility.FromJson<GameSessionData>(jsonResponse);
+                        onSuccess?.Invoke(session);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError($"Failed to parse session update: {e.Message}");
+                        onError?.Invoke(e.Message);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"Session update failed: {webRequest.error}");
+                    onError?.Invoke(webRequest.error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Complete the game session
+        /// </summary>
+        public IEnumerator CompleteSession(
+            CompleteSessionRequest request,
+            Action<GameSessionData> onSuccess,
+            Action<string> onError)
+        {
+            string url = $"{GameServiceURL}/sessions/complete";
+            string jsonBody = JsonUtility.ToJson(request);
+
+            using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
+            {
+                byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+                
+                string token = UserSession.Instance?.FirebaseToken ?? PlayerPrefs.GetString("FirebaseToken", "");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    webRequest.SetRequestHeader("Authorization", "Bearer " + token);
+                }
+
+                Debug.Log("<color=green>[UNITY-API] 🏁 Completing Session</color>");
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.Success)
+                {
+                    string jsonResponse = webRequest.downloadHandler.text;
+                    Debug.Log("<color=green>[UNITY-API] ✅ Session Completed!</color>");
+
+                    try
+                    {
+                        GameSessionData session = JsonUtility.FromJson<GameSessionData>(jsonResponse);
+                        onSuccess?.Invoke(session);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError($"Failed to parse completed session: {e.Message}");
+                        onError?.Invoke(e.Message);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"Session complete failed: {webRequest.error}");
+                    onError?.Invoke(webRequest.error);
                 }
             }
         }
