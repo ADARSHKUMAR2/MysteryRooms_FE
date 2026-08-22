@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using MysteryRooms.Game.Data;
 
 public enum PuzzleState
 {
@@ -14,6 +15,10 @@ public abstract class BasePuzzle : MonoBehaviour
     public string puzzleID;
     public PuzzleState currentState = PuzzleState.Locked;
 
+    [Header("Backend Configuration")]
+    protected PuzzleConfigData backendConfig;
+    protected bool isLockedByDependencies = false;
+
     // Event triggered when puzzle is solved
     public event Action<string> OnPuzzleSolved;
 
@@ -25,12 +30,44 @@ public abstract class BasePuzzle : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Configure puzzle from backend data - OVERRIDE THIS
+    /// </summary>
+    public virtual void ConfigureFromBackend(PuzzleConfigData config)
+    {
+        backendConfig = config;
+        puzzleID = config.id;
+        
+        Debug.Log($"🔧 Configuring {puzzleID} with backend data");
+    }
+
+    /// <summary>
+    /// Lock/unlock puzzle based on dependencies
+    /// </summary>
+    public virtual void SetLocked(bool locked)
+    {
+        isLockedByDependencies = locked;
+        
+        if (locked)
+        {
+            currentState = PuzzleState.Locked;
+        }
+        
+        Debug.Log($"{puzzleID} is now {(locked ? "LOCKED" : "UNLOCKED")}");
+    }
+
     // Check if the puzzle has been solved
     protected abstract bool CheckSolution();
 
     // Called when player interacts with the puzzle
     public virtual void ActivatePuzzle()
     {
+        if (isLockedByDependencies)
+        {
+            Debug.Log($"❌ {puzzleID} is locked. Solve other puzzles first!");
+            return;
+        }
+
         if (currentState == PuzzleState.Locked)
         {
             currentState = PuzzleState.InProgress;
@@ -53,6 +90,7 @@ public abstract class BasePuzzle : MonoBehaviour
     public virtual void ResetPuzzle()
     {
         currentState = PuzzleState.Locked;
+        isLockedByDependencies = false;
         Debug.Log($"Puzzle {puzzleID} reset.");
     }
 }

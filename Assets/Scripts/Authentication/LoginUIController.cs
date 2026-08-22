@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using MysteryRooms.Authentication;
+using UnityEngine.SceneManagement;
 
 namespace MysteryRooms.UI
 {
@@ -440,7 +441,8 @@ namespace MysteryRooms.UI
             
             if (mainMenuPanel != null)
             {
-                mainMenuPanel.SetActive(true); // Show main menu
+                // mainMenuPanel.SetActive(true); // Show main menu
+                SceneManager.LoadScene("Game");
             }
             else
             {

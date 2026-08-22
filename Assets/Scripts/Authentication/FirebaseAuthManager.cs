@@ -316,6 +316,7 @@ namespace MysteryRooms.Authentication
         private IEnumerator VerifyTokenWithBackend(string firebaseToken)
         {
             string url = $"{BackendURL}/auth/verify";
+            PlayerPrefs.SetString("FirebaseToken", firebaseToken);
             
             // Create request body matching your backend's TokenVerifyRequest model
             var requestBody = new TokenVerifyRequest

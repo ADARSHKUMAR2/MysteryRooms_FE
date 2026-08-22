@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using MysteryRooms.Game.Data;
 public class RotatingStatuePuzzle : BasePuzzle, IInteractable
 {
     [Header("Rotation Settings")]
@@ -14,6 +14,8 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
     {
         if (currentState == PuzzleState.Solved)
             return "Statue aligned correctly ✓";
+        else if (isLockedByDependencies)
+            return "Statue is locked by a mysterious force";        
         else
             return "Press E to Rotate Statue";
     }
@@ -36,6 +38,21 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
         isRotating = true;
 
         Debug.Log($"{gameObject.name} rotated to step {currentRotationSteps}");
+    }
+
+    /// <summary>
+    /// Configure from backend data
+    /// </summary>
+    public override void ConfigureFromBackend(PuzzleConfigData config)
+    {
+        base.ConfigureFromBackend(config);
+        
+        // Extract rotation steps from config
+        if (config.config != null)
+        {
+            correctRotationSteps = config.config.correctRotationSteps;
+            Debug.Log($"🗿 Statue {puzzleID} configured: correct rotation = {correctRotationSteps} steps");
+        }
     }
 
     void Update()
