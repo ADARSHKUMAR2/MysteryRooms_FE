@@ -53,6 +53,10 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
             combinationInput.gameObject.SetActive(true);
             combinationInput.Select();
         }
+        if (submitButton != null)
+        {
+            submitButton.gameObject.SetActive(true);
+        }
     }
 
     private void OnSubmitClicked()
@@ -64,11 +68,19 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
             {
                 combinationInput.gameObject.SetActive(false);
             }
+            if (submitButton != null)
+            {
+                submitButton.gameObject.SetActive(false);
+            }
         }
         else
         {
             Debug.Log("❌ Wrong combination!");
             // Visual feedback here
+            if (combinationInput != null)
+            {
+                combinationInput.text = "";
+            }
         }
     }
 
@@ -85,6 +97,10 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         {
             combinationInput.text = "";
             combinationInput.gameObject.SetActive(false);
+        }
+        if (submitButton != null)
+        {
+            submitButton.gameObject.SetActive(false);
         }
     }
 }
