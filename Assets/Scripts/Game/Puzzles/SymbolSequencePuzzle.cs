@@ -31,6 +31,7 @@ public class SymbolSequencePuzzle : BasePuzzle
 
         for (int i = 0; i < Mathf.Min(symbolButtons.Count, correctSequence.Count); i++)
         {
+            symbolButtons[i].gameObject.SetActive(true);
             symbolButtons[i].symbolName = correctSequence[i];
             symbolButtons[i].onSymbolClicked = OnSymbolClicked;
         }
@@ -67,18 +68,5 @@ public class SymbolSequencePuzzle : BasePuzzle
     {
         base.ResetPuzzle();
         playerSequence.Clear();
-    }
-}
-
-// Helper class for symbol buttons
-[System.Serializable]
-public class SymbolButton : MonoBehaviour
-{
-    public string symbolName;
-    public System.Action<string> onSymbolClicked;
-
-    public void OnClick()
-    {
-        onSymbolClicked?.Invoke(symbolName);
     }
 }
