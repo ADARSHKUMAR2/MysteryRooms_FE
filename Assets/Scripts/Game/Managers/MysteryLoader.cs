@@ -75,6 +75,14 @@ namespace MysteryRooms.Game.Managers
             ));
         }
 
+        public void OnJoinByCodeClicked(string inputCode)
+        {
+            StartCoroutine(apiService.GetMysteryByShareCode(
+                inputCode,
+                OnMysteryGenerationSuccess,
+                OnMysteryGenerationError
+            ));
+        }
         private void OnMysteryGenerationSuccess(MysteryConfigData mystery)
         {
             currentMystery = mystery;

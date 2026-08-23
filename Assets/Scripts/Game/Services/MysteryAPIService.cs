@@ -41,7 +41,7 @@ namespace MysteryRooms.Game.Services
                 webRequest.downloadHandler = new DownloadHandlerBuffer();
                 webRequest.SetRequestHeader("Content-Type", "application/json");
 
-                webRequest.timeout = 45;
+                webRequest.timeout = 60;
 
                 string token = PlayerPrefs.GetString("FirebaseToken", "");
                 if (!string.IsNullOrEmpty(token))
@@ -88,6 +88,21 @@ namespace MysteryRooms.Game.Services
         }
 
         /// <summary>
+        /// Fetch an existing mystery by its 6-character share code
+        /// </summary>
+        public IEnumerator GetMysteryByShareCode(
+            string shareCode,
+            Action<MysteryConfigData> onSuccess,
+            Action<string> onError)
+        {
+            string url = $"{GameServiceURL}/mysteries/shared/{shareCode}";
+            yield return FetchMysteryData(url, onSuccess, onError);
+        }
+
+        /// <summary>
+        /// Fetch an existing mystery by ID
+        /// </summary>
+        /// <summary>
         /// Fetch an existing mystery by ID
         /// </summary>
         public IEnumerator GetMystery(
@@ -96,10 +111,33 @@ namespace MysteryRooms.Game.Services
             Action<string> onError)
         {
             string url = $"{GameServiceURL}/mysteries/{mysteryId}";
+            yield return FetchMysteryData(url, onSuccess, onError);
+        }
 
+        /// <summary>
+        /// Common helper method to execute the UnityWebRequest for fetching mysteries
+        /// </summary>
+        private IEnumerator FetchMysteryData(
+            string url,
+            Action<MysteryConfigData> onSuccess,
+            Action<string> onError)
+        {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
-                Debug.Log($"🌐 Fetching mystery: {url}");
+                // Optional: set timeout here as well, though GET requests usually don't need 45s
+                webRequest.timeout = 30; 
+
+                string token = UserSession.Instance?.FirebaseToken ?? PlayerPrefs.GetString("FirebaseToken", "");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    webRequest.SetRequestHeader("Authorization", "Bearer " + token);
+                }
+                else
+                {
+                    Debug.LogWarning("[UNITY-API] No Firebase token found! Request will likely fail 401.");
+                }
+                
+                Debug.Log($"🌐 Fetching mystery from: {url}");
 
                 yield return webRequest.SendWebRequest();
 

@@ -13,6 +13,8 @@ namespace MysteryRooms.UI
 
         [Header("UI Elements")]
         [SerializeField] private Button generateButton;
+        [SerializeField] private Button submitButton;
+        [SerializeField] private TMP_InputField shareCodeInput;
         [SerializeField] private Slider difficultySlider;
         [SerializeField] private TextMeshProUGUI difficultyText;
         [SerializeField] private TextMeshProUGUI mysteryInfoText;
@@ -31,11 +33,32 @@ namespace MysteryRooms.UI
                 OnDifficultyChanged(difficultySlider.value);
             }
 
+            if (submitButton != null && shareCodeInput != null)
+            {
+                submitButton.onClick.AddListener(OnSubmitCodeClicked);
+            }
+
             if (mysteryLoader != null)
             {
                 mysteryLoader.OnMysteryLoaded += OnMysteryLoaded;
                 mysteryLoader.OnMysteryLoadFailed += OnMysteryLoadFailed;
             }
+        }
+
+        private void OnSubmitCodeClicked()
+        {
+            if (mysteryLoader == null) return;
+            
+            string code = shareCodeInput.text.Trim();
+            
+            if (string.IsNullOrEmpty(code))
+            {
+                SetStatus("⚠️ Please enter a valid share code.");
+                return;
+            }
+
+            SetStatus($"🔍 Searching for mystery code: {code}...");
+            mysteryLoader.OnJoinByCodeClicked(code);
         }
 
         private void OnGenerateClicked()
@@ -64,7 +87,8 @@ namespace MysteryRooms.UI
             
             if (mysteryInfoText != null)
             {
-                string info = $"<b>Mystery ID:</b> {mystery.mystery_id}\n" +
+                string info = $"<b>Share Code:</b> <color=#00FFFF>{mystery.share_code}</color>\n" +
+                             $"<b>Mystery ID:</b> {mystery.mystery_id}\n" +
                              $"<b>Room:</b> {mystery.room}\n" +
                              $"<b>Difficulty:</b> {mystery.difficulty}/5\n" +
                              $"<b>Theme:</b> {mystery.theme}\n" +

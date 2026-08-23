@@ -7,6 +7,7 @@ namespace MysteryRooms.Game.Data
     public class MysteryConfigData
     {
         public string mystery_id;
+        public string share_code;
         public string room;
         public int difficulty;
         public string theme;
