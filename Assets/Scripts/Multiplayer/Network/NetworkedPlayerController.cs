@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using MysteryRooms.Game;
+using UnityEngine.InputSystem;
 
 namespace MysteryRooms.Multiplayer.Network
 {
@@ -81,11 +82,30 @@ namespace MysteryRooms.Multiplayer.Network
             if (playerCamera != null)
             {
                 playerCamera.enabled = false;
+                AudioListener audioListener = playerCamera.GetComponent<AudioListener>();
+                if (audioListener != null)
+                {
+                    audioListener.enabled = false;
+                }
             }
 
             if (interactionSystem != null)
             {
                 interactionSystem.enabled = false;
+            }
+
+            // Disable CharacterController so physics don't conflict
+            CharacterController cc = GetComponent<CharacterController>();
+            if (cc != null)
+            {
+                cc.enabled = false;
+            }
+
+            // Disable PlayerInput if you are using it
+            PlayerInput pi = GetComponent<PlayerInput>();
+            if (pi != null)
+            {
+                pi.enabled = false;
             }
 
             Debug.Log("Remote player - controls disabled");

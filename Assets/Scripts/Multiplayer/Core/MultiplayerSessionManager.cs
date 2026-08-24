@@ -81,9 +81,13 @@ namespace MysteryRooms.Multiplayer.Core
                 SessionOptions sessionOptions = new SessionOptions
                 {
                     Name = $"Mystery_{mysteryShareCode}",
-                    MaxPlayers = maxPlayers
+                    MaxPlayers = maxPlayers,
+                    SessionProperties = new System.Collections.Generic.Dictionary<string, SessionProperty> 
+                    {
+                        { "BackendShareCode", new SessionProperty(mysteryShareCode) }
+                    }
                 }.WithRelayNetwork();
-
+                
                 currentUnitySession = await MultiplayerService.Instance.CreateSessionAsync(sessionOptions);
                 
                 string joinCode = currentUnitySession.Code;
@@ -127,12 +131,27 @@ namespace MysteryRooms.Multiplayer.Core
                 Log($"Joining session with code: {joinCode}...");
                 Status = ConnectionStatus.Connecting;
 
+                // 1. Join the session FIRST
                 currentUnitySession = await MultiplayerService.Instance.JoinSessionByCodeAsync(joinCode);
+
+                // 2. NOW you can safely read properties from it
+                string backendShareCode = "";
+
+                if (currentUnitySession.Properties != null && currentUnitySession.Properties.TryGetValue("BackendShareCode", out var propertyValue))
+                {
+                    backendShareCode = propertyValue.Value;
+                    Log($"Found backend share code in session: {backendShareCode}");
+                }
+                else
+                {
+                    LogError("Could not find BackendShareCode in session properties!");
+                }
 
                 CurrentSession = new MultiplayerSessionInfo
                 {
                     sessionId = currentUnitySession.Id,
                     joinCode = joinCode,
+                    mysteryId = backendShareCode,
                     role = SessionRole.Client,
                     maxPlayers = maxPlayers,
                     playerIds = new System.Collections.Generic.List<string> { AuthenticationService.Instance.PlayerId }
@@ -157,6 +176,7 @@ namespace MysteryRooms.Multiplayer.Core
                 return false;
             }
         }
+
 
         private async Task ConfigureRelayTransport(ISession session)
         {

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4846059629024824909}
   - component: {fileID: 1874672559463492282}
   - component: {fileID: 7941160003156447711}
-  - component: {fileID: 6879058988466915674}
+  - component: {fileID: 8339158095056631586}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2923402947
+  GlobalObjectIdHash: 3399915418
   InScenePlacedSourceGlobalObjectIdHash: 3399915418
   DeferredDespawnTick: 0
   Ownership: 1
@@ -224,7 +224,7 @@ MonoBehaviour:
   interactionSystem: {fileID: 4846059629024824909}
   playerCamera: {fileID: 3998966648398151052}
   playerName: Player
---- !u!114 &6879058988466915674
+--- !u!114 &8339158095056631586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,9 +233,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4676746147840750579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 426205854c8fd4dc980d51a0f99bd95a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkTransform
+  m_EditorClassIdentifier: Assembly-CSharp::ClientNetworkTransform
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 0
   AutoOwnerAuthorityTickOffset: 1

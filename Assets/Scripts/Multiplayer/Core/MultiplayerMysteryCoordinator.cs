@@ -251,47 +251,19 @@ namespace MysteryRooms.Multiplayer.Core
 
             Debug.Log("✅ Joined Unity session successfully");
 
-            // Step 1.5: Wait for Host to sync the real Backend Share Code over the network!
-            Debug.Log("⏳ Waiting for Host to sync backend mystery code...");
-            NetworkedPuzzleManager npm = null;
-            float syncDeadline = Time.time + 30f;
-            while (npm == null && Time.time < syncDeadline)
+            // The backend share code was retrieved during JoinSessionAsync and saved to CurrentSession
+            string actualShareCode = sessionManager.CurrentSession.mysteryId;
+            
+            if (string.IsNullOrEmpty(actualShareCode))
             {
-                npm = FindObjectOfType<NetworkedPuzzleManager>();
-                yield return null;
-            }
-
-            if (npm == null)
-            {
-                FailClientJoin("Timed out waiting for the Game scene network object.");
+                FailClientJoin("Could not retrieve backend mystery code from session properties.");
                 yield break;
             }
 
-            while (npm.backendShareCode.Value.IsEmpty && Time.time < syncDeadline)
-            {
-                if (sessionManager == null || !sessionManager.IsConnected)
-                {
-                    FailClientJoin("Disconnected while waiting for the host to sync the mystery.");
-                    yield break;
-                }
-
-                yield return null;
-            }
-
-            if (npm.backendShareCode.Value.IsEmpty)
-            {
-                FailClientJoin("Timed out waiting for the host to sync the mystery.");
-                yield break;
-            }
-
-            string actualShareCode = npm.backendShareCode.Value.ToString();
             Debug.Log($"📡 Step 2: Fetching mystery from backend with REAL code: {actualShareCode}");
             
             MysteryConfigData fetchedMystery = null;
             string error = null;
-
-            // Step 2: Fetch mystery from backend using the same code
-            Debug.Log($"📡 Step 2: Fetching mystery from backend with code: {joinCode}");
             
             yield return apiService.GetMysteryByShareCode(
                 actualShareCode,
@@ -313,14 +285,12 @@ namespace MysteryRooms.Multiplayer.Core
             Debug.Log("🎯 Step 3: Loading mystery into scene...");
             mysteryLoader.LoadMysteryData(fetchedMystery);
 
-            Debug.Log("🎮 Loading Game scene...");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
-
             isLoadingMystery = false;
             OnMysteryReady?.Invoke(fetchedMystery);
 
-            Debug.Log("🎉 Client setup complete!");
+            Debug.Log("🎉 Client setup complete! Waiting for host to start the game.");
         }
+
 
         private void FailClientJoin(string message)
         {
