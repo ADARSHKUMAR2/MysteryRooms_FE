@@ -6,6 +6,7 @@ using System.Collections;
 using MysteryRooms.Config;
 using MysteryRooms.Game.Data;
 using MysteryRooms.Authentication;
+using System.Collections.Generic;
 
 namespace MysteryRooms.Game.Services
 {
@@ -166,6 +167,69 @@ namespace MysteryRooms.Game.Services
                 }
             }
         }
+
+
+                /// <summary>
+        /// Wrapper to help JsonUtility parse a JSON array
+        /// </summary>
+        [Serializable]
+        private class MysteryListWrapper
+        {
+            public List<MysteryConfigData> mysteries;
+        }
+
+        /// <summary>
+        /// Fetch a list of recently generated mysteries from the database
+        /// </summary>
+        public IEnumerator GetRecentMysteries(
+            int limit,
+            Action<List<MysteryConfigData>> onSuccess,
+            Action<string> onError)
+        {
+            string url = $"{GameServiceURL}/mysteries?limit={limit}";
+
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+            {
+                webRequest.timeout = 30; 
+
+                string token = UserSession.Instance?.FirebaseToken ?? PlayerPrefs.GetString("FirebaseToken", "");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    webRequest.SetRequestHeader("Authorization", "Bearer " + token);
+                }
+                
+                Debug.Log($"🌐 Fetching recent mysteries from: {url}");
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.Success)
+                {
+                    string jsonResponse = webRequest.downloadHandler.text;
+                    
+                    try
+                    {
+                        // Wrap the array in an object so JsonUtility can parse it
+                        string wrappedJson = "{\"mysteries\":" + jsonResponse + "}";
+                        MysteryListWrapper wrapper = JsonUtility.FromJson<MysteryListWrapper>(wrappedJson);
+                        
+                        onSuccess?.Invoke(wrapper.mysteries);
+                    }
+                    catch (Exception e)
+                    {
+                        string error = $"Failed to parse recent mysteries JSON: {e.Message}";
+                        Debug.LogError(error);
+                        onError?.Invoke(error);
+                    }
+                }
+                else
+                {
+                    string error = $"Failed to fetch recent mysteries: {webRequest.error}";
+                    Debug.LogError(error);
+                    onError?.Invoke(error);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Start a new game session

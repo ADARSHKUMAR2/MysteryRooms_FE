@@ -442,7 +442,7 @@ namespace MysteryRooms.UI
             if (mainMenuPanel != null)
             {
                 // mainMenuPanel.SetActive(true); // Show main menu
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("MainMenu");
             }
             else
             {

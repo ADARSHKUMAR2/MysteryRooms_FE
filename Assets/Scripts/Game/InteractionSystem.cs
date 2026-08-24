@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-
+using MysteryRooms.Multiplayer.Network;
 public class InteractionSystem : MonoBehaviour
 {
     [Header("Raycast Settings")]
@@ -62,6 +62,18 @@ public class InteractionSystem : MonoBehaviour
         {
             interactionPromptText.text = text;
             interactionPromptText.gameObject.SetActive(true);
+        }
+    }
+
+    void OnInteract(GameObject interactable)
+    {
+        // ... your existing interaction code ...
+        
+        // Notify network
+        NetworkedPlayerController player = GetComponent<NetworkedPlayerController>();
+        if (player != null)
+        {
+            player.OnInteract(interactable.name, "examine");
         }
     }
 

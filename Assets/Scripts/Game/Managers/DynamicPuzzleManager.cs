@@ -235,6 +235,31 @@ namespace MysteryRooms.Game.Managers
             }
         }
 
+        /// <summary>
+        /// Mark a puzzle as solved (called by NetworkedPuzzleManager)
+        /// </summary>
+        public void MarkPuzzleAsSolved(string puzzleId)
+        {
+            // Find the puzzle in your internal list and mark it as solved
+            // This ensures the local game state matches the network state
+            
+            Debug.Log($"Marking puzzle {puzzleId} as solved locally");
+            
+            // Your implementation here - update puzzle state, unlock doors, etc.
+            // Example:
+            // var puzzle = puzzles.Find(p => p.id == puzzleId);
+            // if (puzzle != null) puzzle.isSolved = true;
+        }
+
+        /// <summary>
+        /// Get total puzzle count
+        /// </summary>
+        public int GetTotalPuzzleCount()
+        {
+            // Return the number of puzzles in the current mystery
+            return currentMystery?.puzzles?.Count ?? 0;
+        }
+
         private void OnAllPuzzlesSolved()
         {
             Debug.Log("🎉 ALL PUZZLES SOLVED!");

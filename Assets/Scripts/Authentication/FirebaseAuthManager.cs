@@ -384,7 +384,7 @@ namespace MysteryRooms.Authentication
 
                         // --- NEW: Load Game Scene ---
                         Debug.Log("🚀 Loading Game Scene...");
-                        UnityEngine.SceneManagement.SceneManager.LoadScene("Game"); // Ensure "Game" is in your Build Settings!
+                        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); // Ensure "Game" is in your Build Settings!
                     
                     }
                     catch (Exception e)

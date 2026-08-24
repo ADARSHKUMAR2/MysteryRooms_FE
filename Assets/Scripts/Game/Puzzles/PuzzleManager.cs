@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-
+using MysteryRooms.Multiplayer.Network;
 public class PuzzleManager : MonoBehaviour
 {
     [Header("References")]
@@ -36,6 +36,19 @@ public class PuzzleManager : MonoBehaviour
         if (solvedPuzzleCount >= puzzles.Count)
         {
             UnlockExit();
+        }
+
+        NetworkedPlayerController player = GetComponent<NetworkedPlayerController>();
+        if (player != null)
+        {
+            player.OnPuzzleSolved(puzzleID);
+        }
+        
+        // Update networked puzzle manager
+        NetworkedPuzzleManager npm = FindObjectOfType<NetworkedPuzzleManager>();
+        if (npm != null)
+        {
+            npm.MarkPuzzleSolved(puzzleID);
         }
     }
 

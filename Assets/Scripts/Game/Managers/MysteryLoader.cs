@@ -111,5 +111,56 @@ namespace MysteryRooms.Game.Managers
         public void SetDifficulty(int diff) => difficulty = Mathf.Clamp(diff, 1, 5);
         public void SetRoom(string roomType) => room = roomType;
         public void SetPlayerCount(int count) => playerCount = Mathf.Clamp(count, 1, 4);
+
+
+        /// Multiplayer
+        /// 
+        /// <summary>
+        /// Load mystery data directly (used by multiplayer coordinator)
+        /// This bypasses the API call since the mystery is already fetched
+        /// </summary>
+        public void LoadMysteryData(MysteryConfigData mystery)
+        {
+            if (mystery == null)
+            {
+                Debug.LogError("Cannot load null mystery data!");
+                OnMysteryLoadFailed?.Invoke("Mystery data is null");
+                return;
+            }
+
+            currentMystery = mystery;
+            Debug.Log($"🎯 Mystery loaded directly: {mystery.objective}");
+            Debug.Log($"📊 Difficulty: {mystery.difficulty} | Puzzles: {mystery.puzzles.Count}");
+
+            // Configure puzzles with the loaded mystery
+            if (puzzleManager != null)
+            {
+                puzzleManager.ConfigurePuzzlesFromMystery(mystery);
+            }
+            else
+            {
+                Debug.LogWarning("PuzzleManager is null - puzzles not configured!");
+            }
+
+            // Notify listeners
+            OnMysteryLoaded?.Invoke(mystery);
+        }
+
+        /// <summary>
+        /// Get the current mystery configuration (useful for multiplayer sync)
+        /// </summary>
+        public MysteryConfigData GetCurrentMystery()
+        {
+            return currentMystery;
+        }
+
+        /// <summary>
+        /// Check if a mystery is currently loaded
+        /// </summary>
+        public bool HasMysteryLoaded()
+        {
+            return currentMystery != null;
+        }
+
     }
 }
