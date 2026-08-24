@@ -7,9 +7,10 @@ namespace MysteryRooms.Game.Managers
 {
     public class MysteryLoader : MonoBehaviour
     {
+        private static MysteryLoader instance;
+
         [Header("References")]
         [SerializeField] private MysteryAPIService apiService;
-        [SerializeField] private DynamicPuzzleManager puzzleManager;
 
         [Header("Mystery Settings")]
         [SerializeField] private string room = "mummy_tomb";
@@ -25,28 +26,21 @@ namespace MysteryRooms.Game.Managers
 
         private void Awake()
         {
+            if (instance != null && instance != this)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
             if (apiService == null)
             {
                 apiService = GetComponent<MysteryAPIService>();
-                if (apiService == null)
-                {
-                    Debug.LogError("MysteryAPIService not found!");
-                }
-            }
-
-            if (puzzleManager == null)
-            {
-                puzzleManager = FindObjectOfType<DynamicPuzzleManager>();
-                if (puzzleManager == null)
-                {
-                    Debug.LogError("DynamicPuzzleManager not found in scene!");
-                }
             }
         }
 
-        /// <summary>
-        /// Generate and load a new mystery from backend
-        /// </summary>
         public void GenerateNewMystery()
         {
             GenerateMysteryRequest request = new GenerateMysteryRequest
@@ -55,48 +49,22 @@ namespace MysteryRooms.Game.Managers
                 difficulty = this.difficulty,
                 player_count = this.playerCount
             };
-
-            StartCoroutine(apiService.GenerateMystery(
-                request,
-                OnMysteryGenerationSuccess,
-                OnMysteryGenerationError
-            ));
+            StartCoroutine(apiService.GenerateMystery(request, OnMysteryGenerationSuccess, OnMysteryGenerationError));
         }
 
-        /// <summary>
-        /// Load an existing mystery by ID
-        /// </summary>
         public void LoadMysteryById(string mysteryId)
         {
-            StartCoroutine(apiService.GetMystery(
-                mysteryId,
-                OnMysteryGenerationSuccess,
-                OnMysteryGenerationError
-            ));
+            StartCoroutine(apiService.GetMystery(mysteryId, OnMysteryGenerationSuccess, OnMysteryGenerationError));
         }
 
         public void OnJoinByCodeClicked(string inputCode)
         {
-            StartCoroutine(apiService.GetMysteryByShareCode(
-                inputCode,
-                OnMysteryGenerationSuccess,
-                OnMysteryGenerationError
-            ));
+            StartCoroutine(apiService.GetMysteryByShareCode(inputCode, OnMysteryGenerationSuccess, OnMysteryGenerationError));
         }
+
         private void OnMysteryGenerationSuccess(MysteryConfigData mystery)
         {
-            currentMystery = mystery;
-            Debug.Log($"🎯 Mystery loaded: {mystery.objective}");
-            Debug.Log($"📊 Difficulty: {mystery.difficulty} | Puzzles: {mystery.puzzles.Count}");
-
-            // Configure puzzles with the loaded mystery
-            if (puzzleManager != null)
-            {
-                puzzleManager.ConfigurePuzzlesFromMystery(mystery);
-            }
-
-            // Notify listeners
-            OnMysteryLoaded?.Invoke(mystery);
+            LoadMysteryData(mystery);
         }
 
         private void OnMysteryGenerationError(string error)
@@ -105,20 +73,10 @@ namespace MysteryRooms.Game.Managers
             OnMysteryLoadFailed?.Invoke(error);
         }
 
-        /// <summary>
-        /// Public accessors for UI
-        /// </summary>
         public void SetDifficulty(int diff) => difficulty = Mathf.Clamp(diff, 1, 5);
         public void SetRoom(string roomType) => room = roomType;
         public void SetPlayerCount(int count) => playerCount = Mathf.Clamp(count, 1, 4);
 
-
-        /// Multiplayer
-        /// 
-        /// <summary>
-        /// Load mystery data directly (used by multiplayer coordinator)
-        /// This bypasses the API call since the mystery is already fetched
-        /// </summary>
         public void LoadMysteryData(MysteryConfigData mystery)
         {
             if (mystery == null)
@@ -129,38 +87,13 @@ namespace MysteryRooms.Game.Managers
             }
 
             currentMystery = mystery;
-            Debug.Log($"🎯 Mystery loaded directly: {mystery.objective}");
-            Debug.Log($"📊 Difficulty: {mystery.difficulty} | Puzzles: {mystery.puzzles.Count}");
+            Debug.Log($"🎯 Mystery JSON loaded into memory: {mystery.objective}");
 
-            // Configure puzzles with the loaded mystery
-            if (puzzleManager != null)
-            {
-                puzzleManager.ConfigurePuzzlesFromMystery(mystery);
-            }
-            else
-            {
-                Debug.LogWarning("PuzzleManager is null - puzzles not configured!");
-            }
-
-            // Notify listeners
+            // We just announce it to whoever is listening (if anyone)
             OnMysteryLoaded?.Invoke(mystery);
         }
 
-        /// <summary>
-        /// Get the current mystery configuration (useful for multiplayer sync)
-        /// </summary>
-        public MysteryConfigData GetCurrentMystery()
-        {
-            return currentMystery;
-        }
-
-        /// <summary>
-        /// Check if a mystery is currently loaded
-        /// </summary>
-        public bool HasMysteryLoaded()
-        {
-            return currentMystery != null;
-        }
-
+        public MysteryConfigData GetCurrentMystery() => currentMystery;
+        public bool HasMysteryLoaded() => currentMystery != null;
     }
 }

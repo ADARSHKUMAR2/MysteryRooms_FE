@@ -58,10 +58,17 @@ public class InteractionSystem : MonoBehaviour
 
     private void ShowPrompt(string text)
     {
-        if (interactionPromptText != null)
+        if (MysteryRooms.UI.GameUIController.Instance != null)
         {
-            interactionPromptText.text = text;
-            interactionPromptText.gameObject.SetActive(true);
+            MysteryRooms.UI.GameUIController.Instance.ShowInteractionPrompt(text);
+        }
+    }
+
+    private void HidePrompt()
+    {
+        if (MysteryRooms.UI.GameUIController.Instance != null)
+        {
+            MysteryRooms.UI.GameUIController.Instance.HideInteractionPrompt();
         }
     }
 
@@ -77,11 +84,4 @@ public class InteractionSystem : MonoBehaviour
         }
     }
 
-    private void HidePrompt()
-    {
-        if (interactionPromptText != null)
-        {
-            interactionPromptText.gameObject.SetActive(false);
-        }
-    }
 }
