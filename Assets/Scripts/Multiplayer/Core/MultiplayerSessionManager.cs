@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
@@ -30,6 +31,7 @@ namespace MysteryRooms.Multiplayer.Core
 
         private ISession currentUnitySession;
         private object currentVoiceChannel;
+        private int playersJoinedSinceStart = 0;
 
         private async void Start()
         {
@@ -211,7 +213,9 @@ namespace MysteryRooms.Multiplayer.Core
             Log($"Client {clientId} disconnected");
             if (clientId != NetworkManager.Singleton.LocalClientId)
             {
+                playersJoinedSinceStart++;
                 OnPlayerLeft?.Invoke($"Player_{clientId}");
+                Log($"{playersJoinedSinceStart} player(s) joined so far");
             }
             else
             {
@@ -270,6 +274,28 @@ namespace MysteryRooms.Multiplayer.Core
 
             Log("Host is starting the networked game scene for all clients...");
             NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+
+        public IEnumerator WaitForPlayers(int minimumPlayers = 2, float timeoutSeconds = 30f)
+        {
+            playersJoinedSinceStart = 0;
+            float timeout = Time.time + timeoutSeconds;
+            
+            Log($"⏳ Waiting for at least {minimumPlayers} players to join (timeout: {timeoutSeconds}s)...");
+            
+            while (playersJoinedSinceStart < minimumPlayers && Time.time < timeout)
+            {
+                yield return null;
+            }
+            
+            if (playersJoinedSinceStart >= minimumPlayers)
+            {
+                Log($"✅ Minimum players ({playersJoinedSinceStart}) reached! Proceeding to start game.");
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ Timeout waiting for players. Current: {playersJoinedSinceStart}/{minimumPlayers}. Starting game anyway.");
+            }
         }
 
         private void Log(string message)

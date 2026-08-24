@@ -339,6 +339,13 @@ namespace MysteryRooms.Multiplayer.UI
             }
 
             UpdatePlayerCount();
+
+            ShowLobbyPanel();
+
+            if (statusText != null)
+            {
+                statusText.text = "Waiting for players to join...";
+            }
         }
 
         private void OnSessionJoined()
@@ -351,13 +358,18 @@ namespace MysteryRooms.Multiplayer.UI
             }
 
             UpdatePlayerCount();
+
+            ShowLobbyPanel();
+    
+            if (statusText != null)
+            {
+                statusText.text = "Waiting for host to start the game...";
+            }
         }
 
         private void OnMysteryReady(MysteryConfigData mystery)
         {
             Debug.Log($"📢 UI: Mystery ready - {mystery.objective}");
-            
-            ShowLobbyPanel();
             
             if (statusText != null)
             {
