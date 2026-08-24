@@ -12,6 +12,8 @@ namespace MysteryRooms.Multiplayer.Network
     /// </summary>
     public class NetworkedPuzzleManager : NetworkBehaviour
     {
+        private static string pendingBackendShareCode;
+
         [Header("References")]
         [SerializeField] private DynamicPuzzleManager localPuzzleManager;
 
@@ -20,6 +22,11 @@ namespace MysteryRooms.Multiplayer.Network
 
         // Network variable to share the backend mystery code with clients
         public NetworkVariable<FixedString64Bytes> backendShareCode = new NetworkVariable<FixedString64Bytes>();
+
+        public static void SetPendingBackendShareCode(string code)
+        {
+            pendingBackendShareCode = code;
+        }
 
 
         // Network variable for victory state
@@ -42,10 +49,20 @@ namespace MysteryRooms.Multiplayer.Network
 
         public void SetBackendShareCode(string code)
         {
-            if (IsServer)
+            if (!IsServer)
             {
-                backendShareCode.Value = new FixedString64Bytes(code);
+                Debug.LogWarning("Cannot set backend mystery code from a client.");
+                return;
             }
+
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                Debug.LogError("Cannot set an empty backend mystery code.");
+                return;
+            }
+
+            backendShareCode.Value = new FixedString64Bytes(code);
+            Debug.Log($"Backend mystery code synchronized: {code}");
         }
 
         public override void OnNetworkSpawn()
@@ -57,6 +74,12 @@ namespace MysteryRooms.Multiplayer.Network
             allPuzzlesSolved.OnValueChanged += OnVictoryStateChanged;
 
             Debug.Log("NetworkedPuzzleManager spawned");
+
+            if (IsServer && !string.IsNullOrWhiteSpace(pendingBackendShareCode))
+            {
+                SetBackendShareCode(pendingBackendShareCode);
+                pendingBackendShareCode = null;
+            }
         }
 
         #region Puzzle Solving

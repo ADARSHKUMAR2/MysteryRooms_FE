@@ -38,6 +38,7 @@ namespace MysteryRooms.Multiplayer.Core
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             // Validate references
             if (sessionManager == null)
             {
@@ -141,19 +142,13 @@ namespace MysteryRooms.Multiplayer.Core
             Debug.Log("🎯 Step 3: Loading mystery into scene...");
             mysteryLoader.LoadMysteryData(generatedMystery);
 
-            // Step 3: Load the mystery into the scene
-            Debug.Log("🎯 Step 3: Loading mystery into scene...");
-            mysteryLoader.LoadMysteryData(generatedMystery);
-
-            // Sync the backend share code to all clients!
-            var npm = FindObjectOfType<NetworkedPuzzleManager>();
-            if (npm != null)
-            {
-                npm.SetBackendShareCode(generatedMystery.share_code);
-            }
+            NetworkedPuzzleManager.SetPendingBackendShareCode(generatedMystery.share_code);
 
             isGeneratingMystery = false;
             OnMysteryReady?.Invoke(generatedMystery);
+
+            Debug.Log("🎮 Starting networked game...");
+            sessionManager.StartNetworkedGame();
 
             Debug.Log("🎉 Host setup complete!");
         }
@@ -197,15 +192,13 @@ namespace MysteryRooms.Multiplayer.Core
             Debug.Log("🎯 Loading existing mystery into scene...");
             mysteryLoader.LoadMysteryData(oldMystery);
 
-            // Step 3: Sync the backend share code to all clients!
-            var npm = FindObjectOfType<NetworkedPuzzleManager>();
-            if (npm != null)
-            {
-                npm.SetBackendShareCode(oldMystery.share_code);
-            }
+            NetworkedPuzzleManager.SetPendingBackendShareCode(oldMystery.share_code);
 
             isGeneratingMystery = false;
             OnMysteryReady?.Invoke(oldMystery);
+
+            Debug.Log("🎮 Starting networked game...");
+            sessionManager.StartNetworkedGame();
             
             Debug.Log("🎉 Host setup complete for existing mystery!");
         }
@@ -257,15 +250,34 @@ namespace MysteryRooms.Multiplayer.Core
             // Step 1.5: Wait for Host to sync the real Backend Share Code over the network!
             Debug.Log("⏳ Waiting for Host to sync backend mystery code...");
             NetworkedPuzzleManager npm = null;
-            while (npm == null)
+            float syncDeadline = Time.time + 30f;
+            while (npm == null && Time.time < syncDeadline)
             {
                 npm = FindObjectOfType<NetworkedPuzzleManager>();
                 yield return null;
             }
 
-            while (npm.backendShareCode.Value.IsEmpty)
+            if (npm == null)
             {
+                FailClientJoin("Timed out waiting for the Game scene network object.");
+                yield break;
+            }
+
+            while (npm.backendShareCode.Value.IsEmpty && Time.time < syncDeadline)
+            {
+                if (sessionManager == null || !sessionManager.IsConnected)
+                {
+                    FailClientJoin("Disconnected while waiting for the host to sync the mystery.");
+                    yield break;
+                }
+
                 yield return null;
+            }
+
+            if (npm.backendShareCode.Value.IsEmpty)
+            {
+                FailClientJoin("Timed out waiting for the host to sync the mystery.");
+                yield break;
             }
 
             string actualShareCode = npm.backendShareCode.Value.ToString();
@@ -297,10 +309,20 @@ namespace MysteryRooms.Multiplayer.Core
             Debug.Log("🎯 Step 3: Loading mystery into scene...");
             mysteryLoader.LoadMysteryData(fetchedMystery);
 
+            Debug.Log("🎮 Loading Game scene...");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+
             isLoadingMystery = false;
             OnMysteryReady?.Invoke(fetchedMystery);
 
             Debug.Log("🎉 Client setup complete!");
+        }
+
+        private void FailClientJoin(string message)
+        {
+            Debug.LogError(message);
+            OnError?.Invoke(message);
+            isLoadingMystery = false;
         }
 
         #endregion
