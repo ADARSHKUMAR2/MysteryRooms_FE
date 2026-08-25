@@ -7,7 +7,7 @@ namespace MysteryRooms.Game.Managers
 {
     public class MysteryLoader : MonoBehaviour
     {
-        private static MysteryLoader instance;
+        public static MysteryLoader Instance { get; private set; }
 
         [Header("References")]
         [SerializeField] private MysteryAPIService apiService;
@@ -26,13 +26,13 @@ namespace MysteryRooms.Game.Managers
 
         private void Awake()
         {
-            if (instance != null && instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(this.gameObject);
                 return;
             }
             
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(this.gameObject);
 
             if (apiService == null)

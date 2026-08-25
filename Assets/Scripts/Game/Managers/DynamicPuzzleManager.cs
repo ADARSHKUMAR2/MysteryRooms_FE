@@ -13,6 +13,8 @@ namespace MysteryRooms.Game.Managers
         [SerializeField] private Transform puzzleContainer;
         [SerializeField] private InteractableDoor exitDoor;
 
+        [SerializeField] private NetworkedDoor[] connectingDoors; 
+
         [Header("Runtime Data")]
         public List<BasePuzzle> allPuzzles = new List<BasePuzzle>();
         public Dictionary<string, BasePuzzle> puzzleRegistry = new Dictionary<string, BasePuzzle>();
@@ -42,6 +44,11 @@ namespace MysteryRooms.Game.Managers
             }
 
             apiService = FindObjectOfType<MysteryAPIService>();
+
+            if (connectingDoors == null || connectingDoors.Length == 0)
+            {
+                connectingDoors = FindObjectsOfType<NetworkedDoor>();
+            }
             Debug.Log($"🧩 Game Scene: Found {allPuzzles.Count} puzzles.");
         }
 
@@ -83,6 +90,12 @@ namespace MysteryRooms.Game.Managers
             sessionStartTime = Time.time;
 
             Debug.Log($"⚙️ Configuring {mystery.puzzles.Count} puzzles...");
+
+            foreach (var puzzle in allPuzzles)
+            {
+                puzzle.isConfiguredByBackend = false;
+                puzzle.gameObject.SetActive(false); // Turn off everything first!
+            }
 
             foreach (var puzzleData in mystery.puzzles)
             {
@@ -131,6 +144,7 @@ namespace MysteryRooms.Game.Managers
                 return;
             }
 
+            puzzle.gameObject.name = $"[ACTIVE] {data.id}";
             puzzle.ConfigureFromBackend(data);
             puzzleRegistry[data.id] = puzzle;
             Debug.Log($"✓ Configured {data.type} as {data.id}");
@@ -147,6 +161,8 @@ namespace MysteryRooms.Game.Managers
 
                 if (unityType.Contains(backendType))
                 {
+                    if (puzzle.isConfiguredByBackend) continue;
+                    
                     puzzle.gameObject.SetActive(true);
                     return puzzle;
                 }
@@ -171,10 +187,29 @@ namespace MysteryRooms.Game.Managers
             ReportPuzzleSolved(puzzleID);
             UnlockDependentPuzzles(puzzleID);
 
+            // Check if this puzzle unlocks a door ---
+            CheckDoorUnlocks(puzzleID);
+
             if (solvedPuzzleIds.Count >= currentMystery.puzzles.Count)
             {
                 OnAllPuzzlesSolved();
             }
+        }
+
+        // --- Method to open doors based on JSON data ---
+        private void CheckDoorUnlocks(string solvedPuzzleId)
+        {
+            // Only the server has authority to open network doors
+            if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
+
+            // Optional: Hardcoded logic for testing your JSON specifically
+            if (solvedPuzzleId == "entrance_rotating" && connectingDoors != null && connectingDoors.Length > 0)
+            {
+                Debug.Log("🚪 Entrance puzzle solved! Opening door to next room!");
+                connectingDoors[0].OpenDoor(); 
+            }
+            
+            // Optional: You can expand this logic to open specific doors based on the 'unlocks' array in your JSON
         }
 
         private void ReportPuzzleSolved(string puzzleID)

@@ -19,6 +19,10 @@ public abstract class BasePuzzle : NetworkBehaviour
     protected PuzzleConfigData backendConfig;
     protected bool isLockedByDependencies = false;
 
+    [Header("Backend Configuration Status")]
+    // Shows up in the Inspector so you can see if the backend claimed it!
+    [SerializeField] public bool isConfiguredByBackend = false;
+
     // Event triggered when puzzle is solved
     public event Action<string> OnPuzzleSolved;
 
@@ -37,6 +41,7 @@ public abstract class BasePuzzle : NetworkBehaviour
     {
         backendConfig = config;
         puzzleID = config.id;
+        isConfiguredByBackend = true;
         
         Debug.Log($"🔧 Configuring {puzzleID} with backend data");
     }

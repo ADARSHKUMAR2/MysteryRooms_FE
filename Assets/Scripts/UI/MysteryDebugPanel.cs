@@ -3,13 +3,16 @@ using UnityEngine.UI;
 using TMPro;
 using MysteryRooms.Game.Managers;
 using MysteryRooms.Game.Data;
+using UnityEngine.SceneManagement;
+using MysteryRooms.Multiplayer.Core;
+using Unity.Netcode;
 
 namespace MysteryRooms.UI
 {
     public class MysteryDebugPanel : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private MysteryLoader mysteryLoader;
+        private MysteryLoader mysteryLoader;
 
         [Header("UI Elements")]
         [SerializeField] private Button generateButton;
@@ -22,6 +25,13 @@ namespace MysteryRooms.UI
 
         private void Start()
         {
+            mysteryLoader = MysteryLoader.Instance;
+
+            if (mysteryLoader == null)
+            {
+                Debug.LogWarning("MysteryLoader instance not found! The Debug Panel requires a MysteryLoader in the scene.");
+            }
+
             if (generateButton != null)
             {
                 generateButton.onClick.AddListener(OnGenerateClicked);
@@ -98,6 +108,38 @@ namespace MysteryRooms.UI
                              $"<b>Clues:</b> {mystery.clues.Count}";
                 
                 mysteryInfoText.text = info;
+            }
+
+            MultiplayerSessionManager mpManager = FindObjectOfType<MultiplayerSessionManager>();
+
+            if (mpManager != null && mpManager.IsConnected)
+            {
+                if (mpManager.IsHost)
+                {
+                    Debug.Log("Starting Networked Game Scene...");
+                    mpManager.StartNetworkedGame();
+                }
+                else
+                {
+                    SetStatus("⏳ Waiting for Host to start game...");
+                }
+            }
+            else
+            {
+                // THIS IS WHAT FIXES SINGLE-PLAYER!
+                Debug.Log("Starting Single-Player Game Scene...");
+                if (NetworkManager.Singleton != null)
+                {
+                    // Start the local server/host
+                    NetworkManager.Singleton.StartHost();
+                    
+                    // Use NetworkSceneManager to load the scene so all NetworkObjects spawn
+                    NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+                }
+                else
+                {
+                    Debug.LogError("No NetworkManager found in scene! Cannot start single-player host.");
+                }
             }
         }
 
