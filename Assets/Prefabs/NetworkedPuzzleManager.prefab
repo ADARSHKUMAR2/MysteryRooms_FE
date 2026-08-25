@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Multiplayer.Network.NetworkedPuzzleManager
   ShowTopMostFoldoutHeaderGroup: 1
-  localPuzzleManager: {fileID: 0}
+  localPuzzleManager: {fileID: 7311903972575083571}
   backendShareCode:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
@@ -160,4 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Managers.DynamicPuzzleManager
   puzzleContainer: {fileID: 0}
   exitDoor: {fileID: 0}
+  roomDoors:
+  - roomType: 0
+    doorToOpen: {fileID: 0}
   allPuzzles: []

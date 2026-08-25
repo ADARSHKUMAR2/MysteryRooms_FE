@@ -7,13 +7,32 @@ using MysteryRooms.Game.Services;
 using Unity.Netcode; 
 namespace MysteryRooms.Game.Managers
 {
+    public enum RoomType
+    {
+        entrance_hall,
+        main_chamber,
+        west_chamber,
+        east_chamber,
+        secret_passage,
+        burial_chamber,
+        treasure_room,
+        antechamber
+    }
+    [System.Serializable]
+    public struct RoomDoorMapping
+    {
+        [Tooltip("Exact room name from JSON (e.g., 'entrance_hall')")]
+        public RoomType roomType;
+        [Tooltip("The door that opens when a puzzle in this room is solved")]
+        public NetworkedDoor doorToOpen;
+    }
     public class DynamicPuzzleManager : MonoBehaviour
     {
         [Header("Scene References")]
         [SerializeField] private Transform puzzleContainer;
         [SerializeField] private InteractableDoor exitDoor;
 
-        [SerializeField] private NetworkedDoor[] connectingDoors; 
+        [SerializeField] private List<RoomDoorMapping> roomDoors = new List<RoomDoorMapping>();
 
         [Header("Runtime Data")]
         public List<BasePuzzle> allPuzzles = new List<BasePuzzle>();
@@ -45,10 +64,6 @@ namespace MysteryRooms.Game.Managers
 
             apiService = FindObjectOfType<MysteryAPIService>();
 
-            if (connectingDoors == null || connectingDoors.Length == 0)
-            {
-                connectingDoors = FindObjectsOfType<NetworkedDoor>();
-            }
             Debug.Log($"🧩 Game Scene: Found {allPuzzles.Count} puzzles.");
         }
 
@@ -162,7 +177,7 @@ namespace MysteryRooms.Game.Managers
                 if (unityType.Contains(backendType))
                 {
                     if (puzzle.isConfiguredByBackend) continue;
-                    
+
                     puzzle.gameObject.SetActive(true);
                     return puzzle;
                 }
@@ -202,11 +217,33 @@ namespace MysteryRooms.Game.Managers
             // Only the server has authority to open network doors
             if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
 
-            // Optional: Hardcoded logic for testing your JSON specifically
-            if (solvedPuzzleId == "entrance_rotating" && connectingDoors != null && connectingDoors.Length > 0)
+            // Find the puzzle data from our mystery config
+            var solvedPuzzleData = currentMystery.puzzles.FirstOrDefault(p => p.id == solvedPuzzleId);
+            
+            if (solvedPuzzleData != null)
             {
-                Debug.Log("🚪 Entrance puzzle solved! Opening door to next room!");
-                connectingDoors[0].OpenDoor(); 
+                string jsonRoomString = solvedPuzzleData.position;
+                
+                // Convert JSON string to our Enum safely
+                if (System.Enum.TryParse(jsonRoomString, out RoomType parsedRoomType))
+                {
+                    // Find the door mapped to this room Enum in the Unity Inspector
+                    var mapping = roomDoors.FirstOrDefault(m => m.roomType == parsedRoomType);
+                    
+                    if (mapping.doorToOpen != null)
+                    {
+                        Debug.Log($"🚪 Puzzle in '{parsedRoomType}' solved! Opening mapped door!");
+                        mapping.doorToOpen.OpenDoor();
+                    }
+                    else
+                    {
+                        Debug.Log($"⚠️ Puzzle in '{parsedRoomType}' solved, but no door mapping was found in DynamicPuzzleManager.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"❌ Unknown room type from backend JSON: {jsonRoomString}");
+                }
             }
             
             // Optional: You can expand this logic to open specific doors based on the 'unlocks' array in your JSON

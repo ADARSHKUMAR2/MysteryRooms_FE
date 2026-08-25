@@ -6,7 +6,12 @@ public class NetworkedDoor : NetworkBehaviour, IInteractable
     [Header("Door Settings")]
     [SerializeField] private bool requiresInteraction = false;
     [SerializeField] private float openSpeed = 0.5f;
-    [SerializeField] private Vector3 openOffset = new Vector3(0, 0f, -15f);
+    [Header("Door Positions")]
+    [Tooltip("The exact position of the door when it is closed (locked).")]
+    [SerializeField] private Vector3 closedPosition;
+    
+    [Tooltip("The exact position of the door when it is open.")]
+    [SerializeField] private Vector3 openPosition;
 
     private NetworkVariable<bool> isOpen = new NetworkVariable<bool>(
         false, 
@@ -14,20 +19,16 @@ public class NetworkedDoor : NetworkBehaviour, IInteractable
         NetworkVariableWritePermission.Server //WRITE
     );
 
-    private Vector3 closedPosition;
-    private Vector3 openPosition;
-
-    void Awake()
-    {
-        closedPosition = transform.position;
-        openPosition = closedPosition + openOffset;
-    }
-
     public override void OnNetworkSpawn()
     {
+        // Snap the door to the correct state for players who join late
         if (isOpen.Value)
         {
             transform.position = openPosition;
+        }
+        else
+        {
+            transform.position = closedPosition;
         }
     }
 
@@ -66,5 +67,17 @@ public class NetworkedDoor : NetworkBehaviour, IInteractable
     private void RequestOpenServerRpc()
     {
         isOpen.Value = true;
+    }
+    // Optional Editor Helper: You can right-click the component and select these to easily grab the current transform position!
+    [ContextMenu("Set Closed Position from Current")]
+    private void SetClosedPosition()
+    {
+        closedPosition = transform.position;
+    }
+
+    [ContextMenu("Set Open Position from Current")]
+    private void SetOpenPosition()
+    {
+        openPosition = transform.position;
     }
 }
