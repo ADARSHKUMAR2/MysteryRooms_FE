@@ -6,6 +6,8 @@ using MysteryRooms.Game.Data;
 using UnityEngine.SceneManagement;
 using MysteryRooms.Multiplayer.Core;
 using Unity.Netcode;
+using System.Collections.Generic;
+using MysteryRooms.Game.Services;
 
 namespace MysteryRooms.UI
 {
@@ -13,19 +15,27 @@ namespace MysteryRooms.UI
     {
         [Header("References")]
         private MysteryLoader mysteryLoader;
+        private MysteryAPIService apiService;
 
         [Header("UI Elements")]
         [SerializeField] private Button generateButton;
-        [SerializeField] private Button submitButton;
+        // [SerializeField] private Button submitButton;
         [SerializeField] private TMP_InputField shareCodeInput;
         [SerializeField] private Slider difficultySlider;
         [SerializeField] private TextMeshProUGUI difficultyText;
         [SerializeField] private TextMeshProUGUI mysteryInfoText;
         [SerializeField] private TextMeshProUGUI statusText;
 
+        [Header("Replay Existing UI")]
+        [SerializeField] private TMP_Dropdown recentMysteriesDropdown;
+        [SerializeField] private Button replayMysteryButton;
+        private List<MysteryConfigData> recentMysteriesCache = new List<MysteryConfigData>();
+
+
         private void Start()
         {
             mysteryLoader = MysteryLoader.Instance;
+            apiService = FindObjectOfType<MysteryAPIService>();
 
             if (mysteryLoader == null)
             {
@@ -43,15 +53,85 @@ namespace MysteryRooms.UI
                 OnDifficultyChanged(difficultySlider.value);
             }
 
-            if (submitButton != null && shareCodeInput != null)
+            // if (submitButton != null && shareCodeInput != null)
+            // {
+            //     submitButton.onClick.AddListener(OnSubmitCodeClicked);
+            // }
+
+            if (replayMysteryButton != null)
             {
-                submitButton.onClick.AddListener(OnSubmitCodeClicked);
+                replayMysteryButton.onClick.AddListener(OnReplayMysteryClicked);
             }
 
             if (mysteryLoader != null)
             {
                 mysteryLoader.OnMysteryLoaded += OnMysteryLoaded;
                 mysteryLoader.OnMysteryLoadFailed += OnMysteryLoadFailed;
+            }
+
+            FetchRecentMysteries();
+        }
+
+        private void FetchRecentMysteries()
+        {
+            if (apiService == null) return;
+            
+            SetStatus("Fetching recent mysteries...");
+            
+            StartCoroutine(apiService.GetRecentMysteries(
+                limit: 10,
+                onSuccess: (mysteries) =>
+                {
+                    recentMysteriesCache = mysteries;
+                    PopulateDropdown();
+                    SetStatus("Ready");
+                },
+                onError: (error) =>
+                {
+                    SetStatus($"Warning: Failed to fetch recent mysteries: {error}");
+                }
+            ));
+        }
+
+        private void PopulateDropdown()
+        {
+            if (recentMysteriesDropdown == null) return;
+            
+            recentMysteriesDropdown.ClearOptions();
+            
+            if (recentMysteriesCache.Count == 0)
+            {
+                recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("No recent mysteries found"));
+                recentMysteriesDropdown.interactable = false;
+                if (replayMysteryButton != null) replayMysteryButton.interactable = false;
+                return;
+            }
+            
+            recentMysteriesDropdown.interactable = true;
+            if (replayMysteryButton != null) replayMysteryButton.interactable = true;
+            
+            List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+            foreach (var mystery in recentMysteriesCache)
+            {
+                string label = $"{mystery.theme} (Diff: {mystery.difficulty}) [{mystery.share_code}]";
+                options.Add(new TMP_Dropdown.OptionData(label));
+            }
+            
+            recentMysteriesDropdown.AddOptions(options);
+            recentMysteriesDropdown.RefreshShownValue();
+        }
+
+        private void OnReplayMysteryClicked()
+        {
+            if (recentMysteriesDropdown == null || recentMysteriesCache.Count == 0) return;
+            
+            int selectedIndex = recentMysteriesDropdown.value;
+            if (selectedIndex >= 0 && selectedIndex < recentMysteriesCache.Count)
+            {
+                MysteryConfigData selectedMystery = recentMysteriesCache[selectedIndex];
+                
+                SetStatus($"Loading selected mystery: {selectedMystery.share_code}...");
+                mysteryLoader.OnJoinByCodeClicked(selectedMystery.share_code);
             }
         }
 
