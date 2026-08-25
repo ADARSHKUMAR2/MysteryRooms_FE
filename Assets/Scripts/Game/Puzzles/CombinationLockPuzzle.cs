@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MysteryRooms.Game.Data;
 using TMPro;
+using Unity.Netcode;
 
 public class CombinationLockPuzzle : BasePuzzle, IInteractable
 {
@@ -10,6 +11,12 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     [SerializeField] private Button submitButton;
     
     private string correctCombination;
+    // Network variable for late-joiners
+    private NetworkVariable<bool> isUnlocked = new NetworkVariable<bool>(
+        false, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Server
+    );
 
     protected override void Start()
     {
@@ -19,6 +26,21 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         {
             submitButton.onClick.AddListener(OnSubmitClicked);
         }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        isUnlocked.OnValueChanged += OnUnlockedStateChanged;
+        
+        // Late joiner support
+        if (isUnlocked.Value) OnUnlockedStateChanged(false, true);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        isUnlocked.OnValueChanged -= OnUnlockedStateChanged;
+        base.OnNetworkDespawn();
     }
 
     public override void ConfigureFromBackend(PuzzleConfigData config)
@@ -61,46 +83,60 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
 
     private void OnSubmitClicked()
     {
-        if (CheckSolution())
+        if (combinationInput == null) return;
+        
+        // Ask server to check combination
+        if (IsSpawned) 
         {
-            CompletePuzzle();
-            if (combinationInput != null)
-            {
-                combinationInput.gameObject.SetActive(false);
-            }
-            if (submitButton != null)
-            {
-                submitButton.gameObject.SetActive(false);
-            }
+            SubmitCombinationServerRpc(combinationInput.text);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SubmitCombinationServerRpc(string attemptedCode)
+    {
+        if (attemptedCode == correctCombination)
+        {
+            isUnlocked.Value = true; // Solved!
         }
         else
         {
-            Debug.Log("❌ Wrong combination!");
-            // Visual feedback here
-            if (combinationInput != null)
-            {
-                combinationInput.text = "";
-            }
+            WrongCombinationClientRpc(); // Tell all clients it was wrong
         }
+    }
+
+    private void OnUnlockedStateChanged(bool previousValue, bool newValue)
+    {
+        if (newValue)
+        {
+            CompletePuzzle();
+            if (combinationInput != null) combinationInput.gameObject.SetActive(false);
+            if (submitButton != null) submitButton.gameObject.SetActive(false);
+        }
+    }
+
+    [ClientRpc]
+    private void WrongCombinationClientRpc()
+    {
+        Debug.Log("❌ Wrong combination!");
+        if (combinationInput != null) combinationInput.text = "";
     }
 
     protected override bool CheckSolution()
     {
-        if (combinationInput == null) return false;
-        return combinationInput.text == correctCombination;
+        return isUnlocked.Value;
     }
 
     public override void ResetPuzzle()
     {
         base.ResetPuzzle();
+        if (IsServer) isUnlocked.Value = false;
+        
         if (combinationInput != null)
         {
             combinationInput.text = "";
             combinationInput.gameObject.SetActive(false);
         }
-        if (submitButton != null)
-        {
-            submitButton.gameObject.SetActive(false);
-        }
+        if (submitButton != null) submitButton.gameObject.SetActive(false);
     }
 }

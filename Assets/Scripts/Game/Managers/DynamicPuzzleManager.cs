@@ -4,7 +4,7 @@ using System.Linq;
 using MysteryRooms.Game.Data;
 using MysteryRooms.Authentication;
 using MysteryRooms.Game.Services;
-
+using Unity.Netcode; 
 namespace MysteryRooms.Game.Managers
 {
     public class DynamicPuzzleManager : MonoBehaviour
@@ -140,7 +140,7 @@ namespace MysteryRooms.Game.Managers
         {
             foreach (var puzzle in allPuzzles)
             {
-                if (puzzle.gameObject.activeSelf) continue;
+                // if (puzzle.gameObject.activeSelf) continue;
 
                 string unityType = puzzle.GetType().Name.ToLower();
                 string backendType = puzzleType.ToLower().Replace("_", "");
@@ -180,6 +180,8 @@ namespace MysteryRooms.Game.Managers
         private void ReportPuzzleSolved(string puzzleID)
         {
             if (apiService == null || string.IsNullOrEmpty(currentSessionId)) return;
+
+            if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
 
             UpdateSessionRequest request = new UpdateSessionRequest
             {
@@ -221,6 +223,9 @@ namespace MysteryRooms.Game.Managers
         private void CompleteSessionTracking(string status)
         {
             if (apiService == null || string.IsNullOrEmpty(currentSessionId)) return;
+
+            // NEW: Only let the Server/Host tell the backend the session is done
+            if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
 
             CompleteSessionRequest request = new CompleteSessionRequest
             {

@@ -2,25 +2,46 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using MysteryRooms.Game.Data;
+using Unity.Netcode;
 
 public class SymbolSequencePuzzle : BasePuzzle
 {
     [Header("Symbols")]
     [SerializeField] private List<SymbolButton> symbolButtons;
-    
+
     private List<string> correctSequence;
-    private List<string> playerSequence = new List<string>();
+    
+    // Server maintains the current sequence attempts
+    private List<string> serverPlayerSequence = new List<string>();
+
+    private NetworkVariable<bool> isSolvedNet = new NetworkVariable<bool>(
+        false, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Server
+    );
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        isSolvedNet.OnValueChanged += OnSolvedStateChanged;
+        
+        // Handle Late Joiners
+        if (isSolvedNet.Value) OnSolvedStateChanged(false, true);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        isSolvedNet.OnValueChanged -= OnSolvedStateChanged;
+        base.OnNetworkDespawn();
+    }
 
     public override void ConfigureFromBackend(PuzzleConfigData config)
     {
         base.ConfigureFromBackend(config);
-        
+
         if (config.config != null && config.config.correctSequence != null)
         {
             correctSequence = config.config.correctSequence;
-            Debug.Log($"🔣 Symbol puzzle {puzzleID} configured: {string.Join(" → ", correctSequence)}");
-            
-            // Assign symbols to buttons
             AssignSymbolsToButtons();
         }
     }
@@ -42,31 +63,56 @@ public class SymbolSequencePuzzle : BasePuzzle
         if (currentState == PuzzleState.Solved || isLockedByDependencies) return;
         
         ActivatePuzzle();
-        playerSequence.Add(symbolName);
-        
-        Debug.Log($"Symbol clicked: {symbolName} | Sequence: {string.Join(", ", playerSequence)}");
+        if (IsSpawned) SubmitSymbolServerRpc(symbolName);
+    }
 
-        if (CheckSolution())
+    [ServerRpc(RequireOwnership = false)]
+    private void SubmitSymbolServerRpc(string symbolName)
+    {
+        if (isSolvedNet.Value) return;
+
+        serverPlayerSequence.Add(symbolName);
+        Debug.Log($"Server recorded symbol: {symbolName} | Sequence Length: {serverPlayerSequence.Count}");
+
+        if (serverPlayerSequence.SequenceEqual(correctSequence))
+        {
+            isSolvedNet.Value = true; // Solved!
+        }
+        else if (serverPlayerSequence.Count >= correctSequence.Count)
+        {
+            // Wrong sequence - reset
+            serverPlayerSequence.Clear();
+            ResetSequenceClientRpc();
+        }
+    }
+
+    private void OnSolvedStateChanged(bool prev, bool isSolved)
+    {
+        if (isSolved)
         {
             CompletePuzzle();
         }
-        else if (playerSequence.Count >= correctSequence.Count)
-        {
-            // Wrong sequence - reset
-            Debug.Log("❌ Wrong sequence! Resetting...");
-            playerSequence.Clear();
-        }
+    }
+
+    [ClientRpc]
+    private void ResetSequenceClientRpc()
+    {
+        Debug.Log("❌ Wrong sequence! Resetting...");
+        // Add visual/audio failure feedback here
     }
 
     protected override bool CheckSolution()
     {
-        if (playerSequence.Count != correctSequence.Count) return false;
-        return playerSequence.SequenceEqual(correctSequence);
+        return isSolvedNet.Value;
     }
 
     public override void ResetPuzzle()
     {
         base.ResetPuzzle();
-        playerSequence.Clear();
+        if (IsServer)
+        {
+            serverPlayerSequence.Clear();
+            isSolvedNet.Value = false;
+        }
     }
 }

@@ -1,12 +1,19 @@
 using UnityEngine;
 using MysteryRooms.Game.Data;
+using Unity.Netcode; 
 public class RotatingStatuePuzzle : BasePuzzle, IInteractable
 {
     [Header("Rotation Settings")]
     public float rotationSpeed = 90f; // Degrees per second
-    public int correctRotationSteps = 2; // How many 90° rotations to solve
+    public int correctRotationSteps = 2; 
 
-    private int currentRotationSteps = 0;
+     // 1. Replace local int with a NetworkVariable
+    private NetworkVariable<int> currentRotationSteps = new NetworkVariable<int>(
+        0, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Server
+    ); // How many 90° rotations to solve
+
     private bool isRotating = false;
     private Quaternion targetRotation;
 
@@ -20,24 +27,48 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
             return "Press E to Rotate Statue";
     }
 
+    // 2. Hook into Network spawn to set up listeners and handle late-joiners
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        currentRotationSteps.OnValueChanged += OnRotationStepsChanged;
+        
+        // Snap to correct rotation immediately for late joining players
+        targetRotation = Quaternion.Euler(0, currentRotationSteps.Value * 90f, 0);
+        transform.rotation = targetRotation;
+    }
+    public override void OnNetworkDespawn()
+    {
+        currentRotationSteps.OnValueChanged -= OnRotationStepsChanged;
+        base.OnNetworkDespawn();
+    }
+
     public void Interact()
     {
         if (currentState == PuzzleState.Solved || isRotating) return;
 
         ActivatePuzzle();
-        RotateStatue();
+        RequestRotateServerRpc(); // Tell the server to do the work
     }
 
-    private void RotateStatue()
+    // 4. Server updates the authoritative state
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestRotateServerRpc()
     {
-        // Increment rotation step (wraps around at 4 = full 360°)
-        currentRotationSteps = (currentRotationSteps + 1) % 4;
+        // Updating this triggers OnRotationStepsChanged across ALL clients automatically
+        currentRotationSteps.Value = (currentRotationSteps.Value + 1) % 4;
+    }
 
-        // Calculate target rotation (90° increments around Y axis)
-        targetRotation = Quaternion.Euler(0, currentRotationSteps * 90f, 0);
-        isRotating = true;
-
-        Debug.Log($"{gameObject.name} rotated to step {currentRotationSteps}");
+    // 5. This fires on all clients whenever the server updates the variable
+    private void OnRotationStepsChanged(int previousValue, int newValue)
+    {
+        targetRotation = Quaternion.Euler(0, newValue * 90f, 0);
+        isRotating = true; // This tells the local Update() loop to start animating
+        if (CheckSolution())
+        {
+            CompletePuzzle();
+        }
+        Debug.Log($"{gameObject.name} rotated to step {newValue}");
     }
 
     /// <summary>
@@ -59,38 +90,33 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
     {
         if (isRotating)
         {
-            // Smoothly rotate to target
             transform.rotation = Quaternion.RotateTowards(
                 transform.rotation,
                 targetRotation,
                 rotationSpeed * Time.deltaTime
             );
 
-            // Check if rotation is complete
             if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
             {
                 transform.rotation = targetRotation;
                 isRotating = false;
-
-                // Check if this statue is now correctly aligned
-                if (CheckSolution())
-                {
-                    CompletePuzzle();
-                }
             }
         }
     }
 
     protected override bool CheckSolution()
     {
-        // Check if current rotation matches the solution
-        return currentRotationSteps == correctRotationSteps;
+        return currentRotationSteps.Value == correctRotationSteps;
     }
 
     public override void ResetPuzzle()
     {
         base.ResetPuzzle();
-        currentRotationSteps = 0;
+        // Only the server has permission to change the NetworkVariable
+        if (IsServer)
+        {
+            currentRotationSteps.Value = 0;
+        }
         transform.rotation = Quaternion.identity;
     }
 }

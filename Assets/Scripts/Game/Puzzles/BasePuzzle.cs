@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 using MysteryRooms.Game.Data;
-
+using Unity.Netcode;
 public enum PuzzleState
 {
     Locked,
@@ -9,7 +9,7 @@ public enum PuzzleState
     Solved
 }
 
-public abstract class BasePuzzle : MonoBehaviour
+public abstract class BasePuzzle : NetworkBehaviour
 {
     [Header("Puzzle Settings")]
     public string puzzleID;
