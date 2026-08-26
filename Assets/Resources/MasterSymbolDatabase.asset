@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d235283f14f4a59a5847aa697c54fa, type: 3}
+  m_Name: MasterSymbolDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Data.SymbolDatabase
+  symbols:
+  - symbolName: Ankh
+    symbolSprite: {fileID: 8720604468809159126, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: EyeOfHorus
+    symbolSprite: {fileID: 1846651936, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: WingedScarab
+    symbolSprite: {fileID: -270468555, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: HorusFalcon
+    symbolSprite: {fileID: 181987916, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: HieroglyphTablet
+    symbolSprite: {fileID: 376497909, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: Pyramid
+    symbolSprite: {fileID: -192752112, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: Sphinx
+    symbolSprite: {fileID: -381030956, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: PharaohFront
+    symbolSprite: {fileID: 662452300, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: AnubisSeated
+    symbolSprite: {fileID: 1530294442, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: AnubisStanding
+    symbolSprite: {fileID: 446118163, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: CrookAndFlail
+    symbolSprite: {fileID: -754552853, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: BlueLotus
+    symbolSprite: {fileID: 157773416, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: PapyrusFlowers
+    symbolSprite: {fileID: -109229893, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: WingedScarabBlue
+    symbolSprite: {fileID: 1143252836, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: Cobra
+    symbolSprite: {fileID: -1529983569, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: PharaohSeated
+    symbolSprite: {fileID: -765529870, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: HieroglyphBirdTablet
+    symbolSprite: {fileID: 1449018287, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: AncientScroll
+    symbolSprite: {fileID: -1039495999, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: EyeOfHorusGold
+    symbolSprite: {fileID: -1778067686, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: GoldenFeather
+    symbolSprite: {fileID: -864439899, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: HieroglyphVase
+    symbolSprite: {fileID: -1285845849, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: ScarabPendant
+    symbolSprite: {fileID: -1217184110, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: ScalesOfJustice
+    symbolSprite: {fileID: 430088638, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: Hourglass
+    symbolSprite: {fileID: -507274962, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: EgyptianTemple
+    symbolSprite: {fileID: 2137172818, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: EgyptianChest
+    symbolSprite: {fileID: -1964297892, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: SealedScroll
+    symbolSprite: {fileID: -862114995, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: SunDisk
+    symbolSprite: {fileID: 1721080325, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: HieroglyphStone
+    symbolSprite: {fileID: 1090052593, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: FlyingFalcon
+    symbolSprite: {fileID: 1388969521, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: AnubisWalking
+    symbolSprite: {fileID: -605982215, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: PharaohProfile
+    symbolSprite: {fileID: -1753532133, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: ScarabRed
+    symbolSprite: {fileID: -824435168, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: CrookAndFlailBlue
+    symbolSprite: {fileID: 1134622571, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: PalmTree
+    symbolSprite: {fileID: -612823640, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: TempleDoorway
+    symbolSprite: {fileID: 72295049, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: EgyptianBoat
+    symbolSprite: {fileID: 124986936, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: SacredBrazier
+    symbolSprite: {fileID: -1703553843, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: AnubisStatue
+    symbolSprite: {fileID: -1521193361, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}
+  - symbolName: SunCompass
+    symbolSprite: {fileID: -949234101, guid: 4b76c10dd31aa4699aed13df8a06bdd4, type: 3}

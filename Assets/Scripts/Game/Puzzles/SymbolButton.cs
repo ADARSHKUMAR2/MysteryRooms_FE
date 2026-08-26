@@ -1,10 +1,12 @@
 using UnityEngine;
 using MysteryRooms.Game.Data;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class SymbolButton : MonoBehaviour, IInteractable
 {
     public string symbolName;
+    public Image iconImage;
     public System.Action<string> onSymbolClicked;
 
     // What the player sees when they look at this specific button
@@ -14,6 +16,14 @@ public class SymbolButton : MonoBehaviour, IInteractable
         if (string.IsNullOrEmpty(symbolName)) return "";
         
         return $"Press E to push '{symbolName}'";
+    }
+
+    public void SetSprite(Sprite newSprite)
+    {
+        if (iconImage != null)
+        {
+            iconImage.sprite = newSprite;
+        }
     }
 
     // Called by your player's InteractionSystem when they press E
