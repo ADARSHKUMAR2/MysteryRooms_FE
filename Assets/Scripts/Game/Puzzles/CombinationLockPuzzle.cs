@@ -1,16 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
-using MysteryRooms.Game.Data;
 using TMPro;
 using Unity.Netcode;
+using MysteryRooms.Game.Data;
 
 public class CombinationLockPuzzle : BasePuzzle, IInteractable
 {
-    [Header("Lock Settings")]
-    [SerializeField] private TMP_InputField combinationInput;
-    [SerializeField] private Button submitButton;
+    [Header("Keypad UI References")]
+    [Tooltip("The main Canvas or Panel that holds the Keypad")]
+    [SerializeField] private GameObject keypadUIPanel;
     
-    private string correctCombination;
+    [Tooltip("The text component showing what the player is typing")]
+    [SerializeField] private TextMeshProUGUI displayText;
+    
+    private string correctCombination = "";
+    private string currentInput = "";
+
     // Network variable for late-joiners
     private NetworkVariable<bool> isUnlocked = new NetworkVariable<bool>(
         false, 
@@ -21,11 +26,11 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     protected override void Start()
     {
         base.Start();
-        
-        if (submitButton != null)
+        if (keypadUIPanel != null)
         {
-            submitButton.onClick.AddListener(OnSubmitClicked);
+            keypadUIPanel.SetActive(false); // Hide keypad on start
         }
+        UpdateDisplay();
     }
 
     public override void OnNetworkSpawn()
@@ -50,7 +55,7 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         if (config.config != null)
         {
             correctCombination = config.config.correctCombination;
-            Debug.Log($"🔢 Lock {puzzleID} configured with combination");
+            Debug.Log($"🔢 Lock {puzzleID} configured. Answer: {correctCombination}");
         }
     }
 
@@ -62,7 +67,7 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         if (currentState == PuzzleState.Locked)
             return "Lock is sealed (solve other puzzles first)";
             
-        return "Press E to enter combination";
+        return "Press E to use Keypad";
     }
 
     public void Interact()
@@ -71,25 +76,78 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         
         ActivatePuzzle();
         
-        if (combinationInput != null)
+        // Show the UI Keypad
+        if (keypadUIPanel != null)
         {
-            combinationInput.gameObject.SetActive(true);
-            combinationInput.Select();
-        }
-        if (submitButton != null)
-        {
-            submitButton.gameObject.SetActive(true);
+            keypadUIPanel.SetActive(true);
+            
+            // Optional: If this is a Screen Space overlay, you might want to unlock the player's mouse cursor here!
+            // Cursor.lockState = CursorLockMode.None;
+            // Cursor.visible = true;
         }
     }
 
-    private void OnSubmitClicked()
+    // Call this from the OnClick events of your UI Buttons (0-9)
+    public void OnKeypadButtonPressed(string digit)
     {
-        if (combinationInput == null) return;
-        
+        // Don't allow typing more digits than the correct answer length
+        if (currentInput.Length < correctCombination.Length)
+        {
+            currentInput += digit;
+            UpdateDisplay();
+        }
+    }
+
+    // Call this from a "Clear" button on the UI
+    public void OnClearPressed()
+    {
+        currentInput = "";
+        UpdateDisplay();
+    }
+
+    // Call this from an "Enter/Submit" button on the UI
+    public void OnSubmitPressed()
+    {
+        if (string.IsNullOrEmpty(currentInput)) return;
+
         // Ask server to check combination
         if (IsSpawned) 
         {
-            SubmitCombinationServerRpc(combinationInput.text);
+            SubmitCombinationServerRpc(currentInput);
+        }
+    }
+
+    // Call this from an "X" or "Close" button on the UI
+    public void OnClosePressed()
+    {
+        if (keypadUIPanel != null)
+        {
+            keypadUIPanel.SetActive(false);
+            
+            // Re-lock mouse cursor if needed
+            // Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
+        }
+        
+        // Reset state so they can interact again
+        if (currentState == PuzzleState.InProgress)
+        {
+            currentState = PuzzleState.Unlocked;
+        }
+    }
+
+    private void UpdateDisplay()
+    {
+        if (displayText != null)
+        {
+            // Show underscores for missing digits (e.g., "1 2 _ _")
+            string displayStr = currentInput;
+            while (displayStr.Length < correctCombination.Length)
+            {
+                displayStr += "_";
+            }
+            // Add spaces between characters for readability
+            displayText.text = string.Join(" ", displayStr.ToCharArray());
         }
     }
 
@@ -111,8 +169,7 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         if (newValue)
         {
             CompletePuzzle();
-            if (combinationInput != null) combinationInput.gameObject.SetActive(false);
-            if (submitButton != null) submitButton.gameObject.SetActive(false);
+            OnClosePressed(); // Auto-close the UI when solved
         }
     }
 
@@ -120,7 +177,13 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     private void WrongCombinationClientRpc()
     {
         Debug.Log("❌ Wrong combination!");
-        if (combinationInput != null) combinationInput.text = "";
+        if (displayText != null)
+        {
+            displayText.text = "<color=red>ERROR</color>";
+        }
+        
+        // Auto-clear input after a delay
+        Invoke(nameof(OnClearPressed), 1.5f);
     }
 
     protected override bool CheckSolution()
@@ -133,11 +196,7 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         base.ResetPuzzle();
         if (IsServer) isUnlocked.Value = false;
         
-        if (combinationInput != null)
-        {
-            combinationInput.text = "";
-            combinationInput.gameObject.SetActive(false);
-        }
-        if (submitButton != null) submitButton.gameObject.SetActive(false);
+        OnClearPressed();
+        OnClosePressed();
     }
 }
