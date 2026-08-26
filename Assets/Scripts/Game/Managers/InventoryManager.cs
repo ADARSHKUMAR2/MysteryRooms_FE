@@ -31,7 +31,10 @@ namespace MysteryRooms.Game.Managers
                 collectedItems.Add(itemID);
                 Debug.Log($"[Inventory] Picked up: {itemID}");
                 
-                // TODO: You can tell your UI manager to show an icon on screen here!
+                if (MysteryRooms.UI.GameUIController.Instance != null)
+                {
+                    MysteryRooms.UI.GameUIController.Instance.AddItemToHUD(itemID);
+                }
             }
         }
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2054725517982573485}
   - component: {fileID: 3947507009162089859}
   - component: {fileID: 7311903972575083571}
+  - component: {fileID: 4326217751524259187}
   m_Layer: 0
   m_Name: NetworkedPuzzleManager
   m_TagString: Untagged
@@ -164,3 +165,20 @@ MonoBehaviour:
   - roomType: 0
     doorToOpen: {fileID: 0}
   allPuzzles: []
+--- !u!114 &4326217751524259187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408908732434846873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1a2cc5313d7428cbc9a27fa5a892f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NetworkedScoreboard
+  ShowTopMostFoldoutHeaderGroup: 1
+  playerScores:
+    UpdateTraits:
+      MinSecondsBetweenUpdates: 0
+      MaxSecondsBetweenUpdates: 0

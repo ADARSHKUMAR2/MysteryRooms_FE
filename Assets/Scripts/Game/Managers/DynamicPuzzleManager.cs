@@ -128,6 +128,12 @@ namespace MysteryRooms.Game.Managers
             }
 
             StartSessionTracking();
+            
+            if (MysteryRooms.UI.GameUIController.Instance != null)
+            {
+                // MysteryRooms.UI.GameUIController.Instance.SetObjectiveTitle(mystery.objective);
+                MysteryRooms.UI.GameUIController.Instance.UpdatePuzzleProgress(0, mystery.puzzles.Count);
+            }
             Debug.Log($"✅ All puzzles configured!");
         }
 
@@ -213,6 +219,19 @@ namespace MysteryRooms.Game.Managers
 
             // Check if this puzzle unlocks a door ---
             CheckDoorUnlocks(puzzleID);
+
+            if (MysteryRooms.UI.GameUIController.Instance != null)
+            {
+                int totalPuzzles = currentMystery.puzzles.Count;
+                MysteryRooms.UI.GameUIController.Instance.UpdatePuzzleProgress(solvedPuzzleIds.Count, totalPuzzles);
+                MysteryRooms.UI.GameUIController.Instance.ShowRecentAction($"Solved: {puzzleID}");
+                
+                // Update Local Scoreboard (Assuming local player for now)
+                if (NetworkedScoreboard.Instance != null)
+                {
+                    NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(NetworkManager.Singleton.LocalClientId);
+                }
+            }
 
             if (solvedPuzzleIds.Count >= currentMystery.puzzles.Count)
             {

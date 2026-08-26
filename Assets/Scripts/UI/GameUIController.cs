@@ -1,5 +1,11 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
+using UnityEngine.Events;
+using UnityEngine.UI;
+using UnityEngine.Networking;
+using Unity.Netcode;
+using MysteryRooms.Game.Data;
 
 namespace MysteryRooms.UI
 {
@@ -9,6 +15,26 @@ namespace MysteryRooms.UI
 
         [Header("UI References")]
         public TextMeshProUGUI interactionPromptText;
+
+        [Header("Inventory HUD")]
+        [Tooltip("The parent object holding inventory icons")]
+        public Transform inventoryContainer; 
+        [Tooltip("Prefab for a single inventory item (Image + Text)")]
+        public GameObject inventoryItemPrefab; 
+        
+        [Header("Objectives HUD")]
+        public TextMeshProUGUI objectiveTitleText;
+        public TextMeshProUGUI puzzleProgressText; // E.g., "Puzzles Solved: 2/5"
+        public TextMeshProUGUI recentActionText;   // E.g., "You unlocked: secret_passage"
+
+        [Header("Multiplayer Scoreboard")]
+        public Transform scoreboardContainer;
+        public GameObject playerCardPrefab; // Prefab showing Player Name & Score
+
+        // Dictionary to track instantiated UI elements
+        private Dictionary<ItemType, GameObject> spawnedInventoryItems = new Dictionary<ItemType, GameObject>();
+        private Dictionary<ulong, TextMeshProUGUI> playerScoreCards = new Dictionary<ulong, TextMeshProUGUI>();
+
 
         private void Awake()
         {
@@ -22,6 +48,8 @@ namespace MysteryRooms.UI
             }
         }
 
+
+        // --- INTERACTION ---
         public void ShowInteractionPrompt(string text)
         {
             if (interactionPromptText != null)
@@ -38,5 +66,84 @@ namespace MysteryRooms.UI
                 interactionPromptText.gameObject.SetActive(false);
             }
         }
+
+        // --- INVENTORY ---
+        public void AddItemToHUD(ItemType item, Sprite icon = null)
+        {
+            Debug.Log($"Attempting to add {item} to HUD...");
+
+            if (inventoryContainer == null || inventoryItemPrefab == null) return;
+            if (spawnedInventoryItems.ContainsKey(item)) return;
+
+            GameObject newIcon = Instantiate(inventoryItemPrefab, inventoryContainer);
+
+            newIcon.SetActive(true); 
+            
+            // Set text name
+            TextMeshProUGUI label = newIcon.GetComponentInChildren<TextMeshProUGUI>();
+            if (label != null) label.text = item.ToString();
+
+            // Set image if provided
+            UnityEngine.UI.Image img = newIcon.GetComponentInChildren<UnityEngine.UI.Image>();
+            if (img != null && icon != null) img.sprite = icon;
+
+            spawnedInventoryItems.Add(item, newIcon);
+            ShowRecentAction($"Picked up: {item.ToString()}");
+        }
+
+        public void RemoveItemFromHUD(ItemType item)
+        {
+            if (spawnedInventoryItems.ContainsKey(item))
+            {
+                Destroy(spawnedInventoryItems[item]);
+                spawnedInventoryItems.Remove(item);
+            }
+        }
+
+        // --- OBJECTIVES ---
+        public void SetObjectiveTitle(string title)
+        {
+            if (objectiveTitleText != null) objectiveTitleText.text = $"Objective: {title}";
+        }
+
+        public void UpdatePuzzleProgress(int solved, int total)
+        {
+            if (puzzleProgressText != null) puzzleProgressText.text = $"Puzzles Solved: {solved} / {total}";
+        }
+
+        public void ShowRecentAction(string actionText)
+        {
+            if (recentActionText != null)
+            {
+                recentActionText.text = actionText;
+                recentActionText.gameObject.SetActive(true);
+                CancelInvoke(nameof(HideRecentAction));
+                Invoke(nameof(HideRecentAction), 3f); // Hide after 3 seconds
+            }
+        }
+
+        private void HideRecentAction()
+        {
+            if (recentActionText != null) recentActionText.gameObject.SetActive(false);
+        }
+
+        // --- SCOREBOARD ---
+        public void UpdatePlayerScore(ulong clientId, string playerName, int puzzlesSolved)
+        {
+            if (scoreboardContainer == null || playerCardPrefab == null) return;
+
+            if (!playerScoreCards.ContainsKey(clientId))
+            {
+                // Create a new card for this player
+                GameObject newCard = Instantiate(playerCardPrefab, scoreboardContainer);
+
+                newCard.SetActive(true);
+                playerScoreCards[clientId] = newCard.GetComponentInChildren<TextMeshProUGUI>();
+            }
+
+            // Update the text on their card
+            playerScoreCards[clientId].text = $"{playerName}: {puzzlesSolved} Solved";
+        }
+
     }
 }
