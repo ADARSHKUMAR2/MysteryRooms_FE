@@ -21,10 +21,11 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
     {
         if (currentState == PuzzleState.Solved)
             return "Statue aligned correctly ✓";
-        else if (isLockedByDependencies)
+            
+        if (currentState == PuzzleState.Locked)
             return "Statue is locked by a mysterious force";        
-        else
-            return "Press E to Rotate Statue";
+            
+        return "Press E to Rotate Statue";
     }
 
     // 2. Hook into Network spawn to set up listeners and handle late-joiners
@@ -45,10 +46,10 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
 
     public void Interact()
     {
-        if (currentState == PuzzleState.Solved || isRotating) return;
+        if (currentState == PuzzleState.Locked || currentState == PuzzleState.Solved || isRotating) return;
 
         ActivatePuzzle();
-        RequestRotateServerRpc(); // Tell the server to do the work
+        RequestRotateServerRpc(); 
     }
 
     // 4. Server updates the authoritative state

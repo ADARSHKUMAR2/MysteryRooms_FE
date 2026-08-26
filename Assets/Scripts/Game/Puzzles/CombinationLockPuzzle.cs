@@ -58,18 +58,19 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     {
         if (currentState == PuzzleState.Solved)
             return "Lock opened ✓";
-        else if (isLockedByDependencies)
+            
+        if (currentState == PuzzleState.Locked)
             return "Lock is sealed (solve other puzzles first)";
-        else
-            return "Press E to enter combination";
+            
+        return "Press E to enter combination";
     }
 
     public void Interact()
     {
-        if (currentState == PuzzleState.Solved || isLockedByDependencies) return;
+        if (currentState == PuzzleState.Locked || currentState == PuzzleState.Solved) return;
         
         ActivatePuzzle();
-        // Show UI for combination input
+        
         if (combinationInput != null)
         {
             combinationInput.gameObject.SetActive(true);

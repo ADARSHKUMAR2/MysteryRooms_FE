@@ -187,11 +187,20 @@ namespace MysteryRooms.Game.Managers
 
         private void SetupPuzzleDependencies(PuzzleConfigData data)
         {
-            if (data.dependencies == null || data.dependencies.Count == 0) return;
             if (!puzzleRegistry.ContainsKey(data.id)) return;
 
             BasePuzzle puzzle = puzzleRegistry[data.id];
-            puzzle.SetLocked(true);
+
+            // If there are dependencies, lock it.
+            if (data.dependencies != null && data.dependencies.Count > 0)
+            {
+                puzzle.SetLocked(true);
+            }
+            else
+            {
+                // NO dependencies! This is a starting puzzle. Unlock it immediately!
+                puzzle.SetLocked(false);
+            }
         }
 
         private void OnPuzzleSolved(string puzzleID)
@@ -268,17 +277,34 @@ namespace MysteryRooms.Game.Managers
 
         private void UnlockDependentPuzzles(string solvedPuzzleId)
         {
-            foreach (var puzzleData in currentMystery.puzzles)
+            var solvedPuzzleData = currentMystery.puzzles.FirstOrDefault(p => p.id == solvedPuzzleId);
+        if (solvedPuzzleData != null && solvedPuzzleData.unlocks != null)
+        {
+            foreach (string unlockId in solvedPuzzleData.unlocks)
             {
-                if (puzzleData.dependencies != null && puzzleData.dependencies.Contains(solvedPuzzleId))
+                if (puzzleRegistry.ContainsKey(unlockId))
                 {
-                    bool allDependenciesSolved = puzzleData.dependencies.All(dep => solvedPuzzleIds.Contains(dep));
-                    if (allDependenciesSolved && puzzleRegistry.ContainsKey(puzzleData.id))
-                    {
-                        puzzleRegistry[puzzleData.id].SetLocked(false);
-                    }
+                    Debug.Log($"🔓 {solvedPuzzleId} explicitly unlocks {unlockId}!");
+                    puzzleRegistry[unlockId].SetLocked(false);
                 }
             }
+        }
+
+        // 2. Second, check the standard "dependencies" array (Original Logic)
+        foreach (var puzzleData in currentMystery.puzzles)
+        {
+            if (puzzleData.dependencies != null && puzzleData.dependencies.Contains(solvedPuzzleId))
+            {
+                // Make sure ALL dependencies for this puzzle are met
+                bool allDependenciesSolved = puzzleData.dependencies.All(dep => solvedPuzzleIds.Contains(dep));
+                
+                if (allDependenciesSolved && puzzleRegistry.ContainsKey(puzzleData.id))
+                {
+                    Debug.Log($"🔓 All dependencies met for {puzzleData.id}. Unlocking!");
+                    puzzleRegistry[puzzleData.id].SetLocked(false);
+                }
+            }
+        }
         }
 
         public void MarkPuzzleAsSolved(string puzzleId) { }

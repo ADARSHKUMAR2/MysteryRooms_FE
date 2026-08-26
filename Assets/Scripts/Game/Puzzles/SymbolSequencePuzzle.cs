@@ -104,7 +104,7 @@ public class SymbolSequencePuzzle : BasePuzzle
 
     public void OnSymbolClicked(string symbolName)
     {
-        if (currentState == PuzzleState.Solved || isLockedByDependencies) return;
+        if (currentState == PuzzleState.Locked || currentState == PuzzleState.Solved) return;
         
         ActivatePuzzle();
         if (IsSpawned) SubmitSymbolServerRpc(symbolName);

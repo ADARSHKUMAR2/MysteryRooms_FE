@@ -4,15 +4,17 @@ using MysteryRooms.Game.Data;
 using Unity.Netcode;
 public enum PuzzleState
 {
-    Locked,
-    InProgress,
-    Solved
+    Locked,      // Waiting on previous puzzles to be solved
+    Unlocked,    // Ready to be interacted with
+    InProgress,  // Player has started interacting with it
+    Solved       // Puzzle is complete
 }
 
 public abstract class BasePuzzle : NetworkBehaviour
 {
     [Header("Puzzle Settings")]
     public string puzzleID;
+    // Default to Locked! The Manager will Unlock the starting puzzles later.
     public PuzzleState currentState = PuzzleState.Locked;
 
     [Header("Backend Configuration")]
@@ -57,6 +59,14 @@ public abstract class BasePuzzle : NetworkBehaviour
         {
             currentState = PuzzleState.Locked;
         }
+        else
+        {
+            // When dependencies are met, it becomes Unlocked!
+            if (currentState == PuzzleState.Locked) 
+            {
+                currentState = PuzzleState.Unlocked;
+            }
+        }
         
         Debug.Log($"{puzzleID} is now {(locked ? "LOCKED" : "UNLOCKED")}");
     }
@@ -67,16 +77,17 @@ public abstract class BasePuzzle : NetworkBehaviour
     // Called when player interacts with the puzzle
     public virtual void ActivatePuzzle()
     {
-        if (isLockedByDependencies)
+        if (isLockedByDependencies || currentState == PuzzleState.Locked)
         {
             Debug.Log($"❌ {puzzleID} is locked. Solve other puzzles first!");
             return;
         }
 
-        if (currentState == PuzzleState.Locked)
+        // Move from Unlocked to InProgress when the player touches it
+        if (currentState == PuzzleState.Unlocked)
         {
             currentState = PuzzleState.InProgress;
-            Debug.Log($"Puzzle {puzzleID} activated!");
+            Debug.Log($"Puzzle {puzzleID} activated (In Progress)!");
         }
     }
 
@@ -94,7 +105,8 @@ public abstract class BasePuzzle : NetworkBehaviour
     // Reset puzzle to initial state
     public virtual void ResetPuzzle()
     {
-        currentState = PuzzleState.Locked;
+        // If it resets, it goes back to Unlocked (unless dependencies force it back to locked later)
+        currentState = PuzzleState.Unlocked;
         isLockedByDependencies = false;
         Debug.Log($"Puzzle {puzzleID} reset.");
     }
