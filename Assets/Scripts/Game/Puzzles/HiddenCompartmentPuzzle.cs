@@ -47,7 +47,6 @@ public class HiddenCompartmentPuzzle : BasePuzzle, IInteractable
             {
                 movingPanel.localPosition = closedPosition + openOffset;
             }
-            CompletePuzzle();
         }
     }
 
@@ -114,11 +113,14 @@ public class HiddenCompartmentPuzzle : BasePuzzle, IInteractable
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SolveServerRpc() 
+    private void SolveServerRpc(ServerRpcParams rpcParams = default) // Add Params!
     { 
         if (!isSolvedNet.Value)
         {
             isSolvedNet.Value = true; 
+            // FIRE THE EVENT TO GIVE POINTS AND TELL DYNAMIC PUZZLE MANAGER!
+            InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
+       
         }
     }
 
@@ -126,8 +128,6 @@ public class HiddenCompartmentPuzzle : BasePuzzle, IInteractable
     {
         if (current)
         {
-            CompletePuzzle();
-            
             // Start the physical animation!
             if (movingPanel != null)
             {

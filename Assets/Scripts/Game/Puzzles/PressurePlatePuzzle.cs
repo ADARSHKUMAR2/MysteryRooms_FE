@@ -76,7 +76,7 @@ public class PressurePlatePuzzle : BasePuzzle
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SubmitPlateStepServerRpc(int plateID)
+    private void SubmitPlateStepServerRpc(int plateID, ServerRpcParams rpcParams = default) // Add Params!
     {
         if (isSolvedNet.Value) return;
 
@@ -96,6 +96,10 @@ public class PressurePlatePuzzle : BasePuzzle
         if (currentAttempt.SequenceEqual(correctPattern))
         {
             isSolvedNet.Value = true; // Solved!
+
+            // FIRE THE EVENT TO GIVE POINTS AND TELL DYNAMIC PUZZLE MANAGER!
+            InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
+      
         }
         else if (currentAttempt.Count >= correctPattern.Count || !IsMatchingSoFar(currentAttempt))
         {
@@ -161,7 +165,6 @@ public class PressurePlatePuzzle : BasePuzzle
     {
         if (isSolved)
         {
-            CompletePuzzle();
             UpdatePlateVisuals(); // Ensure they all light up at the end
         }
     }

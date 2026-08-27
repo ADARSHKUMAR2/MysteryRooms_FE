@@ -12,8 +12,6 @@ public class LightPuzzle : BasePuzzle, IInteractable
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        isSolvedNet.OnValueChanged += (prev, current) => { if (current) CompletePuzzle(); };
-        if (isSolvedNet.Value) CompletePuzzle();
     }
 
     public override void ConfigureFromBackend(PuzzleConfigData config)
@@ -37,7 +35,14 @@ public class LightPuzzle : BasePuzzle, IInteractable
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SolveServerRpc() { isSolvedNet.Value = true; }
+    private void SolveServerRpc(ServerRpcParams rpcParams = default) // Add Params!
+    { 
+        if (!isSolvedNet.Value)
+        {
+            isSolvedNet.Value = true; 
+            InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
+        }
+    }
 
     protected override bool CheckSolution() { return isSolvedNet.Value; }
 }
