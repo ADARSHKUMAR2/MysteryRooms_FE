@@ -66,18 +66,18 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
             // The Server knows this is correct!
             // Tell the NetworkManager to mark it solved, passing the exact ID of the sender!        
             // Give the point to the specific client who rotated it!
-            if (NetworkedScoreboard.Instance != null)
-            {
-                Debug.Log($"✅  puzzle solved: )");
-                NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(rpcParams.Receive.SenderClientId);
-            }    
+            // if (NetworkedScoreboard.Instance != null)
+            // {
+            //     Debug.Log($"✅  puzzle solved: )");
+            //     NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(rpcParams.Receive.SenderClientId);
+            // }    
 
             // Set the base state to Solved (This triggers the base OnPuzzleSolved action)
             currentState = PuzzleState.Solved;
             
             // Fire the base event so DynamicPuzzleManager catches it
             // and correctly routes it through NetworkedPuzzleManager!
-            InvokeOnPuzzleSolved();
+             InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "solver_firebase_id_here");
         }
     }
 

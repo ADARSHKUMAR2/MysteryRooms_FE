@@ -21,13 +21,13 @@ public class PuzzleManager : MonoBehaviour
         // Subscribe to each puzzle's completion event
         foreach (var puzzle in puzzles)
         {
-            puzzle.OnPuzzleSolved += OnPuzzleSolved;
+            puzzle.OnPuzzleSolvedWithPlayer += OnPuzzleSolved;
         }
 
         Debug.Log($"PuzzleManager initialized with {puzzles.Count} puzzles.");
     }
 
-    private void OnPuzzleSolved(string puzzleID)
+    private void OnPuzzleSolved(string puzzleID, ulong solverClientId, string solverFirebaseUid)
     {
         solvedPuzzleCount++;
         Debug.Log($"🎯 Progress: {solvedPuzzleCount}/{puzzles.Count} puzzles solved!");
@@ -70,8 +70,8 @@ public class PuzzleManager : MonoBehaviour
         // Unsubscribe from events
         foreach (var puzzle in puzzles)
         {
-            if (puzzle != null)
-                puzzle.OnPuzzleSolved -= OnPuzzleSolved;
+            // if (puzzle != null)
+                // if (puzzle != null) puzzle.OnPuzzleSolvedWithPlayer -= LocalPuzzleSolved;
         }
     }
 }

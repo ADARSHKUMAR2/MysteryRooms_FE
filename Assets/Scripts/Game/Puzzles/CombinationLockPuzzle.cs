@@ -152,11 +152,14 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SubmitCombinationServerRpc(string attemptedCode)
+    private void SubmitCombinationServerRpc(string attemptedCode, ServerRpcParams rpcParams = default) // Added ServerRpcParams!
     {
         if (attemptedCode == correctCombination)
         {
             isUnlocked.Value = true; // Solved!
+            // FIRE THE EVENT TO GIVE POINTS AND TELL DYNAMIC PUZZLE MANAGER!
+            InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
+    
         }
         else
         {
@@ -168,7 +171,7 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     {
         if (newValue)
         {
-            CompletePuzzle();
+            // CompletePuzzle();
             OnClosePressed(); // Auto-close the UI when solved
         }
     }

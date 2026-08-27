@@ -212,9 +212,16 @@ namespace MysteryRooms.UI
                 {
                     // Start the local server/host
                     NetworkManager.Singleton.StartHost();
-                    
+
                     // Use NetworkSceneManager to load the scene so all NetworkObjects spawn
-                    NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+                    if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Game")
+                    {
+                        NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+                    }
+                    else
+                    {
+                        Debug.Log("Already in the Game scene for Single-Player. Skipping load.");
+                    }
                 }
                 else
                 {

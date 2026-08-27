@@ -97,7 +97,9 @@ namespace MysteryRooms.Game.Managers
             // Hook up local puzzle solve events
             foreach (var puzzle in puzzleRegistry.Values)
             {
-                puzzle.OnPuzzleSolved += LocalPuzzleSolved;
+                puzzle.OnPuzzleSolvedWithPlayer -= LocalPuzzleSolved; // Safety clear
+                puzzle.OnPuzzleSolvedWithPlayer += LocalPuzzleSolved;
+         
             }
 
             // Listen to the NETWORKED list of solved puzzles
@@ -197,16 +199,17 @@ namespace MysteryRooms.Game.Managers
         }
 
         // When a puzzle is solved on THIS specific computer
-        private void LocalPuzzleSolved(string puzzleID)
+        private void LocalPuzzleSolved(string puzzleID, ulong solverClientId, string solverFirebaseUid)
         {
             if (netPuzzleManager == null) return;
 
             // Only let the SERVER sync the solved state to prevent duplicate RPCs
-            if (NetworkManager.Singleton != null)
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
             {
-                // MarkPuzzleSolved handles sending the RPC, which triggers the server event, 
+                // MarkPuzzleSolved handles sending the RPC, which triggers the server event,
                 // which then calls ReportPuzzleSolvedByPlayer on the server.
-                netPuzzleManager.MarkPuzzleSolved(puzzleID, currentPlayerId);
+                // WE NOW PASS THE CORRECT FIREBASE UID OF THE SOLVER!
+                netPuzzleManager.MarkPuzzleSolved(puzzleID, solverFirebaseUid);
             }
         }
 
@@ -348,7 +351,7 @@ namespace MysteryRooms.Game.Managers
 
             foreach (var puzzle in puzzleRegistry.Values)
             {
-                if (puzzle != null) puzzle.OnPuzzleSolved -= LocalPuzzleSolved;
+                if (puzzle != null) puzzle.OnPuzzleSolvedWithPlayer -= LocalPuzzleSolved;
             }
         }
     }

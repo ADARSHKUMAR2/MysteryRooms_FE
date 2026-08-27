@@ -25,8 +25,8 @@ public abstract class BasePuzzle : NetworkBehaviour
     // Shows up in the Inspector so you can see if the backend claimed it!
     [SerializeField] public bool isConfiguredByBackend = false;
 
-    // Event triggered when puzzle is solved
-    public event Action<string> OnPuzzleSolved;
+    // Change this event to pass (puzzleID, clientId, firebaseUid)
+    public event System.Action<string, ulong, string> OnPuzzleSolvedWithPlayer;
 
     protected virtual void Start()
     {
@@ -100,13 +100,29 @@ public abstract class BasePuzzle : NetworkBehaviour
             Debug.Log($"✅ Puzzle {puzzleID} SOLVED ");
             
             // Pass BOTH the puzzle ID and the solver ID to the Manager!
-            OnPuzzleSolved?.Invoke(puzzleID);
+            // OnPuzzleSolved?.Invoke(puzzleID);
         }
     }
 
-    protected void InvokeOnPuzzleSolved()
+    protected void InvokeOnPuzzleSolved(ulong solverClientId, string solverFirebaseUid)
     {
-        OnPuzzleSolved?.Invoke(puzzleID);
+        // 1. Update the state on ALL machines (so the Inspector shows "Solved" for clients too)
+        SyncPuzzleStateClientRpc(PuzzleState.Solved);
+        
+        // 1. Give the point to the specific client who solved it!
+        if (NetworkedScoreboard.Instance != null && NetworkManager.Singleton.IsServer)
+        {
+            NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(solverClientId);
+        }
+
+        // 2. Pass the data up the chain to DynamicPuzzleManager
+        OnPuzzleSolvedWithPlayer?.Invoke(puzzleID, solverClientId, solverFirebaseUid);
+    }
+
+    [ClientRpc]
+    protected void SyncPuzzleStateClientRpc(PuzzleState newState)
+    {
+        currentState = newState;
     }
 
 

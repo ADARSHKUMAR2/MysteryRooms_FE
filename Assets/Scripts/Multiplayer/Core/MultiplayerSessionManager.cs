@@ -291,6 +291,12 @@ namespace MysteryRooms.Multiplayer.Core
                 LogError("NetworkManager is null. Cannot start game.");
                 return;
             }
+            // Check if we are already in the Game scene!
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Game")
+            {
+                Log("Already in the Game scene. Skipping scene load.");
+                return;
+            }
 
             Log("Host is starting the networked game scene for all clients...");
             NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);

@@ -111,7 +111,7 @@ public class SymbolSequencePuzzle : BasePuzzle
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SubmitSymbolServerRpc(string symbolName)
+    private void SubmitSymbolServerRpc(string symbolName, ServerRpcParams rpcParams = default) // Added ServerRpcParams!
     {
         if (isSolvedNet.Value) return;
 
@@ -130,6 +130,10 @@ public class SymbolSequencePuzzle : BasePuzzle
         {
             isSolvedNet.Value = true; // Solved!
             syncedPlayerSequence.Clear(); // Clear the board visually
+
+            // FIRE THE EVENT TO GIVE POINTS AND TELL DYNAMIC PUZZLE MANAGER!
+            InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
+      
         }
         else if (currentAttempt.Count >= correctSequence.Count)
         {
@@ -174,7 +178,7 @@ public class SymbolSequencePuzzle : BasePuzzle
     {
         if (isSolved)
         {
-            CompletePuzzle();
+            // CompletePuzzle();
         }
     }
 
