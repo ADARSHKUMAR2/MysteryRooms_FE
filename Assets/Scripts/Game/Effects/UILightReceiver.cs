@@ -9,55 +9,83 @@ namespace MysteryRooms.Game.Effects
         private Image uiImage;
         private Color originalColor;
 
-        [Tooltip("The light source that illuminates this UI (e.g., the Player's Torch or the Room Light)")]
-        public Light targetLight;
-
-        [Tooltip("How close the light needs to be to fully illuminate the image")]
+        [Tooltip("Maximum distance a light can be to affect this UI")]
         public float maxLightDistance = 10f;
+        
+        [Tooltip("Minimum brightness to always show (0 = pitch black)")]
+        [Range(0f, 1f)]
+        public float ambientBrightness = 0.0f;
+
+        private Light[] allLights;
+        private float checkTimer = 0f;
+        private float checkInterval = 0.5f; // Update the list of lights every 0.5s to save performance
 
         private void Start()
         {
             uiImage = GetComponent<Image>();
             originalColor = uiImage.color;
+            FindAllLights();
+        }
+
+        private void FindAllLights()
+        {
+            // Finds every Light component currently in the scene (including newly spawned torches)
+            allLights = FindObjectsOfType<Light>();
         }
 
         private void Update()
         {
-            if (targetLight == null || !targetLight.isActiveAndEnabled)
+            // Periodically check for new lights just in case a player late-joined with a torch
+            checkTimer += Time.deltaTime;
+            if (checkTimer >= checkInterval)
             {
-                // If there is no light, or the light is turned off, the UI goes completely black!
-                uiImage.color = Color.black;
-                return;
+                FindAllLights();
+                checkTimer = 0f;
             }
 
-            // Calculate how far the light is from the UI Image
-            float distance = Vector3.Distance(transform.position, targetLight.transform.position);
+            // Start with total darkness (or whatever ambient brightness you set)
+            float highestBrightness = ambientBrightness;
 
-            if (distance > maxLightDistance)
+            if (allLights != null)
             {
-                // Light is too far away, stay black
-                uiImage.color = Color.black;
-            }
-            else
-            {
-                // Light is close! Calculate how bright the image should be (0 to 1)
-                // If distance is 0, brightness is 1. If distance is maxLightDistance, brightness is 0.
-                float brightness = 1f - (distance / maxLightDistance);
-                
-                // Multiply brightness by the light's intensity so brighter lights make it pop more
-                brightness *= (targetLight.intensity / 5f); 
-                
-                // Clamp it so it doesn't get brighter than the original color
-                brightness = Mathf.Clamp01(brightness);
+                foreach (Light light in allLights)
+                {
+                    // Skip lights that are destroyed or turned off
+                    if (light == null || !light.isActiveAndEnabled) continue;
 
-                // Apply the calculated darkness to the image
-                uiImage.color = new Color(
-                    originalColor.r * brightness, 
-                    originalColor.g * brightness, 
-                    originalColor.b * brightness, 
-                    originalColor.a
-                );
+                    // Calculate distance from this UI element to the light source
+                    float distance = Vector3.Distance(transform.position, light.transform.position);
+
+                    // We care about the light's actual range setting, capped by our max limit
+                    float effectiveRange = Mathf.Min(maxLightDistance, light.range);
+
+                    if (distance <= effectiveRange)
+                    {
+                        // Calculate brightness (1 when right next to it, 0 when at the edge of the light's range)
+                        float lightContribution = 1f - (distance / effectiveRange);
+                        
+                        // Factor in the light's intensity (Assuming an intensity of ~5 is "full brightness")
+                        lightContribution *= (light.intensity / 5f);
+                        
+                        // If this light illuminates the image brighter than the others, use this one!
+                        if (lightContribution > highestBrightness)
+                        {
+                            highestBrightness = lightContribution;
+                        }
+                    }
+                }
             }
+
+            // Cap brightness so it doesn't wash out the image colors
+            highestBrightness = Mathf.Clamp01(highestBrightness);
+
+            // Apply the calculated brightness dynamically to the image
+            uiImage.color = new Color(
+                originalColor.r * highestBrightness, 
+                originalColor.g * highestBrightness, 
+                originalColor.b * highestBrightness, 
+                originalColor.a // Preserve the original transparency
+            );
         }
     }
 }

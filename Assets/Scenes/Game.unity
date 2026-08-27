@@ -957,6 +957,7 @@ GameObject:
   - component: {fileID: 35653069}
   - component: {fileID: 35653071}
   - component: {fileID: 35653070}
+  - component: {fileID: 35653072}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -1021,6 +1022,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35653068}
   m_CullTransparentMesh: 1
+--- !u!114 &35653072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35653068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
+  maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &36295458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1047,7 @@ GameObject:
   - component: {fileID: 36295459}
   - component: {fileID: 36295461}
   - component: {fileID: 36295460}
+  - component: {fileID: 36295462}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -1096,6 +1112,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36295458}
   m_CullTransparentMesh: 1
+--- !u!114 &36295462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36295458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
+  maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &37031040
 GameObject:
   m_ObjectHideFlags: 0
@@ -10325,6 +10355,7 @@ GameObject:
   - component: {fileID: 545440671}
   - component: {fileID: 545440673}
   - component: {fileID: 545440672}
+  - component: {fileID: 545440674}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -10389,6 +10420,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545440670}
   m_CullTransparentMesh: 1
+--- !u!114 &545440674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545440670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
+  maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &563700433
 GameObject:
   m_ObjectHideFlags: 0
@@ -17391,6 +17436,7 @@ GameObject:
   - component: {fileID: 685575639}
   - component: {fileID: 685575641}
   - component: {fileID: 685575640}
+  - component: {fileID: 685575642}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -17455,6 +17501,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685575638}
   m_CullTransparentMesh: 1
+--- !u!114 &685575642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685575638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
+  maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &686890533
 GameObject:
   m_ObjectHideFlags: 0
@@ -18432,6 +18492,7 @@ GameObject:
   - component: {fileID: 751987243}
   - component: {fileID: 751987245}
   - component: {fileID: 751987244}
+  - component: {fileID: 751987246}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -18496,6 +18557,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751987242}
   m_CullTransparentMesh: 1
+--- !u!114 &751987246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751987242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
+  maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &752764372
 GameObject:
   m_ObjectHideFlags: 0
@@ -19160,6 +19235,7 @@ GameObject:
   - component: {fileID: 803580518}
   - component: {fileID: 803580520}
   - component: {fileID: 803580519}
+  - component: {fileID: 803580521}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -19224,6 +19300,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803580517}
   m_CullTransparentMesh: 1
+--- !u!114 &803580521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803580517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
+  maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &814595642
 GameObject:
   m_ObjectHideFlags: 0
@@ -24296,6 +24386,7 @@ GameObject:
   - component: {fileID: 1257226773}
   - component: {fileID: 1257226775}
   - component: {fileID: 1257226774}
+  - component: {fileID: 1257226776}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -24360,6 +24451,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257226772}
   m_CullTransparentMesh: 1
+--- !u!114 &1257226776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257226772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
+  maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &1290231791
 GameObject:
   m_ObjectHideFlags: 0
@@ -27696,8 +27801,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7c1a41b00614a54b8c44d3d510d4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
-  targetLight: {fileID: 960112100}
   maxLightDistance: 10
+  ambientBrightness: 0
 --- !u!1 &1538757523
 GameObject:
   m_ObjectHideFlags: 0
