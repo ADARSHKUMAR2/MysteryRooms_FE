@@ -18,7 +18,7 @@ namespace MysteryRooms.Multiplayer.Network
         [SerializeField] private DynamicPuzzleManager localPuzzleManager;
 
         // Network list of solved puzzle IDs (automatically synced)
-        private NetworkList<FixedString64Bytes> solvedPuzzleIds;
+        public NetworkList<FixedString64Bytes> solvedPuzzleIds;
 
         // Network variable to share the backend mystery code with clients
         public NetworkVariable<FixedString64Bytes> backendShareCode = new NetworkVariable<FixedString64Bytes>();
@@ -33,7 +33,9 @@ namespace MysteryRooms.Multiplayer.Network
         private NetworkVariable<bool> allPuzzlesSolved = new NetworkVariable<bool>(false);
 
         // Events
-        public System.Action<string> OnPuzzleSolvedNetwork;
+        // Now carries both puzzleId AND the solver's Firebase UID
+        public System.Action<string, string> OnPuzzleSolvedNetwork;
+
         public System.Action OnAllPuzzlesSolved;
 
         private void Awake()
@@ -87,7 +89,7 @@ namespace MysteryRooms.Multiplayer.Network
         /// <summary>
         /// Call this when a puzzle is solved locally
         /// </summary>
-        public void MarkPuzzleSolved(string puzzleId)
+        public void MarkPuzzleSolved(string puzzleId, string solverFirebaseUid = null)
         {
             if (string.IsNullOrEmpty(puzzleId))
             {
@@ -95,17 +97,17 @@ namespace MysteryRooms.Multiplayer.Network
                 return;
             }
 
-            Debug.Log($"🧩 Marking puzzle as solved: {puzzleId}");
+            Debug.Log($"🧩 Marking puzzle as solved: {puzzleId} by {solverFirebaseUid ?? "unknown"}");
 
-            // Send to server
-            MarkPuzzleSolvedServerRpc(puzzleId);
+            // Send to server — include the solver's backend identity
+            MarkPuzzleSolvedServerRpc(puzzleId, solverFirebaseUid ?? "");
         }
 
         /// <summary>
         /// [ServerRpc] Client notifies server that a puzzle was solved
         /// </summary>
         [ServerRpc(RequireOwnership = false)]
-        private void MarkPuzzleSolvedServerRpc(string puzzleId)
+        private void MarkPuzzleSolvedServerRpc(string puzzleId, string solverFirebaseUid, ServerRpcParams rpcParams = default)
         {
             FixedString64Bytes fixedId = new FixedString64Bytes(puzzleId);
 
@@ -116,13 +118,20 @@ namespace MysteryRooms.Multiplayer.Network
                 return;
             }
 
+            // Use the NGO client ID for the in-game scoreboard
+            ulong solverId = rpcParams.Receive.SenderClientId;
+            if (NetworkedScoreboard.Instance != null)
+            {
+                NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(solverId);
+            }
+
             // Add to solved list (this automatically syncs to all clients)
             solvedPuzzleIds.Add(fixedId);
 
-            Debug.Log($"✅ Server confirmed puzzle solved: {puzzleId}");
+            Debug.Log($"✅ Server confirmed puzzle solved: {puzzleId} by Client {solverId} (Firebase: {solverFirebaseUid})");
 
-            // Broadcast to all clients
-            NotifyPuzzleSolvedClientRpc(puzzleId);
+            // Broadcast to all clients — include the solver's Firebase UID for backend reporting
+            NotifyPuzzleSolvedClientRpc(puzzleId, solverFirebaseUid);
 
             // Check if all puzzles are solved
             CheckVictoryCondition();
@@ -132,20 +141,18 @@ namespace MysteryRooms.Multiplayer.Network
         /// [ClientRpc] Server notifies all clients that a puzzle was solved
         /// </summary>
         [ClientRpc]
-        private void NotifyPuzzleSolvedClientRpc(string puzzleId)
+        private void NotifyPuzzleSolvedClientRpc(string puzzleId, string solverFirebaseUid)
         {
-            Debug.Log($"📢 Received puzzle solved notification: {puzzleId}");
+            Debug.Log($"📢 Received puzzle solved notification: {puzzleId} (solver: {solverFirebaseUid})");
 
             // Update local puzzle manager
             if (localPuzzleManager != null)
             {
-                // Mark the puzzle as solved in the local game
-                // You'll need to add this method to DynamicPuzzleManager:
                 localPuzzleManager.MarkPuzzleAsSolved(puzzleId);
             }
 
-            // Trigger event for other systems
-            OnPuzzleSolvedNetwork?.Invoke(puzzleId);
+            // Trigger event for other systems — now includes the solver's Firebase UID
+            OnPuzzleSolvedNetwork?.Invoke(puzzleId, solverFirebaseUid);
         }
 
         #endregion

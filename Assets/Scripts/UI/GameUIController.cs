@@ -130,20 +130,33 @@ namespace MysteryRooms.UI
         // --- SCOREBOARD ---
         public void UpdatePlayerScore(ulong clientId, string playerName, int puzzlesSolved)
         {
-            if (scoreboardContainer == null || playerCardPrefab == null) return;
+            Debug.Log($"[HUD] UpdatePlayerScore called -> clientId: {clientId}, name: {playerName}, solved: {puzzlesSolved}");
+            Debug.Log($"[HUD] scoreboardContainer is {(scoreboardContainer == null ? "NULL ❌" : "assigned ✅")}, playerCardPrefab is {(playerCardPrefab == null ? "NULL ❌" : "assigned ✅")}");
+
+            if (scoreboardContainer == null || playerCardPrefab == null)
+            {
+                Debug.LogError($"[HUD] ❌ ABORTING - Cannot spawn score card! scoreboardContainer: {scoreboardContainer}, playerCardPrefab: {playerCardPrefab}");
+                return;
+            }
 
             if (!playerScoreCards.ContainsKey(clientId))
             {
-                // Create a new card for this player
+                Debug.Log($"[HUD] 🆕 Spawning new player card for clientId: {clientId}");
                 GameObject newCard = Instantiate(playerCardPrefab, scoreboardContainer);
-
                 newCard.SetActive(true);
-                playerScoreCards[clientId] = newCard.GetComponentInChildren<TextMeshProUGUI>();
+
+                var tmpText = newCard.GetComponentInChildren<TextMeshProUGUI>();
+                if (tmpText == null)
+                {
+                    Debug.LogError($"[HUD] ❌ Spawned card has NO TextMeshProUGUI child! Card name: {newCard.name}");
+                }
+                playerScoreCards[clientId] = tmpText;
             }
 
-            // Update the text on their card
+            Debug.Log($"[HUD] ✅ Updating card -> {playerName}: {puzzlesSolved} Solved");
             playerScoreCards[clientId].text = $"{playerName}: {puzzlesSolved} Solved";
         }
+
 
     }
 }

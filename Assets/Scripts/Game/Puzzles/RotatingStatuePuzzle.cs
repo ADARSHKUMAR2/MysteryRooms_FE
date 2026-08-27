@@ -1,6 +1,8 @@
 using UnityEngine;
 using MysteryRooms.Game.Data;
 using Unity.Netcode; 
+using MysteryRooms.Multiplayer.Network;
+
 public class RotatingStatuePuzzle : BasePuzzle, IInteractable
 {
     [Header("Rotation Settings")]
@@ -54,10 +56,32 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
 
     // 4. Server updates the authoritative state
     [ServerRpc(RequireOwnership = false)]
-    private void RequestRotateServerRpc()
+    private void RequestRotateServerRpc(ServerRpcParams rpcParams = default)
     {
-        // Updating this triggers OnRotationStepsChanged across ALL clients automatically
-        currentRotationSteps.Value = (currentRotationSteps.Value + 1) % 4;
+        int nextStep = (currentRotationSteps.Value + 1) % 4;
+        currentRotationSteps.Value = nextStep;
+
+        if (nextStep == correctRotationSteps)
+        {
+            // The Server knows this is correct!
+            // Tell the NetworkManager to mark it solved, passing the exact ID of the sender!
+            
+            NetworkedPuzzleManager netManager = FindObjectOfType<NetworkedPuzzleManager>();
+            if (netManager != null)
+            {
+                // Give the point to the person who rotated it!
+                if (NetworkedScoreboard.Instance != null)
+                {
+                    NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(rpcParams.Receive.SenderClientId);
+                }
+                
+                // Add it to the synced list so everyone's doors open
+                netManager.solvedPuzzleIds.Add(new Unity.Collections.FixedString64Bytes(puzzleID));
+                
+                // Set the base state to Solved
+                currentState = PuzzleState.Solved;
+            }
+        }
     }
 
     // 5. This fires on all clients whenever the server updates the variable
@@ -65,10 +89,10 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
     {
         targetRotation = Quaternion.Euler(0, newValue * 90f, 0);
         isRotating = true; // This tells the local Update() loop to start animating
-        if (CheckSolution())
-        {
-            CompletePuzzle();
-        }
+        // if (CheckSolution())
+        // {
+        //     CompletePuzzle();
+        // }
         Debug.Log($"{gameObject.name} rotated to step {newValue}");
     }
 

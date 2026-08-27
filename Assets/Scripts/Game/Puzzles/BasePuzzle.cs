@@ -97,7 +97,9 @@ public abstract class BasePuzzle : NetworkBehaviour
         if (currentState != PuzzleState.Solved)
         {
             currentState = PuzzleState.Solved;
-            Debug.Log($"✅ Puzzle {puzzleID} SOLVED!");
+            Debug.Log($"✅ Puzzle {puzzleID} SOLVED ");
+            
+            // Pass BOTH the puzzle ID and the solver ID to the Manager!
             OnPuzzleSolved?.Invoke(puzzleID);
         }
     }
