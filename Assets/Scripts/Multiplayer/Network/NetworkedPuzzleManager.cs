@@ -127,16 +127,16 @@ namespace MysteryRooms.Multiplayer.Network
             }
 
             // Use the NGO client ID for the in-game scoreboard
-            ulong solverId = rpcParams.Receive.SenderClientId;
-            if (NetworkedScoreboard.Instance != null)
-            {
-                NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(solverId);
-            }
+            // ulong solverId = rpcParams.Receive.SenderClientId;
+            // if (NetworkedScoreboard.Instance != null)
+            // {
+            //     NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(solverId);
+            // }
 
             // Add to solved list (this automatically syncs to all clients)
             solvedPuzzleIds.Add(fixedId);
 
-            Debug.Log($"✅ Server confirmed puzzle solved: {puzzleId} by Client {solverId} (Firebase: {solverFirebaseUid})");
+            // Debug.Log($"✅ Server confirmed puzzle solved: {puzzleId} by Client {solverId} (Firebase: {solverFirebaseUid})");
 
             // Broadcast to all clients — include the solver's Firebase UID for backend reporting
             NotifyPuzzleSolvedClientRpc(puzzleId, solverFirebaseUid);

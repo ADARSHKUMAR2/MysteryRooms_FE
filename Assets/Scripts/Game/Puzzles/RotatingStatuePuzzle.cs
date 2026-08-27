@@ -64,13 +64,13 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
         if (nextStep == correctRotationSteps)
         {
             // The Server knows this is correct!
-            // Tell the NetworkManager to mark it solved, passing the exact ID of the sender!
-            
-            // Give the point to the person who rotated it!
+            // Tell the NetworkManager to mark it solved, passing the exact ID of the sender!        
+            // Give the point to the specific client who rotated it!
             if (NetworkedScoreboard.Instance != null)
             {
+                Debug.Log($"✅  puzzle solved: )");
                 NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(rpcParams.Receive.SenderClientId);
-            }
+            }    
 
             // Set the base state to Solved (This triggers the base OnPuzzleSolved action)
             currentState = PuzzleState.Solved;
