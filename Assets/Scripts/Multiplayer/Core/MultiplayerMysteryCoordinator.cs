@@ -137,7 +137,7 @@ namespace MysteryRooms.Multiplayer.Core
             }
 
             Debug.Log($"✅ Unity session created with join code: {joinCode}");
-            yield return sessionManager.WaitForPlayers(minimumPlayers: 2, timeoutSeconds: 30f);
+            // yield return sessionManager.WaitForPlayers(minimumPlayers: 2, timeoutSeconds: 30f);
 
 
             // Step 3: Load the mystery into the scene
@@ -149,8 +149,8 @@ namespace MysteryRooms.Multiplayer.Core
             isGeneratingMystery = false;
             OnMysteryReady?.Invoke(generatedMystery);
 
-            Debug.Log("🎮 Starting networked game...");
-            sessionManager.StartNetworkedGame();
+            // Debug.Log("🎮 Starting networked game...");
+            // sessionManager.StartNetworkedGame();
 
             Debug.Log("🎉 Host setup complete!");
         }
@@ -189,7 +189,7 @@ namespace MysteryRooms.Multiplayer.Core
             }
 
             Debug.Log($"✅ Unity session created with code: {joinCode}");
-            yield return sessionManager.WaitForPlayers(minimumPlayers: 2, timeoutSeconds: 30f);
+            // yield return sessionManager.WaitForPlayers(minimumPlayers: 2, timeoutSeconds: 30f);
 
 
             // Step 2: Load the mystery into the scene
@@ -201,8 +201,8 @@ namespace MysteryRooms.Multiplayer.Core
             isGeneratingMystery = false;
             OnMysteryReady?.Invoke(oldMystery);
 
-            Debug.Log("🎮 Starting networked game...");
-            sessionManager.StartNetworkedGame();
+            // Debug.Log("🎮 Starting networked game...");
+            // sessionManager.StartNetworkedGame();
             
             Debug.Log("🎉 Host setup complete for existing mystery!");
         }
