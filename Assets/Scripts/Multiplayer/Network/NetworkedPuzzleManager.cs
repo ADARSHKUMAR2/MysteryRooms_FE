@@ -23,6 +23,14 @@ namespace MysteryRooms.Multiplayer.Network
         // Network variable to share the backend mystery code with clients
         public NetworkVariable<FixedString64Bytes> backendShareCode = new NetworkVariable<FixedString64Bytes>();
 
+        // Add NetworkVariable to sync the session ID from Backend so clients know which one to join
+        public NetworkVariable<FixedString64Bytes> backendSessionId = new NetworkVariable<FixedString64Bytes>();
+        
+        // Event that only runs on the Server side passing the Puzzle ID and the Solver's UID
+        public System.Action<string, string> OnPuzzleSolvedByPlayer;
+
+        
+
         public static void SetPendingBackendShareCode(string code)
         {
             pendingBackendShareCode = code;
@@ -132,6 +140,9 @@ namespace MysteryRooms.Multiplayer.Network
 
             // Broadcast to all clients — include the solver's Firebase UID for backend reporting
             NotifyPuzzleSolvedClientRpc(puzzleId, solverFirebaseUid);
+
+            // Trigger server event to notify the DynamicPuzzleManager to update Backend
+            OnPuzzleSolvedByPlayer?.Invoke(puzzleId, solverFirebaseUid);
 
             // Check if all puzzles are solved
             CheckVictoryCondition();

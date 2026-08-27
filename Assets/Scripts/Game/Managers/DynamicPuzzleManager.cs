@@ -44,6 +44,8 @@ namespace MysteryRooms.Game.Managers
         
         // Reference to the networked manager instead of a local HashSet
         private NetworkedPuzzleManager netPuzzleManager;
+        // Add a flag to track if we've successfully joined the backend session
+        private bool hasJoinedBackendSession = false;
 
         private void Awake()
         {
@@ -111,23 +113,51 @@ namespace MysteryRooms.Game.Managers
                 // MysteryRooms.UI.GameUIController.Instance.SetObjectiveTitle(mystery.objective);
                 MysteryRooms.UI.GameUIController.Instance.UpdatePuzzleProgress(0, mystery.puzzles.Count);
             }
+
+            // Listen to the NETWORKED list of solved puzzles
+            if (netPuzzleManager != null)
+            {
+                netPuzzleManager.solvedPuzzleIds.OnListChanged += OnNetworkedPuzzlesChanged;
+                
+                // Subscribe server to explicitly report back to backend
+                if (NetworkManager.Singleton != null)
+                {
+                    netPuzzleManager.OnPuzzleSolvedByPlayer -= ReportPuzzleSolvedByPlayer; // Unsubscribe just in case
+                    netPuzzleManager.OnPuzzleSolvedByPlayer += ReportPuzzleSolvedByPlayer;
+                }
+            }
         }
 
         private void StartSessionTracking()
         {
             if (apiService == null || currentMystery == null) return;
 
-            StartSessionRequest request = new StartSessionRequest
+            // Only the server starts a NEW session
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
             {
-                mystery_id = currentMystery.mystery_id,
-                player_ids = new List<string> { currentPlayerId },
-                max_players = 1
-            };
+                StartSessionRequest request = new StartSessionRequest
+                {
+                    mystery_id = currentMystery.mystery_id,
+                    player_ids = new List<string> { currentPlayerId },
+                    max_players = 4 
+                };
 
-            StartCoroutine(apiService.StartSession(request, 
-                (session) => currentSessionId = session.session_id, 
-                (error) => Debug.LogError($"Failed to start session: {error}")
-            ));
+                StartCoroutine(apiService.StartSession(
+                    request,
+                    session => 
+                    {
+                        currentSessionId = session.session_id;
+                        Debug.Log($"<color=green>Session Started: {currentSessionId}</color>");
+                        
+                        // Sync the session ID to clients
+                        if (netPuzzleManager != null)
+                        {
+                            netPuzzleManager.backendSessionId.Value = new FixedString64Bytes(currentSessionId);
+                        }
+                    },
+                    error => Debug.LogError($"Failed to start session: {error}")
+                ));
+            }
         }
 
         private void ConfigurePuzzle(PuzzleConfigData data)
@@ -174,10 +204,9 @@ namespace MysteryRooms.Game.Managers
             // Only let the SERVER sync the solved state to prevent duplicate RPCs
             if (NetworkManager.Singleton != null)
             {
-                // Notice how we removed the NetworkedScoreboard block from here entirely!
-                
-                netPuzzleManager.MarkPuzzleSolved(puzzleID);
-                ReportPuzzleSolved(puzzleID);
+                // MarkPuzzleSolved handles sending the RPC, which triggers the server event, 
+                // which then calls ReportPuzzleSolvedByPlayer on the server.
+                netPuzzleManager.MarkPuzzleSolved(puzzleID, currentPlayerId);
             }
         }
 
@@ -216,18 +245,24 @@ namespace MysteryRooms.Game.Managers
             }
         }
 
-        private void ReportPuzzleSolved(string puzzleID)
+        // This is called by the Server when a client (or host) solves a puzzle
+        private void ReportPuzzleSolvedByPlayer(string puzzleID, string solverFirebaseUid)
         {
+            Debug.Log($"📢 Received puzzle solved notification: {puzzleID} (solver: {solverFirebaseUid})");
             if (apiService == null || string.IsNullOrEmpty(currentSessionId)) return;
             if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
 
             UpdateSessionRequest request = new UpdateSessionRequest
             {
-                session_id = currentSessionId, puzzle_solved = puzzleID,
-                player_id = currentPlayerId, time_elapsed_seconds = (int)(Time.time - sessionStartTime)
+                session_id = currentSessionId,
+                puzzle_solved = puzzleID,
+                player_id = solverFirebaseUid, // Uses the actual solver's UID!
+                time_elapsed_seconds = (int)(Time.time - sessionStartTime)
             };
+            
             StartCoroutine(apiService.UpdateSession(request, s => {}, e => {}));
         }
+
 
         private void UnlockDependentPuzzles(string solvedPuzzleId)
         {
@@ -256,6 +291,27 @@ namespace MysteryRooms.Game.Managers
             }
         }
 
+        private void Update()
+        {
+            // If we are a client, wait until the host syncs the backendSessionId, then join it once
+            if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer && !hasJoinedBackendSession)
+            {
+                if (netPuzzleManager != null && !string.IsNullOrEmpty(netPuzzleManager.backendSessionId.Value.ToString()))
+                {
+                    currentSessionId = netPuzzleManager.backendSessionId.Value.ToString();
+                    hasJoinedBackendSession = true; // Prevent multiple joins
+                    
+                    StartCoroutine(apiService.JoinSession(
+                        currentSessionId,
+                        currentPlayerId,
+                        session => Debug.Log($"<color=green>Client joined session successfully: {currentSessionId}</color>"),
+                        error => Debug.LogError($"Client failed to join session: {error}")
+                    ));
+                }
+            }
+        }
+
+
         public void MarkPuzzleAsSolved(string puzzleId) { }
         public int GetTotalPuzzleCount() => currentMystery?.puzzles?.Count ?? 0;
 
@@ -272,10 +328,18 @@ namespace MysteryRooms.Game.Managers
 
             CompleteSessionRequest request = new CompleteSessionRequest
             {
-                session_id = currentSessionId, status = status, difficulty_rating = currentMystery.difficulty
+                session_id = currentSessionId, 
+                status = status, 
+                difficulty_rating = currentMystery.difficulty
             };
-            StartCoroutine(apiService.CompleteSession(request, s => {}, e => {}));
+            
+            StartCoroutine(apiService.CompleteSession(
+                request, 
+                s => Debug.Log("<color=green>Server successfully closed the session</color>"), 
+                e => Debug.LogError("Failed to close session: " + e)
+            ));
         }
+
 
         private void OnDestroy()
         {

@@ -66,21 +66,18 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
             // The Server knows this is correct!
             // Tell the NetworkManager to mark it solved, passing the exact ID of the sender!
             
-            NetworkedPuzzleManager netManager = FindObjectOfType<NetworkedPuzzleManager>();
-            if (netManager != null)
+            // Give the point to the person who rotated it!
+            if (NetworkedScoreboard.Instance != null)
             {
-                // Give the point to the person who rotated it!
-                if (NetworkedScoreboard.Instance != null)
-                {
-                    NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(rpcParams.Receive.SenderClientId);
-                }
-                
-                // Add it to the synced list so everyone's doors open
-                netManager.solvedPuzzleIds.Add(new Unity.Collections.FixedString64Bytes(puzzleID));
-                
-                // Set the base state to Solved
-                currentState = PuzzleState.Solved;
+                NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(rpcParams.Receive.SenderClientId);
             }
+
+            // Set the base state to Solved (This triggers the base OnPuzzleSolved action)
+            currentState = PuzzleState.Solved;
+            
+            // Fire the base event so DynamicPuzzleManager catches it
+            // and correctly routes it through NetworkedPuzzleManager!
+            InvokeOnPuzzleSolved();
         }
     }
 

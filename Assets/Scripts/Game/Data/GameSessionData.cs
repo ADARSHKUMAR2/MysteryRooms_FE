@@ -40,4 +40,10 @@ namespace MysteryRooms.Game.Data
         public int time_elapsed_seconds;
         public List<string> puzzles_solved;
     }
+
+    [Serializable]
+    public class JoinSessionRequestPayload
+    {
+        public string player_id;
+    }
 }

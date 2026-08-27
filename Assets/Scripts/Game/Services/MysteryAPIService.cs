@@ -168,8 +168,61 @@ namespace MysteryRooms.Game.Services
             }
         }
 
+        /// <summary>
+        /// Join an ongoing game session
+        /// </summary>
+        public IEnumerator JoinSession(
+            string sessionId,
+            string playerId,
+            Action<GameSessionData> onSuccess,
+            Action<string> onError)
+        {
+            string url = $"{GameServiceURL}/sessions/{sessionId}/join";
+            
+            JoinSessionRequestPayload request = new JoinSessionRequestPayload { player_id = playerId };
+            string jsonBody = JsonUtility.ToJson(request);
 
-                /// <summary>
+            using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
+            {
+                byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+
+                string token = UserSession.Instance?.FirebaseToken ?? PlayerPrefs.GetString("FirebaseToken", "");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    webRequest.SetRequestHeader("Authorization", "Bearer " + token);
+                }
+
+                Debug.Log($"<color=yellow>[UNITY-API] ➕ Joining Session: {sessionId}</color>");
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.Success)
+                {
+                    string jsonResponse = webRequest.downloadHandler.text;
+                    try
+                    {
+                        GameSessionData session = JsonUtility.FromJson<GameSessionData>(jsonResponse);
+                        onSuccess?.Invoke(session);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError($"Failed to parse joined session: {e.Message}");
+                        onError?.Invoke(e.Message);
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"Session join failed: {webRequest.error}");
+                    onError?.Invoke(webRequest.error);
+                }
+            }
+        }
+
+
+        /// <summary>
         /// Wrapper to help JsonUtility parse a JSON array
         /// </summary>
         [Serializable]

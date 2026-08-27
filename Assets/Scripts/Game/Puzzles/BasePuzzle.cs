@@ -104,6 +104,12 @@ public abstract class BasePuzzle : NetworkBehaviour
         }
     }
 
+    protected void InvokeOnPuzzleSolved()
+    {
+        OnPuzzleSolved?.Invoke(puzzleID);
+    }
+
+
     // Reset puzzle to initial state
     public virtual void ResetPuzzle()
     {

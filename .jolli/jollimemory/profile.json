@@ -1,3 +1,11 @@
 {
-	"manuallyDisabled": false
+	"manuallyDisabled": false,
+	"cutoverAttemptedAtMs": 1787816871724,
+	"cutoverFence": {
+		"reason": "cutover to sqlite",
+		"at": "2026-08-27T07:47:54.090Z",
+		"tips": {
+			"/Users/adarsh/MysteryRooms_FE": "e226d90ad42982557afecceed22d795763a95b05"
+		}
+	}
 }
