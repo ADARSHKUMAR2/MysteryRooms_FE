@@ -20,24 +20,23 @@ public class SymbolSequencePuzzle : BasePuzzle
     [Header("Grid Configuration")]
     private const int GRID_COLUMNS = 8;
     private const int GRID_ROWS = 5;
-    private const int TOTAL_SYMBOLS = 40; // 8 x 5
+    private const int TOTAL_SYMBOLS = 40;
 
     [Header("Sequence Display")]
     [Tooltip("The UI slots showing the current sequence attempt (e.g. at the top of the wall)")]
     [SerializeField] private List<Image> sequenceAttemptPlaceholders;
 
     // Backend configuration
-    private List<string> correctSequence; // The 4 symbols in correct order
-    private string patternType; // "horizontal_row" or "vertical_column"
+    private List<string> correctSequence;
+    private string patternType;
     private PatternStartPosition patternStartPosition;
 
     // Grid data
-    private SymbolButton[,] gridButtons; // 2D array [row, col]
-    private List<GridPosition> correctPositions = new List<GridPosition>(); // The exact grid positions of the solution
+    private SymbolButton[,] gridButtons;
+    private List<GridPosition> correctPositions = new List<GridPosition>();
 
-    // Netcode: NetworkList automatically syncs the list to all clients (including late joiners)
+    // Netcode
     private NetworkList<FixedString32Bytes> syncedPlayerSequence;
-
     private NetworkVariable<bool> isSolvedNet = new NetworkVariable<bool>(
         false, 
         NetworkVariableReadPermission.Everyone, 
@@ -59,7 +58,6 @@ public class SymbolSequencePuzzle : BasePuzzle
 
     private void Awake()
     {
-        // NetworkLists must be initialized in Awake
         syncedPlayerSequence = new NetworkList<FixedString32Bytes>();
         gridButtons = new SymbolButton[GRID_ROWS, GRID_COLUMNS];
     }
@@ -71,11 +69,12 @@ public class SymbolSequencePuzzle : BasePuzzle
         isSolvedNet.OnValueChanged += OnSolvedStateChanged;
         syncedPlayerSequence.OnListChanged += OnSequenceChanged;
         
-        // Handle Late Joiners
         if (isSolvedNet.Value) OnSolvedStateChanged(false, true);
         
-        // Force a visual update for late joiners so they see the current attempt
         UpdateSequenceVisuals();
+        
+        // Initialize raycast state based on current puzzle state
+        UpdateRaycastState();
     }
 
     public override void OnNetworkDespawn()
@@ -102,7 +101,99 @@ public class SymbolSequencePuzzle : BasePuzzle
     }
 
     /// <summary>
-    /// Generates the 8x5 grid with 40 symbols, including the correct sequence at the specified positions
+    /// Override SetLocked to update raycast state when puzzle is locked/unlocked
+    /// </summary>
+    public override void SetLocked(bool locked)
+    {
+        base.SetLocked(locked);
+        
+        // Update raycast state immediately when lock state changes
+        UpdateRaycastState();
+        
+        // Update visual feedback for locked/unlocked state
+        UpdateGridVisualState();
+    }
+
+    /// <summary>
+    /// Enable/disable raycasting on all symbol buttons based on puzzle state
+    /// </summary>
+    private void UpdateRaycastState()
+    {
+        bool shouldEnableRaycast = (currentState == PuzzleState.Unlocked || currentState == PuzzleState.InProgress);
+        
+        if (gridButtons == null) return;
+
+        for (int row = 0; row < GRID_ROWS; row++)
+        {
+            for (int col = 0; col < GRID_COLUMNS; col++)
+            {
+                SymbolButton button = gridButtons[row, col];
+                if (button != null)
+                {
+                    // Disable/enable BoxCollider for 3D raycasts
+                    BoxCollider collider = button.GetComponent<BoxCollider>();
+                    if (collider != null)
+                    {
+                        collider.enabled = shouldEnableRaycast;
+                    }
+                    
+                    // Disable/enable UI raycast target
+                    Image buttonImage = button.iconImage;
+                    if (buttonImage != null)
+                    {
+                        buttonImage.raycastTarget = shouldEnableRaycast;
+                    }
+                    
+                    // Disable/enable Unity UI Button component
+                    Button uiButton = button.GetComponent<Button>();
+                    if (uiButton != null)
+                    {
+                        uiButton.interactable = shouldEnableRaycast;
+                    }
+                }
+            }
+        }
+        
+        Debug.Log($"🔒 [{puzzleID}] Raycast state updated: {(shouldEnableRaycast ? "ENABLED" : "DISABLED")} (State: {currentState})");
+    }
+
+    /// <summary>
+    /// Update visual appearance of grid based on locked/unlocked state
+    /// </summary>
+    private void UpdateGridVisualState()
+    {
+        if (gridButtons == null) return;
+
+        Color lockedTint = new Color(0.5f, 0.5f, 0.5f, 0.6f); // Grayed out
+        Color unlockedTint = Color.white; // Normal
+        Color solvedTint = new Color(1f, 0.9f, 0.5f); // Golden
+
+        Color targetColor = unlockedTint;
+        
+        if (currentState == PuzzleState.Locked)
+        {
+            targetColor = lockedTint;
+        }
+        else if (currentState == PuzzleState.Solved)
+        {
+            targetColor = solvedTint;
+        }
+
+        for (int row = 0; row < GRID_ROWS; row++)
+        {
+            for (int col = 0; col < GRID_COLUMNS; col++)
+            {
+                SymbolButton button = gridButtons[row, col];
+                if (button != null && button.iconImage != null)
+                {
+                    button.iconImage.color = targetColor;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Generates the 8x5 grid with 40 symbols
     /// </summary>
     private void GenerateGridPuzzle()
     {
@@ -112,21 +203,14 @@ public class SymbolSequencePuzzle : BasePuzzle
             return;
         }
 
-        // Step 1: Calculate the exact grid positions where the correct symbols should appear
         CalculateCorrectPositions();
-
-        // Step 2: Get all available symbols from the database
         List<string> allSymbols = GetAllAvailableSymbols();
-        
-        // Step 3: Create a pool of random symbols (excluding the ones in correctSequence to avoid duplicates)
         List<string> decoySymbols = allSymbols.Where(s => !correctSequence.Contains(s)).ToList();
         
-        // Step 4: Generate the 8x5 grid
         for (int row = 0; row < GRID_ROWS; row++)
         {
             for (int col = 0; col < GRID_COLUMNS; col++)
             {
-                // Check if this position is part of the solution
                 GridPosition currentPos = new GridPosition(row, col);
                 int correctIndex = GetCorrectSequenceIndex(currentPos);
                 
@@ -134,16 +218,13 @@ public class SymbolSequencePuzzle : BasePuzzle
                 
                 if (correctIndex >= 0)
                 {
-                    // This position is part of the correct sequence
                     symbolToPlace = correctSequence[correctIndex];
                 }
                 else
                 {
-                    // This is a decoy position - pick a random symbol
                     symbolToPlace = decoySymbols[Random.Range(0, decoySymbols.Count)];
                 }
                 
-                // Instantiate the button
                 GameObject buttonObj = Instantiate(symbolButtonPrefab, gridContainer);
                 SymbolButton button = buttonObj.GetComponent<SymbolButton>();
                 
@@ -153,21 +234,20 @@ public class SymbolSequencePuzzle : BasePuzzle
                     button.SetSprite(symbolDatabase.GetSprite(symbolToPlace));
                     button.onSymbolClicked = OnSymbolClicked;
                     
-                    // Store in 2D array for reference
                     gridButtons[row, col] = button;
                 }
             }
         }
 
-        // Step 5: Initialize sequence attempt placeholders
         InitializePlaceholders();
+        
+        // Set initial raycast state (should be disabled if puzzle starts locked)
+        UpdateRaycastState();
+        UpdateGridVisualState();
         
         Debug.Log($"✅ [{puzzleID}] Grid generated with {TOTAL_SYMBOLS} symbols. Correct positions: {string.Join(", ", correctPositions.Select(p => $"({p.row},{p.col})"))}");
     }
 
-    /// <summary>
-    /// Calculates the exact grid positions where the correct sequence should appear
-    /// </summary>
     private void CalculateCorrectPositions()
     {
         correctPositions.Clear();
@@ -183,7 +263,6 @@ public class SymbolSequencePuzzle : BasePuzzle
 
         if (patternType == "horizontal_row")
         {
-            // Place 4 symbols horizontally in the same row
             for (int i = 0; i < 4; i++)
             {
                 correctPositions.Add(new GridPosition(startRow, startCol + i));
@@ -191,7 +270,6 @@ public class SymbolSequencePuzzle : BasePuzzle
         }
         else if (patternType == "vertical_column")
         {
-            // Place 4 symbols vertically in the same column
             for (int i = 0; i < 4; i++)
             {
                 correctPositions.Add(new GridPosition(startRow + i, startCol));
@@ -199,9 +277,6 @@ public class SymbolSequencePuzzle : BasePuzzle
         }
     }
 
-    /// <summary>
-    /// Checks if a grid position is part of the correct sequence and returns its index
-    /// </summary>
     private int GetCorrectSequenceIndex(GridPosition pos)
     {
         for (int i = 0; i < correctPositions.Count; i++)
@@ -211,21 +286,13 @@ public class SymbolSequencePuzzle : BasePuzzle
                 return i;
             }
         }
-        return -1; // Not part of the solution
+        return -1;
     }
 
-    /// <summary>
-    /// Gets all available symbol names from the database
-    /// </summary>
     private List<string> GetAllAvailableSymbols()
     {
-        // This assumes your SymbolDatabase has a way to get all symbol names
-        // You may need to add a method to SymbolDatabase to expose this
         List<string> allSymbols = new List<string>();
         
-        // Fallback: use the symbols from the database
-        // If your SymbolDatabase doesn't expose all symbols, you'll need to add a public method
-        // For now, let's assume we can access them via reflection or a new method
         foreach (var entry in symbolDatabase.symbols)
         {
             if (!string.IsNullOrEmpty(entry.symbolName))
@@ -241,7 +308,6 @@ public class SymbolSequencePuzzle : BasePuzzle
     {
         if (sequenceAttemptPlaceholders != null)
         {
-            // Initialize placeholders (hide them until a symbol is pressed)
             foreach (var placeholder in sequenceAttemptPlaceholders)
             {
                 if (placeholder != null)
@@ -255,7 +321,12 @@ public class SymbolSequencePuzzle : BasePuzzle
 
     public void OnSymbolClicked(string symbolName)
     {
-        if (currentState == PuzzleState.Locked || currentState == PuzzleState.Solved) return;
+        // Double-check state before allowing interaction
+        if (currentState == PuzzleState.Locked || currentState == PuzzleState.Solved)
+        {
+            Debug.Log($"⚠️ [{puzzleID}] Interaction blocked - puzzle is {currentState}");
+            return;
+        }
         
         ActivatePuzzle();
         if (IsSpawned) SubmitSymbolServerRpc(symbolName);
@@ -266,11 +337,9 @@ public class SymbolSequencePuzzle : BasePuzzle
     {
         if (isSolvedNet.Value) return;
 
-        // Add to synced list
         syncedPlayerSequence.Add(new FixedString32Bytes(symbolName));
         Debug.Log($"[{puzzleID}] Server recorded symbol: {symbolName} | Sequence: {syncedPlayerSequence.Count}/{correctSequence.Count}");
 
-        // Convert FixedString back to normal string for comparison
         List<string> currentAttempt = new List<string>();
         foreach (var str in syncedPlayerSequence)
         {
@@ -279,25 +348,21 @@ public class SymbolSequencePuzzle : BasePuzzle
 
         if (currentAttempt.SequenceEqual(correctSequence))
         {
-            isSolvedNet.Value = true; // Solved!
+            isSolvedNet.Value = true;
             Debug.Log($"✅ [{puzzleID}] SOLVED! Correct sequence matched.");
             
-            // FIRE THE EVENT TO GIVE POINTS AND TELL DYNAMIC PUZZLE MANAGER!
             InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
             
-            // Clear the attempt display after a short delay
             Invoke(nameof(ClearSequenceDisplay), 2f);
         }
         else if (currentAttempt.Count >= correctSequence.Count)
         {
-            // Wrong sequence - tell clients to play error animation, then reset
             Debug.Log($"❌ [{puzzleID}] Wrong sequence! Expected: {string.Join(", ", correctSequence)} | Got: {string.Join(", ", currentAttempt)}");
             TriggerErrorVisualClientRpc();
             syncedPlayerSequence.Clear();
         }
         else
         {
-            // Still building the sequence - check if it matches so far
             bool matchingSoFar = true;
             for (int i = 0; i < currentAttempt.Count; i++)
             {
@@ -310,7 +375,6 @@ public class SymbolSequencePuzzle : BasePuzzle
             
             if (!matchingSoFar)
             {
-                // Wrong symbol pressed - reset immediately
                 Debug.Log($"❌ [{puzzleID}] Wrong symbol at position {currentAttempt.Count - 1}! Resetting.");
                 TriggerErrorVisualClientRpc();
                 syncedPlayerSequence.Clear();
@@ -326,7 +390,6 @@ public class SymbolSequencePuzzle : BasePuzzle
         }
     }
 
-    // This fires automatically on ALL clients whenever an item is added/removed from the NetworkList
     private void OnSequenceChanged(NetworkListEvent<FixedString32Bytes> changeEvent)
     {
         UpdateSequenceVisuals();
@@ -336,21 +399,18 @@ public class SymbolSequencePuzzle : BasePuzzle
     {
         if (symbolDatabase == null || sequenceAttemptPlaceholders == null) return;
 
-        // Loop through placeholders and update them based on the current synced list
         for (int i = 0; i < sequenceAttemptPlaceholders.Count; i++)
         {
             if (sequenceAttemptPlaceholders[i] == null) continue;
 
             if (i < syncedPlayerSequence.Count)
             {
-                // We have a symbol for this slot
                 string symName = syncedPlayerSequence[i].ToString();
                 sequenceAttemptPlaceholders[i].sprite = symbolDatabase.GetSprite(symName);
                 sequenceAttemptPlaceholders[i].gameObject.SetActive(true);
             }
             else
             {
-                // Slot is empty
                 sequenceAttemptPlaceholders[i].sprite = null;
                 sequenceAttemptPlaceholders[i].gameObject.SetActive(false);
             }
@@ -362,6 +422,10 @@ public class SymbolSequencePuzzle : BasePuzzle
         if (isSolved)
         {
             Debug.Log($"🎉 [{puzzleID}] Puzzle solved state synced to all clients!");
+            
+            // Disable raycasts when solved
+            UpdateRaycastState();
+            UpdateGridVisualState();
         }
     }
 
@@ -369,7 +433,34 @@ public class SymbolSequencePuzzle : BasePuzzle
     private void TriggerErrorVisualClientRpc()
     {
         Debug.Log($"❌ [{puzzleID}] Wrong sequence! Resetting...");
-        // TODO: Add visual/audio failure feedback here (e.g. flash placeholders red, play error sound)
+        
+        // Optional: Add visual feedback here
+        StartCoroutine(FlashPlaceholdersRed());
+    }
+
+    private System.Collections.IEnumerator FlashPlaceholdersRed()
+    {
+        if (sequenceAttemptPlaceholders == null) yield break;
+        
+        Color[] originalColors = new Color[sequenceAttemptPlaceholders.Count];
+        for (int i = 0; i < sequenceAttemptPlaceholders.Count; i++)
+        {
+            if (sequenceAttemptPlaceholders[i] != null)
+            {
+                originalColors[i] = sequenceAttemptPlaceholders[i].color;
+                sequenceAttemptPlaceholders[i].color = Color.red;
+            }
+        }
+        
+        yield return new WaitForSeconds(0.3f);
+        
+        for (int i = 0; i < sequenceAttemptPlaceholders.Count; i++)
+        {
+            if (sequenceAttemptPlaceholders[i] != null)
+            {
+                sequenceAttemptPlaceholders[i].color = originalColors[i];
+            }
+        }
     }
 
     protected override bool CheckSolution()
@@ -385,5 +476,9 @@ public class SymbolSequencePuzzle : BasePuzzle
             syncedPlayerSequence.Clear();
             isSolvedNet.Value = false;
         }
+        
+        // Re-enable raycasts when puzzle is reset
+        UpdateRaycastState();
+        UpdateGridVisualState();
     }
 }
