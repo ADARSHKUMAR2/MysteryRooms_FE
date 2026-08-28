@@ -45,6 +45,11 @@ namespace MysteryRooms.Game.Data
         // Light Puzzle
         public List<int> correctTorchOrder;
         public bool requiresAlignment;
+        
+        // Card Deck Riddle 
+        public List<RiddleRule> riddleRules;
+        public string correctCode;
+        public List<CardData> gridCards;
     }
     [Serializable]
     public class PatternStartPosition

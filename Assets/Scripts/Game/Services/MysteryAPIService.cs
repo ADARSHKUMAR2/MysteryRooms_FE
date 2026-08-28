@@ -42,7 +42,7 @@ namespace MysteryRooms.Game.Services
                 webRequest.downloadHandler = new DownloadHandlerBuffer();
                 webRequest.SetRequestHeader("Content-Type", "application/json");
 
-                webRequest.timeout = 60;
+                webRequest.timeout = 120;
 
                 string token = PlayerPrefs.GetString("FirebaseToken", "");
                 if (!string.IsNullOrEmpty(token))

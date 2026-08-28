@@ -1,0 +1,1331 @@
+fileFormatVersion: 2
+guid: b0ad4232ec7124769b11a6094436cbfc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5270396998653281755
+    second: egyptian_52_cards_FINAL_true_equal_cards_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52a7cfd7ad9cbd6b0800000000000000
+      internalID: -5270396998653281755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59c460021c9a84fa494d5f8e6ff75660
+      internalID: 1379191234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_2
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca27af2ed4bbd43a6868a5d760a77def
+      internalID: -1461412999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_3
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e843b72436b5464c9f521fd0a36c2e8
+      internalID: 2145626739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_4
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caf118d67cc454b719b625d15af281fe
+      internalID: 393582835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_5
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f565ea044e6949a299a910237350db6
+      internalID: 2018687488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_6
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad9f83e1157c24d88b6fffe64d13ac34
+      internalID: 1933930887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_7
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59fdc848d658e45acba37c409a12dd7c
+      internalID: 1695975577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_8
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f96867b1952a4ea9b7218455d6afaa7
+      internalID: -1833311536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_9
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79a8143d57254467aadd19d34e97199f
+      internalID: -1479282536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_10
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcaca242fb5ab43c892a17980a792d6f
+      internalID: 1364859304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_11
+      rect:
+        serializedVersion: 2
+        x: 1760
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb1171ae142ae40bfa38910a26d2ffa4
+      internalID: -1877508628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_12
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 624
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea27161cab474f12af59e8dace01742
+      internalID: 1525502094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f787715da314472992a2d48cbe1ab51
+      internalID: 778866561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_14
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 373874b5fc24d4ee6a719285a3ac37b8
+      internalID: 1224125884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_15
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c08c91bdd87c4483782c60d1e7629154
+      internalID: 1429596524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_16
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78ba4487a619a46039b60a2326be585a
+      internalID: 558660340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_17
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07bb900385e064b198c30ef7952995c5
+      internalID: 432099220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_18
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21e63b68868404bed8f0f8ae286774f3
+      internalID: -1130731991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_19
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65eefae6b32fb43d6b81082dac048aec
+      internalID: 1112062049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_20
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 403b54630373342e4a3cc8f14069b62d
+      internalID: -880715692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_21
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caf602cf2112946beb0cfbd98028a2a5
+      internalID: -1039010752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_22
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36b04105915e747a8aea00fa43d5619e
+      internalID: -843489054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_23
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fef77766ce8c4692aa109d8e1a70807
+      internalID: -1930817998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_24
+      rect:
+        serializedVersion: 2
+        x: 1760
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d412bd0c7d3884fa98e5094c85aef09f
+      internalID: -770616901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_25
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 416
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10c767c61f16941a48d267e39f7ef1e5
+      internalID: -1699367727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 731132ec6fe574c2d95feec60050abda
+      internalID: 190485940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_27
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9f2217c6cbfc4886b2f03342d07dbdc
+      internalID: 1705058348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_28
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c48e70d984bc0406ab64bdd32f2e5faf
+      internalID: 652878804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_29
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 847e6fd9e63d24e5e9d891cf766b4d40
+      internalID: -1169226185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_30
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dbaa1927be184a9b80d1454831772de
+      internalID: 1949325392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_31
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c2c1339217424b31aed9459d4aa0592
+      internalID: 1886463800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_32
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29b575e4d182549ceb56a85a8d5a661d
+      internalID: -701825047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_33
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 170236e019bf14c0f8a04bab150b34bd
+      internalID: 1798280006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_34
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae8f81884d53f4800a173d32e7d39e13
+      internalID: 208334072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_35
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96e735b43b3d4431cb38d3424ea667a6
+      internalID: 460317326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_36
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d852f4c5ed45f47e9989046e1c42562a
+      internalID: 1992500779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_37
+      rect:
+        serializedVersion: 2
+        x: 1760
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61439a2a9c93341c89d10c0fb64dd7b5
+      internalID: 1572332988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_38
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 208
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dc68bca7dc1e44388578885ed571a2b
+      internalID: -723640659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0914e3ba5a20d42f9a2c8d5be480e367
+      internalID: -61114570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_40
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df3ae27077b494f8bb2d44dece7823e9
+      internalID: 2050229093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_41
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1288ecb45aeab42bf8d910206ef0ff59
+      internalID: 1967532637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_42
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 285a7ba8701c1458791fc609d53326e0
+      internalID: 527489867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_43
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6beb7baf6a2634f70b7097425fbe6b9f
+      internalID: -578671203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_44
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3531f7510818e49cead77d32a20689d8
+      internalID: -663561973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_45
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3aae173da6694eaf80e5703d48b2f88
+      internalID: 1612376417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_46
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b094e8e2a300543b6bd65ff86b75e725
+      internalID: -533975571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_47
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67b1664ee1cac4e029a89cd430ba801f
+      internalID: -487550391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_48
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf77e10e3dfc945bc8dd775d12565a67
+      internalID: 1750679730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_49
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f8976bd0153f4f50a848dc8db428bcd
+      internalID: -461286455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_50
+      rect:
+        serializedVersion: 2
+        x: 1760
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41b27d716b21e4fe7844e00af940d0f8
+      internalID: -1280112074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: egyptian_52_cards_FINAL_true_equal_cards_51
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 160
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16319b68f76d34a2f8425d070519b533
+      internalID: 64500721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3ce1e6aa498994e688d05e26d9507f06
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":13.0,"y":4.0},"gridSpriteSize":{"x":160.0,"y":208.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      egyptian_52_cards_FINAL_true_equal_cards_0: -5270396998653281755
+      egyptian_52_cards_FINAL_true_equal_cards_1: 1379191234
+      egyptian_52_cards_FINAL_true_equal_cards_10: 1364859304
+      egyptian_52_cards_FINAL_true_equal_cards_11: -1877508628
+      egyptian_52_cards_FINAL_true_equal_cards_12: 1525502094
+      egyptian_52_cards_FINAL_true_equal_cards_13: 778866561
+      egyptian_52_cards_FINAL_true_equal_cards_14: 1224125884
+      egyptian_52_cards_FINAL_true_equal_cards_15: 1429596524
+      egyptian_52_cards_FINAL_true_equal_cards_16: 558660340
+      egyptian_52_cards_FINAL_true_equal_cards_17: 432099220
+      egyptian_52_cards_FINAL_true_equal_cards_18: -1130731991
+      egyptian_52_cards_FINAL_true_equal_cards_19: 1112062049
+      egyptian_52_cards_FINAL_true_equal_cards_2: -1461412999
+      egyptian_52_cards_FINAL_true_equal_cards_20: -880715692
+      egyptian_52_cards_FINAL_true_equal_cards_21: -1039010752
+      egyptian_52_cards_FINAL_true_equal_cards_22: -843489054
+      egyptian_52_cards_FINAL_true_equal_cards_23: -1930817998
+      egyptian_52_cards_FINAL_true_equal_cards_24: -770616901
+      egyptian_52_cards_FINAL_true_equal_cards_25: -1699367727
+      egyptian_52_cards_FINAL_true_equal_cards_26: 190485940
+      egyptian_52_cards_FINAL_true_equal_cards_27: 1705058348
+      egyptian_52_cards_FINAL_true_equal_cards_28: 652878804
+      egyptian_52_cards_FINAL_true_equal_cards_29: -1169226185
+      egyptian_52_cards_FINAL_true_equal_cards_3: 2145626739
+      egyptian_52_cards_FINAL_true_equal_cards_30: 1949325392
+      egyptian_52_cards_FINAL_true_equal_cards_31: 1886463800
+      egyptian_52_cards_FINAL_true_equal_cards_32: -701825047
+      egyptian_52_cards_FINAL_true_equal_cards_33: 1798280006
+      egyptian_52_cards_FINAL_true_equal_cards_34: 208334072
+      egyptian_52_cards_FINAL_true_equal_cards_35: 460317326
+      egyptian_52_cards_FINAL_true_equal_cards_36: 1992500779
+      egyptian_52_cards_FINAL_true_equal_cards_37: 1572332988
+      egyptian_52_cards_FINAL_true_equal_cards_38: -723640659
+      egyptian_52_cards_FINAL_true_equal_cards_39: -61114570
+      egyptian_52_cards_FINAL_true_equal_cards_4: 393582835
+      egyptian_52_cards_FINAL_true_equal_cards_40: 2050229093
+      egyptian_52_cards_FINAL_true_equal_cards_41: 1967532637
+      egyptian_52_cards_FINAL_true_equal_cards_42: 527489867
+      egyptian_52_cards_FINAL_true_equal_cards_43: -578671203
+      egyptian_52_cards_FINAL_true_equal_cards_44: -663561973
+      egyptian_52_cards_FINAL_true_equal_cards_45: 1612376417
+      egyptian_52_cards_FINAL_true_equal_cards_46: -533975571
+      egyptian_52_cards_FINAL_true_equal_cards_47: -487550391
+      egyptian_52_cards_FINAL_true_equal_cards_48: 1750679730
+      egyptian_52_cards_FINAL_true_equal_cards_49: -461286455
+      egyptian_52_cards_FINAL_true_equal_cards_5: 2018687488
+      egyptian_52_cards_FINAL_true_equal_cards_50: -1280112074
+      egyptian_52_cards_FINAL_true_equal_cards_51: 64500721
+      egyptian_52_cards_FINAL_true_equal_cards_6: 1933930887
+      egyptian_52_cards_FINAL_true_equal_cards_7: 1695975577
+      egyptian_52_cards_FINAL_true_equal_cards_8: -1833311536
+      egyptian_52_cards_FINAL_true_equal_cards_9: -1479282536
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

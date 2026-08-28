@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 599aa94f55b724ef3b45192265016831, type: 3}
+  m_Name: CardDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Data.CardDatabase
+  cards:
+  - cardId: Spades_A
+    cardSprite: {fileID: -5270396998653281755, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_2
+    cardSprite: {fileID: 1379191234, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_3
+    cardSprite: {fileID: -1461412999, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_4
+    cardSprite: {fileID: 2145626739, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_5
+    cardSprite: {fileID: 393582835, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_6
+    cardSprite: {fileID: 2018687488, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_7
+    cardSprite: {fileID: 1933930887, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_8
+    cardSprite: {fileID: 1695975577, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_9
+    cardSprite: {fileID: -1833311536, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_10
+    cardSprite: {fileID: -1479282536, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_J
+    cardSprite: {fileID: 1364859304, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_Q
+    cardSprite: {fileID: -1877508628, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Spades_K
+    cardSprite: {fileID: 1525502094, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_A
+    cardSprite: {fileID: 778866561, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_2
+    cardSprite: {fileID: 1224125884, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_3
+    cardSprite: {fileID: 1429596524, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_4
+    cardSprite: {fileID: 558660340, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_5
+    cardSprite: {fileID: 432099220, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_6
+    cardSprite: {fileID: -1130731991, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_7
+    cardSprite: {fileID: 1112062049, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_8
+    cardSprite: {fileID: -880715692, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_9
+    cardSprite: {fileID: -1039010752, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_10
+    cardSprite: {fileID: -843489054, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_J
+    cardSprite: {fileID: -1930817998, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_Q
+    cardSprite: {fileID: -770616901, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Hearts_K
+    cardSprite: {fileID: -1699367727, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_A
+    cardSprite: {fileID: -61114570, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_2
+    cardSprite: {fileID: 2050229093, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_3
+    cardSprite: {fileID: 1967532637, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_4
+    cardSprite: {fileID: 527489867, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_5
+    cardSprite: {fileID: -578671203, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_6
+    cardSprite: {fileID: -663561973, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_7
+    cardSprite: {fileID: 1612376417, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_8
+    cardSprite: {fileID: -533975571, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_9
+    cardSprite: {fileID: -487550391, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_10
+    cardSprite: {fileID: 1750679730, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_J
+    cardSprite: {fileID: -461286455, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_Q
+    cardSprite: {fileID: -1280112074, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Diamonds_K
+    cardSprite: {fileID: 64500721, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_A
+    cardSprite: {fileID: 190485940, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_2
+    cardSprite: {fileID: 1705058348, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_3
+    cardSprite: {fileID: 652878804, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_4
+    cardSprite: {fileID: -1169226185, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_5
+    cardSprite: {fileID: 1949325392, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_6
+    cardSprite: {fileID: 1886463800, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_7
+    cardSprite: {fileID: -701825047, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_8
+    cardSprite: {fileID: 1798280006, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_9
+    cardSprite: {fileID: 208334072, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_10
+    cardSprite: {fileID: 460317326, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_J
+    cardSprite: {fileID: 1992500779, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_Q
+    cardSprite: {fileID: 1572332988, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  - cardId: Clubs_K
+    cardSprite: {fileID: -723640659, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
+  cardBackSprite: {fileID: 0}
