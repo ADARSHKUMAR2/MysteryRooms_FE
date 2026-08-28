@@ -40,6 +40,22 @@ namespace MysteryRooms.Game.Data
             return null;
         }
 
+        /// <summary>
+        /// Gets all available symbol names in the database
+        /// </summary>
+        public List<string> GetAllSymbolNames()
+        {
+            List<string> names = new List<string>();
+            foreach (var entry in symbols)
+            {
+                if (!string.IsNullOrEmpty(entry.symbolName))
+                {
+                    names.Add(entry.symbolName);
+                }
+            }
+            return names;
+        }
+
         private void InitializeDictionary()
         {
             _symbolLookup = new Dictionary<string, Sprite>();

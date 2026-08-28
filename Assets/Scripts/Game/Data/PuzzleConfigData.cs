@@ -30,6 +30,8 @@ namespace MysteryRooms.Game.Data
         
         // Symbol/Hieroglyph Sequence
         public List<string> correctSequence;
+        public string patternType; // "horizontal_row" or "vertical_column"
+        public PatternStartPosition patternStartPosition;
         
         // Map Coordinates
         public string correctCoordinates;
@@ -43,5 +45,11 @@ namespace MysteryRooms.Game.Data
         // Light Puzzle
         public List<int> correctTorchOrder;
         public bool requiresAlignment;
+    }
+    [Serializable]
+    public class PatternStartPosition
+    {
+        public int row; // 0-4
+        public int col; // 0-7
     }
 }
