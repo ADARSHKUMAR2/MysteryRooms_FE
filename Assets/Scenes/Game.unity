@@ -6743,6 +6743,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 751987244}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!23 &107416954
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7907,7 +7912,7 @@ Transform:
   m_GameObject: {fileID: 208186539}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.3, y: 282.1, z: -0.11}
+  m_LocalPosition: {x: 0, y: 148, z: -0.11}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9086,7 +9091,7 @@ RectTransform:
   m_GameObject: {fileID: 306382775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.11}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.007, y: 0.007, z: 0.007}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 263171591}
@@ -9094,7 +9099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -67}
   m_SizeDelta: {x: 800, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &306382777
@@ -11205,6 +11210,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 36295460}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!23 &565551716
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14606,6 +14616,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 1532416143}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!23 &762156184
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17079,6 +17094,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 35653070}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!23 &952335832
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20811,7 +20831,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271136609}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -22816,6 +22836,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 803580519}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!23 &1403714576
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31551,6 +31576,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 685575640}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!23 &1595471926
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36338,6 +36368,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 1257226774}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!1001 &1906702741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37538,6 +37573,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 545440672}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverScaleFactor: 1.35
+  animationSpeed: 5
 --- !u!23 &2019047305
 MeshRenderer:
   m_ObjectHideFlags: 0

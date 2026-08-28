@@ -246,6 +246,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SymbolButton
   symbolName: 
   iconImage: {fileID: 3516600527276682904}
+  borderImage: {fileID: 0}
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
+  hoverColor: {r: 1, g: 0.9, b: 0.5, a: 1}
+  hoverScaleFactor: 1.15
+  animationSpeed: 5
 --- !u!114 &5387771302875685210
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class InteractionSystem : MonoBehaviour
     public TextMeshProUGUI interactionPromptText;
 
     private IInteractable currentInteractable;
+    private SymbolButton currentSymbolButton;
 
     void Update()
     {
@@ -27,19 +28,42 @@ public class InteractionSystem : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactionRange, interactableLayer))
         {
-            // Check if the object we hit has an IInteractable component
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            SymbolButton symbolButton = hit.collider.GetComponent<SymbolButton>(); // ADD THIS
 
             if (interactable != null)
             {
-                // We are looking at something interactable
-                currentInteractable = interactable;
-                ShowPrompt(interactable.GetInteractionPrompt());
+                // NEW INTERACTABLE DETECTED
+                if (currentInteractable != interactable)
+                {
+                    // Exit previous hover
+                    if (currentSymbolButton != null)
+                    {
+                        currentSymbolButton.OnHoverExit();
+                    }
+                    
+                    // Enter new hover
+                    currentInteractable = interactable;
+                    currentSymbolButton = symbolButton;
+                    
+                    if (currentSymbolButton != null)
+                    {
+                        currentSymbolButton.OnHoverEnter();
+                    }
+                    
+                    ShowPrompt(interactable.GetInteractionPrompt());
+                }
                 return;
             }
         }
 
-        // If we reach here, we are not looking at anything interactable
+        // NOT LOOKING AT ANYTHING - EXIT HOVER
+        if (currentSymbolButton != null)
+        {
+            currentSymbolButton.OnHoverExit();
+            currentSymbolButton = null;
+        }
+        
         currentInteractable = null;
         HidePrompt();
     }
@@ -81,6 +105,15 @@ public class InteractionSystem : MonoBehaviour
         if (player != null)
         {
             player.OnInteract(interactable.name, "examine");
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (currentSymbolButton != null)
+        {
+            currentSymbolButton.OnHoverExit();
+            currentSymbolButton = null;
         }
     }
 
