@@ -4,6 +4,8 @@ using MysteryRooms.Game.Data;
 using Unity.Netcode;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
+using System.Collections;
 
 public class CardDeckRiddlePuzzle : BasePuzzle
 {
@@ -26,6 +28,11 @@ public class CardDeckRiddlePuzzle : BasePuzzle
     private const int GRID_COLUMNS = 4;
     private const int GRID_ROWS = 4;
     private const int TOTAL_CARDS = 16;
+
+    [Header("Visual Environmental Clues")]
+    [Tooltip("Drag your 4 CardVisualClue objects here. They can be scattered around the room!")]
+    [SerializeField] private List<CardVisualClue> visualClues;
+
 
     // Backend configuration
     private List<RiddleRule> riddleRules;
@@ -90,6 +97,9 @@ public class CardDeckRiddlePuzzle : BasePuzzle
             
             GenerateCardGrid();
             UpdateCodeDisplay(); // Update display NOW that we have the code
+
+            // Set up the visual clues in the room!
+            SetupVisualClues(); 
         }
     }
 
@@ -135,6 +145,30 @@ public class CardDeckRiddlePuzzle : BasePuzzle
 
         Debug.Log($"✅ [{puzzleID}] Card grid generated with {TOTAL_CARDS} cards.");
     }
+
+    private void SetupVisualClues()
+    {
+        if (visualClues == null || visualClues.Count == 0) return;
+        if (riddleRules == null || riddleRules.Count == 0) return;
+
+        // Sort the rules by column just to guarantee column 0 is first, column 1 is second, etc.
+        var sortedRules = riddleRules.OrderBy(r => r.column).ToList();
+
+        for (int i = 0; i < sortedRules.Count; i++)
+        {
+            if (i < visualClues.Count)
+            {
+                // i + 1 because players read 1, 2, 3, 4 (not 0, 1, 2, 3)
+                int sequenceNumber = sortedRules[i].column + 1; 
+                string suitToCount = sortedRules[i].suit;
+
+                visualClues[i].SetClue(suitToCount, sequenceNumber);
+                
+                Debug.Log($"🔍 Set Visual Clue {sequenceNumber}: Count {suitToCount}");
+            }
+        }
+    }
+
 
 
     /// <summary>
