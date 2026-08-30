@@ -34,6 +34,8 @@ namespace MysteryRooms.Game.Managers
         public List<BasePuzzle> allPuzzles = new List<BasePuzzle>();
         public Dictionary<string, BasePuzzle> puzzleRegistry = new Dictionary<string, BasePuzzle>();
 
+        public List<WallInscription> allInscriptions = new List<WallInscription>();
+
         [Header("Session Tracking")]
         private MysteryAPIService apiService;
         private string currentSessionId;
@@ -47,6 +49,7 @@ namespace MysteryRooms.Game.Managers
         // Add a flag to track if we've successfully joined the backend session
         private bool hasJoinedBackendSession = false;
 
+
         private void Awake()
         {
             GetUserID();
@@ -56,6 +59,7 @@ namespace MysteryRooms.Game.Managers
 
             apiService = FindObjectOfType<MysteryAPIService>();
             netPuzzleManager = FindObjectOfType<NetworkedPuzzleManager>();
+            allInscriptions = FindObjectsOfType<WallInscription>(true).ToList();
         }
 
         private void Start()
@@ -91,8 +95,20 @@ namespace MysteryRooms.Game.Managers
                 puzzle.gameObject.SetActive(false); 
             }
 
+            // Hide all inscriptions initially
+            foreach (var inscription in allInscriptions)
+            {
+                inscription.gameObject.SetActive(false);
+            }
+
             foreach (var puzzleData in mystery.puzzles) ConfigurePuzzle(puzzleData);
             foreach (var puzzleData in mystery.puzzles) SetupPuzzleDependencies(puzzleData);
+
+            // Distribute the AI-generated clues to the walls!
+            if (mystery.clues != null)
+            {
+                DistributeClues(mystery.clues);
+            }
 
             // Hook up local puzzle solve events
             foreach (var puzzle in puzzleRegistry.Values)
@@ -129,6 +145,45 @@ namespace MysteryRooms.Game.Managers
                 }
             }
         }
+
+        // ==========================================
+        // CLUE DISTRIBUTION LOGIC
+        // ==========================================
+        private void DistributeClues(List<ClueConfigData> clues)
+        {
+            // We only care about inscription/visual clues for the walls
+            var wallClues = clues.Where(c => c.type == "inscription" || c.type == "visual").ToList();
+            
+            int inscriptionIndex = 0;
+
+            foreach (var clue in wallClues)
+            {
+                if (inscriptionIndex >= allInscriptions.Count)
+                {
+                    Debug.LogWarning($"[DynamicPuzzleManager] Not enough Wall Inscriptions in scene for clue: {clue.id}");
+                    break;
+                }
+
+                // Get an unused Wall Inscription
+                WallInscription inscription = allInscriptions[inscriptionIndex];
+                
+                // Activate it and inject the AI text
+                inscription.gameObject.SetActive(true);
+                inscription.SetClueText(clue.content);
+
+                // Optional: You could use the clue.location (e.g., "entrance_hall") to 
+                // specifically pick a WallInscription that is physically in that room,
+                // but simply activating them in order works if you place them near their respective puzzles.
+                
+                Debug.Log($"📜 Assigned Clue to Wall: {clue.content.Substring(0, Mathf.Min(20, clue.content.Length))}...");
+                
+                inscriptionIndex++;
+            }
+            
+            Debug.Log($"[DynamicPuzzleManager] Assigned {inscriptionIndex} clues to walls out of {wallClues.Count} available.");
+        }
+        // ==========================================
+
 
         private void StartSessionTracking()
         {
