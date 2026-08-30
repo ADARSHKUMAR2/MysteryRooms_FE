@@ -24,6 +24,9 @@ public abstract class BasePuzzle : NetworkBehaviour
     [Header("Backend Configuration Status")]
     // Shows up in the Inspector so you can see if the backend claimed it!
     [SerializeField] public bool isConfiguredByBackend = false;
+    [Header("Feedback Visuals")]
+    [Tooltip("Optional Light or GameObject that turns ON when puzzle is Unlocked, and OFF when Locked/Solved")]
+    public GameObject puzzleHighlightLight;
 
     // Change this event to pass (puzzleID, clientId, firebaseUid)
     public event System.Action<string, ulong, string> OnPuzzleSolvedWithPlayer;
@@ -48,6 +51,12 @@ public abstract class BasePuzzle : NetworkBehaviour
         Debug.Log($"🔧 Configuring {puzzleID} with backend data");
     }
 
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        UpdateHighlightLight(); // Ensure late-joiners see correct light state
+    }
+
     /// <summary>
     /// Lock/unlock puzzle based on dependencies
     /// </summary>
@@ -67,7 +76,8 @@ public abstract class BasePuzzle : NetworkBehaviour
                 currentState = PuzzleState.Unlocked;
             }
         }
-        
+
+        UpdateHighlightLight(); // Update light when dependencies unlock it!
         Debug.Log($"{puzzleID} is now {(locked ? "LOCKED" : "UNLOCKED")}");
     }
 
@@ -88,6 +98,7 @@ public abstract class BasePuzzle : NetworkBehaviour
         {
             currentState = PuzzleState.InProgress;
             Debug.Log($"Puzzle {puzzleID} activated (In Progress)!");
+            UpdateHighlightLight();
         }
     }
 
@@ -98,6 +109,7 @@ public abstract class BasePuzzle : NetworkBehaviour
         {
             currentState = PuzzleState.Solved;
             Debug.Log($"✅ Puzzle {puzzleID} SOLVED ");
+            UpdateHighlightLight();
             
             // Pass BOTH the puzzle ID and the solver ID to the Manager!
             // OnPuzzleSolved?.Invoke(puzzleID);
@@ -123,6 +135,7 @@ public abstract class BasePuzzle : NetworkBehaviour
     protected void SyncPuzzleStateClientRpc(PuzzleState newState)
     {
         currentState = newState;
+        UpdateHighlightLight(); // Turn off light for all clients when solved!
     }
 
 
@@ -133,5 +146,18 @@ public abstract class BasePuzzle : NetworkBehaviour
         currentState = PuzzleState.Unlocked;
         isLockedByDependencies = false;
         Debug.Log($"Puzzle {puzzleID} reset.");
+        UpdateHighlightLight();
+    }
+
+    /// <summary>
+    /// Turns the assigned highlight light ON when unlocked/in-progress, and OFF when locked/solved.
+    /// </summary>
+    protected virtual void UpdateHighlightLight()
+    {
+        if (puzzleHighlightLight != null)
+        {
+            bool shouldBeOn = (currentState == PuzzleState.Unlocked || currentState == PuzzleState.InProgress);
+            puzzleHighlightLight.SetActive(shouldBeOn);
+        }
     }
 }

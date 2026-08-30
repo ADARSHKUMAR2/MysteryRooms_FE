@@ -76,7 +76,7 @@ public class PressurePlatePuzzle : BasePuzzle
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SubmitPlateStepServerRpc(int plateID, ServerRpcParams rpcParams = default) // Add Params!
+    private void SubmitPlateStepServerRpc(int plateID, ServerRpcParams rpcParams = default)
     {
         if (isSolvedNet.Value) return;
 
@@ -86,7 +86,6 @@ public class PressurePlatePuzzle : BasePuzzle
         syncedPlayerPattern.Add(plateID);
         Debug.Log($"[PressurePlates] Step recorded: {plateID}. Sequence so far: {syncedPlayerPattern.Count}/{correctPattern.Count}");
 
-        // Convert network list to standard list for comparison
         List<int> currentAttempt = new List<int>();
         foreach (int step in syncedPlayerPattern)
         {
@@ -96,20 +95,24 @@ public class PressurePlatePuzzle : BasePuzzle
         if (currentAttempt.SequenceEqual(correctPattern))
         {
             isSolvedNet.Value = true; // Solved!
-
-            // FIRE THE EVENT TO GIVE POINTS AND TELL DYNAMIC PUZZLE MANAGER!
             InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
-      
         }
         else if (currentAttempt.Count >= correctPattern.Count || !IsMatchingSoFar(currentAttempt))
         {
-            // Wrong sequence - fail and reset immediately
+            // Wrong sequence - fail and reset
             TriggerErrorVisualClientRpc();
-            syncedPlayerPattern.Clear();
+            
+            // Clear the list after a delay so players see the red flash first
+            StartCoroutine(ClearSequenceAfterDelayServerRoutine());
         }
     }
 
-    // Helper to reset early if they make a mistake midway
+    private IEnumerator ClearSequenceAfterDelayServerRoutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        syncedPlayerPattern.Clear();
+    }
+
     private bool IsMatchingSoFar(List<int> attempt)
     {
         for (int i = 0; i < attempt.Count; i++)
@@ -128,44 +131,69 @@ public class PressurePlatePuzzle : BasePuzzle
     {
         if (physicalPlates == null) return;
 
+        // Check if pattern is wrong right now
+        List<int> currentAttempt = new List<int>();
+        foreach (int step in syncedPlayerPattern) { currentAttempt.Add(step); }
+        bool isWrong = currentAttempt.Count > 0 && !IsMatchingSoFar(currentAttempt);
+
         foreach (var plate in physicalPlates)
         {
-            PhysicalPressurePlate.PlateState state;
+            // Only update plates that have already risen
+            if (isLockedByDependencies) continue;
 
-            if (isLockedByDependencies)
+            if (isSolvedNet.Value)
             {
-                // The puzzle hasn't been unlocked yet (show as Black/Inactive)
-                state = PhysicalPressurePlate.PlateState.Inactive;
+                // Puzzle solved! All plates press down and glow gold
+                plate.PressPlate(true);
             }
-            else if (isSolvedNet.Value || syncedPlayerPattern.Contains(plate.plateID))
+            else if (syncedPlayerPattern.Contains(plate.plateID))
             {
-                // The puzzle is solved, OR the player has stepped on this specific plate
-                state = PhysicalPressurePlate.PlateState.Pressed;
+                // This specific plate was stepped on
+                // If the sequence is wrong so far, make it glow red. If correct, glow gold.
+                plate.PressPlate(!isWrong);
             }
             else
             {
-                // Puzzle is active and waiting to be stepped on
-                state = PhysicalPressurePlate.PlateState.Default;
+                // Plate is waiting to be stepped on
+                plate.ResetPlate();
             }
-
-            plate.SetVisualState(state);
         }
     }
 
-    // This overrides a method from BasePuzzle to ensure visuals update 
-    // the exact moment a dependency puzzle is solved!
-     public override void SetLocked(bool locked)
+    // Overriding SetLocked is the secret to making them RISE UP dynamically!
+    public override void SetLocked(bool locked)
     {
-        base.SetLocked(locked); // Calls the BasePuzzle logic to set isLockedByDependencies
+        bool wasLocked = isLockedByDependencies;
+        base.SetLocked(locked); 
         
-        UpdatePlateVisuals(); // Instantly update the black/active materials
+        // If it JUST unlocked, tell all plates to rise out of the ground!
+        if (wasLocked && !locked)
+        {
+            StartCoroutine(StaggeredRiseRoutine());
+        }
+    }
+
+    /// <summary>
+    /// Makes the plates rise out of the floor one by one for a cool cinematic effect
+    /// </summary>
+    private IEnumerator StaggeredRiseRoutine()
+    {
+        if (physicalPlates == null) yield break;
+
+        // Shake the camera here if you have a camera shake script!
+        
+        foreach (var plate in physicalPlates)
+        {
+            plate.RevealPlate();
+            yield return new WaitForSeconds(0.4f); // Stagger the rising effect
+        }
     }
 
     private void OnSolvedStateChanged(bool prev, bool isSolved)
     {
         if (isSolved)
         {
-            UpdatePlateVisuals(); // Ensure they all light up at the end
+            UpdatePlateVisuals(); 
         }
     }
 
@@ -173,7 +201,7 @@ public class PressurePlatePuzzle : BasePuzzle
     private void TriggerErrorVisualClientRpc()
     {
         Debug.Log("❌ Wrong plate sequence! Resetting...");
-        // You can add an AudioSource.Play() here for an error buzz sound
+        // Sound effect plays locally via the plate's press method
     }
 
     protected override bool CheckSolution()

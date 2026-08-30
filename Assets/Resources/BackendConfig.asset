@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979ee1c810169457e9d9ae7ba995bb9e, type: 3}
   m_Name: BackendConfig
   m_EditorClassIdentifier: KBC.Config::KBC.Config.BackendConfig
-  localGatewayURL: http://192.168.1.3:8000
+  localGatewayURL: http://192.168.1.10:8000
   productionGatewayURL: https://your-production-url.com
   useProductionEnv: 0
