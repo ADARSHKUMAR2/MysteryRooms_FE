@@ -239,7 +239,7 @@ public class CardDeckRiddlePuzzle : BasePuzzle
         Invoke(nameof(OnClearClicked), 1.5f);
     }
 
-    private System.Collections.IEnumerator FlashCodeRed()
+    private IEnumerator FlashCodeRed()
     {
         Color originalColor = codeDisplayText.color;
         codeDisplayText.color = Color.red;
@@ -278,11 +278,22 @@ public class CardDeckRiddlePuzzle : BasePuzzle
         {
             Debug.Log($"🎉 [{puzzleID}] Puzzle solved!");
             
-            // Hide input panel
-            if (codeInputPanel != null)
+            // Wait 1 second before hiding so the UI effects finish playing
+            if (gameObject.activeInHierarchy)
             {
-                codeInputPanel.SetActive(false);
+                StartCoroutine(HidePanelDelayed());
             }
+        }
+    }
+
+    private IEnumerator HidePanelDelayed()
+    {
+        // Let the player see the success state briefly
+        yield return new WaitForSeconds(1.5f);
+        
+        if (codeInputPanel != null)
+        {
+            codeInputPanel.SetActive(false);
         }
     }
 
