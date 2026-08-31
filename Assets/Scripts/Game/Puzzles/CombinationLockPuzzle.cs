@@ -59,19 +59,31 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
 
             if (config.config.elementalMapping != null)
             {
-                ElementalCylinderData cylinderClue = FindObjectOfType<ElementalCylinderData>();
-                if (cylinderClue != null)
+                var mappings = config.config.elementalMapping.ToDictionary();
+                string style = config.config.clueStyle; // "cylinder" or "scales"
+
+                // Find both objects in the scene (even if they are disabled)
+                ElementalCylinderData cylinder = FindObjectOfType<ElementalCylinderData>(true);
+                ElementalScalesData scales = FindObjectOfType<ElementalScalesData>(true);
+
+                if (style == "scales" && scales != null)
                 {
-                    cylinderClue.SetMappings(config.config.elementalMapping.ToDictionary());
-                    Debug.Log($"💎 Automatically linked Elemental Cylinder to {puzzleID}!");
+                    if (cylinder != null) cylinder.gameObject.SetActive(false); // Hide cylinder
+                    scales.gameObject.SetActive(true);
+                    scales.SetMappings(mappings);
+                    Debug.Log("⚖️ Activated Scales Clue!");
                 }
-                else
+                else if (cylinder != null)
                 {
-                    Debug.LogWarning($"⚠️ No ElementalCylinderData found in the scene! The player won't be able to solve {puzzleID}.");
+                    if (scales != null) scales.gameObject.SetActive(false); // Hide scales
+                    cylinder.gameObject.SetActive(true);
+                    cylinder.SetMappings(mappings);
+                    Debug.Log("🌀 Activated Cylinder Clue!");
                 }
             }
         }
     }
+
 
     public string GetInteractionPrompt()
     {

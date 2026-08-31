@@ -28,6 +28,7 @@ namespace MysteryRooms.Game.Data
         // Combination Lock
         public string correctCombination;
         public ElementMapping elementalMapping;
+        public string clueStyle;
         
         // Symbol/Hieroglyph Sequence
         public List<string> correctSequence;
