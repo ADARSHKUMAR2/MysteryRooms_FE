@@ -52,6 +52,9 @@ namespace MysteryRooms.Game.Data
         public List<RiddleRule> riddleRules;
         public string correctCode;
         public List<CardData> gridCards;
+
+        public string latitude;
+        public string longitude;
     }
     [Serializable]
     public class PatternStartPosition
