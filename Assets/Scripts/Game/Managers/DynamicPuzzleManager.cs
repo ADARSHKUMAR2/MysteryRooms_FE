@@ -298,8 +298,17 @@ namespace MysteryRooms.Game.Managers
             var solvedPuzzleData = currentMystery.puzzles.FirstOrDefault(p => p.id == solvedPuzzleId);
             if (solvedPuzzleData != null && System.Enum.TryParse(solvedPuzzleData.position, out RoomType parsedRoomType))
             {
-                var mapping = roomDoors.FirstOrDefault(m => m.roomType == parsedRoomType);
-                if (mapping.doorToOpen != null) mapping.doorToOpen.OpenDoor();
+                // Find ALL doors that match this room type instead of just the first one
+                var mappings = roomDoors.Where(m => m.roomType == parsedRoomType).ToList();
+                
+                foreach (var mapping in mappings)
+                {
+                    if (mapping.doorToOpen != null)
+                    {
+                        Debug.Log($"🚪 Opening door for room {parsedRoomType} due to solving {solvedPuzzleId}");
+                        mapping.doorToOpen.OpenDoor();
+                    }
+                }
             }
         }
 
