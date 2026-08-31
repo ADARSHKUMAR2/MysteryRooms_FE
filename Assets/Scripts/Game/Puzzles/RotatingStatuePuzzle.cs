@@ -77,7 +77,7 @@ public class RotatingStatuePuzzle : BasePuzzle, IInteractable
             
             // Fire the base event so DynamicPuzzleManager catches it
             // and correctly routes it through NetworkedPuzzleManager!
-             InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "solver_firebase_id_here");
+            InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "solver_firebase_id_here");
         }
     }
 

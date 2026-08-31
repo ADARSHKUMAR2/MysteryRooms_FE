@@ -27,6 +27,7 @@ namespace MysteryRooms.Game.Data
         
         // Combination Lock
         public string correctCombination;
+        public ElementMapping elementalMapping;
         
         // Symbol/Hieroglyph Sequence
         public List<string> correctSequence;
@@ -56,5 +57,25 @@ namespace MysteryRooms.Game.Data
     {
         public int row; // 0-4
         public int col; // 0-7
+    }
+
+    [Serializable]
+    public class ElementMapping
+    {
+        public int Fire;
+        public int Leaf;
+        public int Water;
+        public int Sun;
+        
+        public Dictionary<string, int> ToDictionary()
+        {
+            return new Dictionary<string, int>
+            {
+                { "Fire", Fire },
+                { "Leaf", Leaf },
+                { "Water", Water },
+                { "Sun", Sun }
+            };
+        }
     }
 }

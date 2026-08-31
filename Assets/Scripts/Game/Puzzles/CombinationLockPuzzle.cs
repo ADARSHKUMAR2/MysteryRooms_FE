@@ -56,6 +56,20 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         {
             correctCombination = config.config.correctCombination;
             Debug.Log($"🔢 Lock {puzzleID} configured. Answer: {correctCombination}");
+
+            if (config.config.elementalMapping != null)
+            {
+                ElementalCylinderData cylinderClue = FindObjectOfType<ElementalCylinderData>();
+                if (cylinderClue != null)
+                {
+                    cylinderClue.SetMappings(config.config.elementalMapping.ToDictionary());
+                    Debug.Log($"💎 Automatically linked Elemental Cylinder to {puzzleID}!");
+                }
+                else
+                {
+                    Debug.LogWarning($"⚠️ No ElementalCylinderData found in the scene! The player won't be able to solve {puzzleID}.");
+                }
+            }
         }
     }
 
