@@ -16,6 +16,9 @@ public abstract class BasePuzzle : NetworkBehaviour
     public string puzzleID;
     // Default to Locked! The Manager will Unlock the starting puzzles later.
     public PuzzleState currentState = PuzzleState.Locked;
+    [Header("Spawn Settings")]
+    [Tooltip("Adjust this if the prefab spawns too high, low, or deep into the wall at a socket.")]
+    public Vector3 spawnOffset = Vector3.zero;
 
     [Header("Backend Configuration")]
     public PuzzleConfigData backendConfig;

@@ -268,7 +268,7 @@ namespace MysteryRooms.Game.Managers
             }
         }
 
-                private void TeleportPuzzleToRoom(BasePuzzle puzzle, RoomType room)
+        private void TeleportPuzzleToRoom(BasePuzzle puzzle, RoomType room)
         {
             // Find the socket list for this room
             var roomConfig = roomSpawnSockets.FirstOrDefault(r => r.roomType == room);
@@ -278,49 +278,65 @@ namespace MysteryRooms.Game.Managers
                 return;
             }
 
-            // CHECK THE NEW TOGGLE
+            // DEFINE THE SEARCH LIST BASED ON THE RANDOMIZE TOGGLE
             List<Transform> searchList;
             if (randomizeSocketPlacement)
             {
-                // Create a randomized list of the sockets
+                // Shuffle the available sockets randomly
                 searchList = roomConfig.availableSockets.OrderBy(x => System.Guid.NewGuid()).ToList();
             }
             else
             {
-                // Use the exact order defined in the Unity Inspector
                 searchList = roomConfig.availableSockets;
             }
 
-            // Find an unused socket from our list
+            // --- NEW TWO-PASS SOCKET SEARCH ---
             Transform targetSocket = null;
+            string incomingType = puzzle.backendConfig.type.ToLower().Replace("_", "");
+
+            // PASS 1: Look for an EXACT match (e.g., PressurePlate puzzle looking for a PressurePlate socket)
             foreach (var socket in searchList)
             {
                 if (!roomConfig.usedSockets.Contains(socket))
                 {
-                    // Check if this socket has a specific puzzle type constraint
                     PuzzleSocketHelper helper = socket.GetComponent<PuzzleSocketHelper>();
-                    bool isMatch = true;
-
+                    
                     if (helper != null && helper.allowedPuzzleType != AllowedPuzzleType.Any)
                     {
-                        // Convert Enum to backend string format
                         string constraintType = helper.allowedPuzzleType.ToString().ToLower().Replace("_", "");
-                        string incomingType = puzzle.backendConfig.type.ToLower().Replace("_", "");
                         
-                        if (!incomingType.Contains(constraintType) && !constraintType.Contains(incomingType))
+                        if (incomingType.Contains(constraintType) || constraintType.Contains(incomingType))
                         {
-                            isMatch = false; // Constraint failed!
+                            targetSocket = socket;
+                            roomConfig.usedSockets.Add(socket);
+                            Debug.Log($"[Socket] Exact match found for {puzzle.puzzleID} on {socket.name}");
+                            break;
                         }
-                    }
-
-                    if (isMatch)
-                    {
-                        targetSocket = socket;
-                        roomConfig.usedSockets.Add(socket); // Mark as used!
-                        break;
                     }
                 }
             }
+
+            // PASS 2: If no exact match was found, look for ANY generic "Any" socket
+            if (targetSocket == null)
+            {
+                foreach (var socket in searchList)
+                {
+                    if (!roomConfig.usedSockets.Contains(socket))
+                    {
+                        PuzzleSocketHelper helper = socket.GetComponent<PuzzleSocketHelper>();
+                        
+                        // We can only use this socket if it has NO constraints (AllowedPuzzleType.Any)
+                        if (helper == null || helper.allowedPuzzleType == AllowedPuzzleType.Any)
+                        {
+                            targetSocket = socket;
+                            roomConfig.usedSockets.Add(socket);
+                            Debug.Log($"[Socket] Fallback 'Any' socket used for {puzzle.puzzleID} on {socket.name}");
+                            break;
+                        }
+                    }
+                }
+            }
+            // ----------------------------------
 
             if (targetSocket != null)
             {
@@ -333,9 +349,12 @@ namespace MysteryRooms.Game.Managers
                     puzzleRoot = puzzleRoot.parent;
                 }
 
-                // Snap position and rotation
-                puzzleRoot.position = targetSocket.position;
+                // Snap rotation first
                 puzzleRoot.rotation = targetSocket.rotation;
+                
+                // Snap position, taking the puzzle's specific offset into account!
+                Vector3 finalPosition = targetSocket.position + targetSocket.TransformDirection(puzzle.spawnOffset);
+                puzzleRoot.position = finalPosition;
 
                 Debug.Log($"🚀 Teleported {puzzle.puzzleID} to {room} at {targetSocket.name}");
             }
