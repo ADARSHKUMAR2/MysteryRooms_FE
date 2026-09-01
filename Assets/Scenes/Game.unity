@@ -5349,6 +5349,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: 
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   keypadUIPanel: {fileID: 1081351799}
@@ -5686,7 +5717,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11034,6 +11065,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266030038}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &266722844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 266722845}
+  - component: {fileID: 266722846}
+  m_Layer: 0
+  m_Name: Socket_entrance_hall_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &266722845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266722844}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.82, y: 0, z: -23.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1895607938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &266722846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266722844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &275046735
 GameObject:
   m_ObjectHideFlags: 0
@@ -13249,6 +13327,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391449923}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &409984045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 409984046}
+  - component: {fileID: 409984047}
+  m_Layer: 0
+  m_Name: Socket_treasure_room_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &409984046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409984045}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.38, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 855912663}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &409984047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409984045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &410305313
 GameObject:
   m_ObjectHideFlags: 0
@@ -15542,6 +15667,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: pharaoh_cards_riddle
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   cardDatabase: {fileID: 11400000, guid: c906a53ef57f34fc5b7d7cc2fff8fe56, type: 2}
@@ -16232,6 +16388,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: east_light
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   lineRenderer: {fileID: 856367182}
@@ -16512,7 +16699,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21841,6 +22028,53 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &536596276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 536596277}
+  - component: {fileID: 536596278}
+  m_Layer: 0
+  m_Name: Socket_entrance_hall_5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &536596277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536596276}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8, y: 0, z: -22.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1895607938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &536596278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536596276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &542584879
 GameObject:
   m_ObjectHideFlags: 0
@@ -22152,6 +22386,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556555758}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &557229743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 557229744}
+  - component: {fileID: 557229745}
+  m_Layer: 0
+  m_Name: Socket_main_chamber_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &557229744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557229743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 6, y: 0, z: 10.21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1655529196}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &557229745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557229743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &561041773
 GameObject:
   m_ObjectHideFlags: 0
@@ -31127,6 +31408,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: Statue_SW
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   rotationSpeed: 90
@@ -32078,6 +32390,53 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 3, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &726975924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 726975925}
+  - component: {fileID: 726975926}
+  m_Layer: 0
+  m_Name: Socket_treasure_room_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &726975925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726975924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 4, y: 0, z: 5.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 855912663}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &726975926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726975924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &727562001
 GameObject:
   m_ObjectHideFlags: 0
@@ -32533,6 +32892,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741321198}
   m_CullTransparentMesh: 1
+--- !u!1 &742979501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 742979502}
+  - component: {fileID: 742979503}
+  m_Layer: 0
+  m_Name: Socket_treasure_room_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &742979502
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742979501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -7.49, y: 0, z: -1.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 855912663}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &742979503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742979501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &752764372
 GameObject:
   m_ObjectHideFlags: 0
@@ -38278,6 +38684,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799742126}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &809219951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809219952}
+  - component: {fileID: 809219953}
+  m_Layer: 0
+  m_Name: Socket_burial_chamber_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809219952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809219951}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 6, y: 0, z: 8.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1285062727}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &809219953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809219951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &811604160
 GameObject:
   m_ObjectHideFlags: 0
@@ -38542,7 +38995,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -39237,6 +39690,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853012942}
   m_CullTransparentMesh: 1
+--- !u!1 &855912662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855912663}
+  m_Layer: 0
+  m_Name: Sockets_treasure_room
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &855912663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855912662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.1, y: 1.15, z: 20.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1046012019}
+  - {fileID: 742979502}
+  - {fileID: 726975925}
+  - {fileID: 409984046}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &856367180
 GameObject:
   m_ObjectHideFlags: 0
@@ -45813,7 +46301,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -46079,6 +46567,53 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 3, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &915640602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 915640603}
+  - component: {fileID: 915640604}
+  m_Layer: 0
+  m_Name: Socket_main_chamber_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &915640603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915640602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 9.96, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1655529196}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &915640604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915640602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &919561454
 GameObject:
   m_ObjectHideFlags: 0
@@ -46942,7 +47477,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eb0db08f36cb640ddae35247daa81412, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -47402,7 +47937,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eb0db08f36cb640ddae35247daa81412, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -47671,7 +48206,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -48809,7 +49344,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -49257,6 +49792,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1040434197}
   m_CullTransparentMesh: 1
+--- !u!1 &1046012018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1046012019}
+  - component: {fileID: 1046012020}
+  m_Layer: 0
+  m_Name: Socket_treasure_room_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1046012019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046012018}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.35, y: 0, z: -8.58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 855912663}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1046012020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046012018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1058612841
 GameObject:
   m_ObjectHideFlags: 0
@@ -49899,6 +50481,180 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1073643801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1073643804}
+  - component: {fileID: 1073643803}
+  - component: {fileID: 1073643802}
+  m_Layer: 0
+  m_Name: TestLight (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1073643802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073643801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
+--- !u!108 &1073643803
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073643801}
+  m_Enabled: 1
+  serializedVersion: 13
+  m_Type: 2
+  m_Color: {r: 1, g: 0.65, b: 0.3, a: 1}
+  m_Intensity: 46
+  m_Range: 210.1
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.802082
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShapeRadius: 0.025
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!4 &1073643804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073643801}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -22.35, y: 5.39, z: -9.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1075603541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1075603542}
+  - component: {fileID: 1075603543}
+  m_Layer: 0
+  m_Name: Socket_main_chamber_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1075603542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075603541}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -3.215, y: 0, z: 10.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1655529196}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1075603543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075603541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1077611649
 GameObject:
   m_ObjectHideFlags: 0
@@ -50367,6 +51123,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086063620}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1087561424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1087561425}
+  - component: {fileID: 1087561426}
+  m_Layer: 0
+  m_Name: Socket_burial_chamber_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1087561425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087561424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 9.44, y: 0, z: -9.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1285062727}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1087561426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087561424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1098914822
 GameObject:
   m_ObjectHideFlags: 0
@@ -52984,7 +53787,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -53748,6 +54551,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211515225}
   m_CullTransparentMesh: 1
+--- !u!1 &1213082811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1213082812}
+  - component: {fileID: 1213082813}
+  m_Layer: 0
+  m_Name: Socket_main_chamber_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1213082812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213082811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -7.87, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1655529196}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1213082813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213082811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1216915824
 GameObject:
   m_ObjectHideFlags: 0
@@ -53824,6 +54674,53 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2, y: 2.5, z: 1.2}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!1 &1220602940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1220602941}
+  - component: {fileID: 1220602942}
+  m_Layer: 0
+  m_Name: Socket_burial_chamber_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1220602941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220602940}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.47, y: 0, z: -22.53}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1285062727}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1220602942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220602940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1227148230
 GameObject:
   m_ObjectHideFlags: 0
@@ -54857,7 +55754,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: e78f519982a794bfc8d3cc08f93474cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -55244,6 +56141,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: floor_puzzle
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 1438966127}
   physicalPlates:
@@ -55672,6 +56600,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Effects.UILightReceiver
   maxLightDistance: 10
   ambientBrightness: 0
+--- !u!1 &1285062726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1285062727}
+  m_Layer: 0
+  m_Name: Sockets_burial_chamber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1285062727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285062726}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.98, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1220602941}
+  - {fileID: 1087561425}
+  - {fileID: 1661640595}
+  - {fileID: 809219952}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1286006634
 GameObject:
   m_ObjectHideFlags: 0
@@ -61818,6 +62781,53 @@ MonoBehaviour:
   enableFloating: 0
   floatAmplitude: 0
   floatFrequency: 0
+--- !u!1 &1319512723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1319512724}
+  - component: {fileID: 1319512725}
+  m_Layer: 0
+  m_Name: Socket_entrance_hall_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1319512724
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319512723}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 9.24, y: 0, z: -6.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1895607938}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1319512725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319512723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!21 &1322584186
 Material:
   serializedVersion: 8
@@ -61999,7 +63009,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -69567,6 +70577,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1427454299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1427454300}
+  - component: {fileID: 1427454301}
+  m_Layer: 0
+  m_Name: Socket_west_chamber_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1427454300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427454299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -4.86, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1557784772}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1427454301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427454299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1429926494
 GameObject:
   m_ObjectHideFlags: 0
@@ -69694,172 +70751,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &1432324758
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1432324759}
-  - component: {fileID: 1432324764}
-  - component: {fileID: 1432324763}
-  - component: {fileID: 1432324762}
-  - component: {fileID: 1432324760}
-  - component: {fileID: 1432324765}
-  m_Layer: 0
-  m_Name: PressurePlates (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1432324759
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432324758}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.13, z: -2.64}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1712609003}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1432324760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432324758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea8068f68d5949de93a1f6034a79a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PhysicalPressurePlate
-  plateID: 2
-  movingPlateMesh: {fileID: 0}
-  plateRenderer: {fileID: 1432324762}
-  inactiveMaterial: {fileID: 2100000, guid: 492e9a6d6f8e24fe39b007ccdab3e6bc, type: 2}
-  activeMaterial: {fileID: 0}
-  correctGlowColor: {r: 0.85, g: 0.65, b: 0.13, a: 1}
-  errorGlowColor: {r: 0.8, g: 0.1, b: 0.1, a: 1}
-  hiddenYOffset: -1.5
-  activeYOffset: 0
-  pressedYOffset: -0.1
-  riseSpeed: 1
-  grindSound: {fileID: 0}
-  clickSound: {fileID: 0}
---- !u!23 &1432324762
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432324758}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1432324763
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432324758}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1432324764
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432324758}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &1432324765
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432324758}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1433171459
 GameObject:
   m_ObjectHideFlags: 0
@@ -70149,172 +71040,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2774220344278030320, guid: 334b60a08293542e8a92fff0521cfc68, type: 3}
   m_PrefabInstance: {fileID: 1433583190}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1436086474
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1436086475}
-  - component: {fileID: 1436086480}
-  - component: {fileID: 1436086479}
-  - component: {fileID: 1436086478}
-  - component: {fileID: 1436086476}
-  - component: {fileID: 1436086481}
-  m_Layer: 0
-  m_Name: PressurePlates (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1436086475
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436086474}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.03, y: -1.13, z: -2.64}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1712609003}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1436086476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436086474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea8068f68d5949de93a1f6034a79a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PhysicalPressurePlate
-  plateID: 3
-  movingPlateMesh: {fileID: 0}
-  plateRenderer: {fileID: 1436086478}
-  inactiveMaterial: {fileID: 2100000, guid: 492e9a6d6f8e24fe39b007ccdab3e6bc, type: 2}
-  activeMaterial: {fileID: 0}
-  correctGlowColor: {r: 0.85, g: 0.65, b: 0.13, a: 1}
-  errorGlowColor: {r: 0.8, g: 0.1, b: 0.1, a: 1}
-  hiddenYOffset: -1.5
-  activeYOffset: 0
-  pressedYOffset: -0.1
-  riseSpeed: 1
-  grindSound: {fileID: 0}
-  clickSound: {fileID: 0}
---- !u!23 &1436086478
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436086474}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1436086479
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436086474}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1436086480
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436086474}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &1436086481
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436086474}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1437372255
 GameObject:
   m_ObjectHideFlags: 0
@@ -70448,6 +71173,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: Statue_SE
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   rotationSpeed: 90
@@ -77910,6 +78666,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: Statue_NW
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   rotationSpeed: 90
@@ -77940,6 +78727,53 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!1 &1538985923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1538985924}
+  - component: {fileID: 1538985925}
+  m_Layer: 0
+  m_Name: Socket_entrance_hall_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1538985924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538985923}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.83, y: 0, z: -11.51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1895607938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1538985925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538985923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1540646455
 GameObject:
   m_ObjectHideFlags: 0
@@ -83557,6 +84391,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549203280}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1550428477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550428478}
+  - component: {fileID: 1550428479}
+  m_Layer: 0
+  m_Name: Socket_entrance_hall_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1550428478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550428477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -8.64, y: 0.63, z: -18.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1895607938}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1550428479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550428477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1552466024
 GameObject:
   m_ObjectHideFlags: 0
@@ -83807,6 +84688,41 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1557784771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1557784772}
+  m_Layer: 0
+  m_Name: Sockets_west_chamber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1557784772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557784771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -24.39, y: 0, z: -16.31}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2139856406}
+  - {fileID: 1820851383}
+  - {fileID: 1427454300}
+  - {fileID: 1986574596}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1557814253
 GameObject:
   m_ObjectHideFlags: 0
@@ -85839,6 +86755,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: 
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   movingPanel: {fileID: 653523547}
@@ -86315,6 +87262,90 @@ PrefabInstance:
       propertyPath: mapDoors.Array.data[5].physicalDoor
       value: 
       objectReference: {fileID: 506979189}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[0].availableSockets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 266722845}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[0].availableSockets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1319512724}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[0].availableSockets.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1538985924}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[0].availableSockets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1550428478}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[0].availableSockets.Array.data[4]'
+      value: 
+      objectReference: {fileID: 536596277}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[1].availableSockets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1220602941}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[1].availableSockets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1087561425}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[1].availableSockets.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1661640595}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[1].availableSockets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 809219952}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[2].availableSockets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2139856406}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[2].availableSockets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1820851383}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[2].availableSockets.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1427454300}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[2].availableSockets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1986574596}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[3].availableSockets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1213082812}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[3].availableSockets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1075603542}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[3].availableSockets.Array.data[2]'
+      value: 
+      objectReference: {fileID: 915640603}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[3].availableSockets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 557229744}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[4].availableSockets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1046012019}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[4].availableSockets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 742979502}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[4].availableSockets.Array.data[2]'
+      value: 
+      objectReference: {fileID: 726975925}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[4].availableSockets.Array.data[3]'
+      value: 
+      objectReference: {fileID: 409984046}
     - target: {fileID: 7408908732434846873, guid: c5e009182805446e999fb4908073c6c7, type: 3}
       propertyPath: m_Name
       value: NetworkedPuzzleManager
@@ -86596,6 +87627,41 @@ Transform:
   - {fileID: 1377018670}
   m_Father: {fileID: 1161416415}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1655529195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1655529196}
+  m_Layer: 0
+  m_Name: Sockets_main_chamber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1655529196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655529195}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -21.97, y: 0.57, z: 39.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1213082812}
+  - {fileID: 1075603542}
+  - {fileID: 915640603}
+  - {fileID: 557229744}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1655983931
 GameObject:
   m_ObjectHideFlags: 0
@@ -86686,6 +87752,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655983931}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1661640594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1661640595}
+  - component: {fileID: 1661640596}
+  m_Layer: 0
+  m_Name: Socket_burial_chamber_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1661640595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661640594}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.59, y: 0, z: -23.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1285062727}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1661640596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661640594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1661824158
 GameObject:
   m_ObjectHideFlags: 0
@@ -86745,7 +87858,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87898,172 +89011,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &1696950235
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1696950236}
-  - component: {fileID: 1696950241}
-  - component: {fileID: 1696950240}
-  - component: {fileID: 1696950239}
-  - component: {fileID: 1696950242}
-  - component: {fileID: 1696950243}
-  m_Layer: 0
-  m_Name: PressurePlates (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1696950236
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696950235}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.13, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1712609003}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1696950239
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696950235}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1696950240
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696950235}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1696950241
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696950235}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1696950242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696950235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea8068f68d5949de93a1f6034a79a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PhysicalPressurePlate
-  plateID: 1
-  movingPlateMesh: {fileID: 0}
-  plateRenderer: {fileID: 1696950239}
-  inactiveMaterial: {fileID: 2100000, guid: 492e9a6d6f8e24fe39b007ccdab3e6bc, type: 2}
-  activeMaterial: {fileID: 0}
-  correctGlowColor: {r: 0.85, g: 0.65, b: 0.13, a: 1}
-  errorGlowColor: {r: 0.8, g: 0.1, b: 0.1, a: 1}
-  hiddenYOffset: -1.5
-  activeYOffset: 0
-  pressedYOffset: -0.1
-  riseSpeed: 1
-  grindSound: {fileID: 0}
-  clickSound: {fileID: 0}
---- !u!54 &1696950243
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1696950235}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1698741010
 GameObject:
   m_ObjectHideFlags: 0
@@ -88510,91 +89457,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1712609002
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1712609003}
-  - component: {fileID: 1712609004}
-  - component: {fileID: 1712609008}
-  m_Layer: 0
-  m_Name: PressurePlatePuzzle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1712609003
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712609002}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.88, y: 1, z: -17.789}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1696950236}
-  - {fileID: 1432324759}
-  - {fileID: 1436086475}
-  - {fileID: 1783411025}
-  m_Father: {fileID: 2145184306}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1712609004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712609002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26c1f25f62faa4ff18501c31723f3401, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PressurePlatePuzzle
-  ShowTopMostFoldoutHeaderGroup: 1
-  puzzleID: 
-  currentState: 0
-  isConfiguredByBackend: 0
-  puzzleHighlightLight: {fileID: 1438966127}
-  physicalPlates:
-  - {fileID: 1696950242}
-  - {fileID: 1432324760}
-  - {fileID: 1436086476}
-  - {fileID: 1783411026}
---- !u!114 &1712609008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712609002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2946483575
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 0
-  m_InScenePlaced: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!21 &1715325301
 Material:
   serializedVersion: 8
@@ -88939,7 +89801,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89932,172 +90794,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769784491}
   m_CullTransparentMesh: 1
---- !u!1 &1783411024
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1783411025}
-  - component: {fileID: 1783411030}
-  - component: {fileID: 1783411029}
-  - component: {fileID: 1783411028}
-  - component: {fileID: 1783411026}
-  - component: {fileID: 1783411031}
-  m_Layer: 0
-  m_Name: PressurePlates (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1783411025
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783411024}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.03, y: -1.13, z: -0.184}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1712609003}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1783411026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783411024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea8068f68d5949de93a1f6034a79a2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PhysicalPressurePlate
-  plateID: 4
-  movingPlateMesh: {fileID: 0}
-  plateRenderer: {fileID: 1783411028}
-  inactiveMaterial: {fileID: 2100000, guid: 492e9a6d6f8e24fe39b007ccdab3e6bc, type: 2}
-  activeMaterial: {fileID: 0}
-  correctGlowColor: {r: 0.85, g: 0.65, b: 0.13, a: 1}
-  errorGlowColor: {r: 0.8, g: 0.1, b: 0.1, a: 1}
-  hiddenYOffset: -1.5
-  activeYOffset: 0
-  pressedYOffset: -0.1
-  riseSpeed: 1
-  grindSound: {fileID: 0}
-  clickSound: {fileID: 0}
---- !u!23 &1783411028
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783411024}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1783411029
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783411024}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1783411030
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783411024}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &1783411031
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783411024}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1784432280
 GameObject:
   m_ObjectHideFlags: 0
@@ -91219,6 +91915,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1820453388}
   m_CullTransparentMesh: 1
+--- !u!1 &1820851382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1820851383}
+  - component: {fileID: 1820851384}
+  m_Layer: 0
+  m_Name: Socket_west_chamber_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820851383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820851382}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -4.83, y: 0, z: -13.16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1557784772}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1820851384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820851382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1825146259
 GameObject:
   m_ObjectHideFlags: 0
@@ -91685,7 +92428,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92153,6 +92896,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: 
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 1864935250}
   symbolDatabase: {fileID: 11400000, guid: ce000236e69a7440c9f9d03f7167e9b8, type: 2}
@@ -93028,6 +93802,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887252664}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1895607937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1895607938}
+  m_Layer: 0
+  m_Name: Sockets_entrance_hall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1895607938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895607937}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.19, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 266722845}
+  - {fileID: 1319512724}
+  - {fileID: 1538985924}
+  - {fileID: 1550428478}
+  - {fileID: 536596277}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1899247655
 GameObject:
   m_ObjectHideFlags: 0
@@ -94674,6 +95484,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardDeckSubmitClear
   type: 1
+--- !u!1 &1986574595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1986574596}
+  - component: {fileID: 1986574597}
+  m_Layer: 0
+  m_Name: Socket_west_chamber_4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1986574596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986574595}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1557784772}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1986574597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986574595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1988961022
 GameObject:
   m_ObjectHideFlags: 0
@@ -96042,6 +96899,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: map_room
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 0}
   fullScreenMapPanel: {fileID: 1108405749}
@@ -96517,7 +97405,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102211,7 +103099,7 @@ RectTransform:
   m_GameObject: {fileID: 2105948567}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalScale: {x: -0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1081351800}
@@ -102606,6 +103494,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: hieroglyph_wall
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 1314124729}
   symbolDatabase: {fileID: 11400000, guid: ce000236e69a7440c9f9d03f7167e9b8, type: 2}
@@ -102995,7 +103914,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -103370,6 +104289,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2135779968}
   m_CullTransparentMesh: 1
+--- !u!1 &2139856405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139856406}
+  - component: {fileID: 2139856407}
+  m_Layer: 0
+  m_Name: Socket_west_chamber_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2139856406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139856405}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -20.54}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1557784772}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2139856407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139856405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 0
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &2142194529
 GameObject:
   m_ObjectHideFlags: 0
@@ -103589,7 +104555,6 @@ Transform:
   - {fileID: 12845091}
   - {fileID: 1635536784}
   - {fileID: 1267648372}
-  - {fileID: 1712609003}
   - {fileID: 2111700997}
   - {fileID: 1848726050}
   - {fileID: 501042942}
@@ -103656,7 +104621,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a040232cb2a744c6bb5d5ef9dd43cf06, type: 2}
+  - {fileID: 2100000, guid: 77c989724e8914a2fb216fe7b175e1f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104110,6 +105075,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   puzzleID: Statue_NE
   currentState: 0
+  backendConfig:
+    id: 
+    type: 
+    position: 
+    config:
+      correctRotationSteps: 0
+      correctCombination: 
+      elementalMapping:
+        Fire: 0
+        Leaf: 0
+        Water: 0
+        Sun: 0
+      clueStyle: 
+      correctSequence: []
+      patternType: 
+      patternStartPosition:
+        row: 0
+        col: 0
+      correctCoordinates: 
+      correctPattern: 
+      requiresKey: 0
+      correctTorchOrder: 
+      requiresAlignment: 0
+      riddleRules: []
+      correctCode: 
+      gridCards: []
+      latitude: 
+      longitude: 
+    dependencies: []
+    unlocks: []
+    hint: 
   isConfiguredByBackend: 0
   puzzleHighlightLight: {fileID: 1372966535}
   rotationSpeed: 90
@@ -104492,3 +105488,9 @@ SceneRoots:
   - {fileID: 1842761996}
   - {fileID: 355218965}
   - {fileID: 644258608}
+  - {fileID: 1073643804}
+  - {fileID: 1895607938}
+  - {fileID: 1285062727}
+  - {fileID: 1557784772}
+  - {fileID: 1655529196}
+  - {fileID: 855912663}

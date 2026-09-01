@@ -18,7 +18,7 @@ public abstract class BasePuzzle : NetworkBehaviour
     public PuzzleState currentState = PuzzleState.Locked;
 
     [Header("Backend Configuration")]
-    protected PuzzleConfigData backendConfig;
+    public PuzzleConfigData backendConfig;
     protected bool isLockedByDependencies = false;
 
     [Header("Backend Configuration Status")]

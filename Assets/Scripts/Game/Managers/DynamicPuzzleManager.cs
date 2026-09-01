@@ -76,6 +76,9 @@ namespace MysteryRooms.Game.Managers
         // Add a flag to track if we've successfully joined the backend session
         private bool hasJoinedBackendSession = false;
 
+        // ADD THIS NEW TOGGLE
+        [Tooltip("If true, puzzles will pick a random valid socket. If false, they will fill sockets in the exact order listed above.")]
+        [SerializeField] private bool randomizeSocketPlacement = true; 
 
         private void Awake()
         {
@@ -246,13 +249,102 @@ namespace MysteryRooms.Game.Managers
 
         private void ConfigurePuzzle(PuzzleConfigData data)
         {
+            // 1. Find the puzzle by TYPE
             BasePuzzle puzzle = FindPuzzleByType(data.type);
             if (puzzle == null) return;
 
             puzzle.gameObject.name = $"[ACTIVE] {data.id}";
             puzzle.ConfigureFromBackend(data);
             puzzleRegistry[data.id] = puzzle;
+
+            // 2. TELEPORT it to the correct room!
+            if (System.Enum.TryParse(data.position, out RoomType targetRoom))
+            {
+                TeleportPuzzleToRoom(puzzle, targetRoom);
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ Could not parse room position '{data.position}' for puzzle {data.id}");
+            }
         }
+
+                private void TeleportPuzzleToRoom(BasePuzzle puzzle, RoomType room)
+        {
+            // Find the socket list for this room
+            var roomConfig = roomSpawnSockets.FirstOrDefault(r => r.roomType == room);
+            if (roomConfig == null || roomConfig.availableSockets == null || roomConfig.availableSockets.Count == 0)
+            {
+                Debug.LogWarning($"⚠️ No available sockets configured for room {room}! Puzzle {puzzle.puzzleID} will stay where it is.");
+                return;
+            }
+
+            // CHECK THE NEW TOGGLE
+            List<Transform> searchList;
+            if (randomizeSocketPlacement)
+            {
+                // Create a randomized list of the sockets
+                searchList = roomConfig.availableSockets.OrderBy(x => System.Guid.NewGuid()).ToList();
+            }
+            else
+            {
+                // Use the exact order defined in the Unity Inspector
+                searchList = roomConfig.availableSockets;
+            }
+
+            // Find an unused socket from our list
+            Transform targetSocket = null;
+            foreach (var socket in searchList)
+            {
+                if (!roomConfig.usedSockets.Contains(socket))
+                {
+                    // Check if this socket has a specific puzzle type constraint
+                    PuzzleSocketHelper helper = socket.GetComponent<PuzzleSocketHelper>();
+                    bool isMatch = true;
+
+                    if (helper != null && helper.allowedPuzzleType != AllowedPuzzleType.Any)
+                    {
+                        // Convert Enum to backend string format
+                        string constraintType = helper.allowedPuzzleType.ToString().ToLower().Replace("_", "");
+                        string incomingType = puzzle.backendConfig.type.ToLower().Replace("_", "");
+                        
+                        if (!incomingType.Contains(constraintType) && !constraintType.Contains(incomingType))
+                        {
+                            isMatch = false; // Constraint failed!
+                        }
+                    }
+
+                    if (isMatch)
+                    {
+                        targetSocket = socket;
+                        roomConfig.usedSockets.Add(socket); // Mark as used!
+                        break;
+                    }
+                }
+            }
+
+            if (targetSocket != null)
+            {
+                // Teleport the root of the puzzle to the socket!
+                Transform puzzleRoot = puzzle.transform;
+                
+                // If the BasePuzzle script is on a child, find the highest parent
+                while (puzzleRoot.parent != null && puzzleRoot.parent != puzzleContainer)
+                {
+                    puzzleRoot = puzzleRoot.parent;
+                }
+
+                // Snap position and rotation
+                puzzleRoot.position = targetSocket.position;
+                puzzleRoot.rotation = targetSocket.rotation;
+
+                Debug.Log($"🚀 Teleported {puzzle.puzzleID} to {room} at {targetSocket.name}");
+            }
+            else
+            {
+                Debug.LogWarning($"⚠️ Ran out of matching empty sockets in {room} for {puzzle.puzzleID} (Type: {puzzle.backendConfig.type})!");
+            }
+        }
+
 
         private BasePuzzle FindPuzzleByType(string puzzleType)
         {

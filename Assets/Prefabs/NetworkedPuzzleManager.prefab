@@ -252,6 +252,43 @@ MonoBehaviour:
     physicalDoor: {fileID: 0}
   allPuzzles: []
   allInscriptions: []
+  roomSpawnSockets:
+  - roomType: 0
+    availableSockets:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    usedSockets: []
+  - roomType: 5
+    availableSockets:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    usedSockets: []
+  - roomType: 2
+    availableSockets:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    usedSockets: []
+  - roomType: 1
+    availableSockets:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    usedSockets: []
+  - roomType: 6
+    availableSockets:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    usedSockets: []
 --- !u!114 &4326217751524259187
 MonoBehaviour:
   m_ObjectHideFlags: 0
