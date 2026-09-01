@@ -237,9 +237,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MysteryRooms.Game.Managers.DynamicPuzzleManager
   puzzleContainer: {fileID: 0}
   exitDoor: {fileID: 0}
-  roomDoors:
-  - roomType: 0
-    doorToOpen: {fileID: 0}
+  mapDoors:
+  - connectionID: 1
+    physicalDoor: {fileID: 0}
+  - connectionID: 2
+    physicalDoor: {fileID: 0}
+  - connectionID: 0
+    physicalDoor: {fileID: 0}
+  - connectionID: 3
+    physicalDoor: {fileID: 0}
+  - connectionID: 4
+    physicalDoor: {fileID: 0}
+  - connectionID: 5
+    physicalDoor: {fileID: 0}
   allPuzzles: []
   allInscriptions: []
 --- !u!114 &4326217751524259187

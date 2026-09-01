@@ -15,26 +15,53 @@ namespace MysteryRooms.Game.Managers
         entrance_hall, main_chamber, west_chamber, east_chamber,
         secret_passage, burial_chamber, treasure_room, antechamber
     }
+    public enum DoorConnectionID
+    {
+        door_entrance_hall_to_burial_chamber,
+        door_entrance_hall_to_west_chamber,
+        door_entrance_hall_to_treasure_room,
+        door_west_chamber_to_treasure_room,
+        door_west_chamber_to_secret_passage,
+        door_treasure_room_to_main_chamber
+    }
+
 
     [System.Serializable]
-    public struct RoomDoorMapping
+    public struct DoorConnection
+    {
+        [Tooltip("Select the specific door connection from the map layout")]
+        public DoorConnectionID connectionID; 
+        public NetworkedDoor physicalDoor;
+    }
+
+    [System.Serializable]
+    public class RoomSockets
     {
         public RoomType roomType;
-        public NetworkedDoor doorToOpen;
+        [Tooltip("Empty GameObjects placed in this room where puzzles can spawn")]
+        public List<Transform> availableSockets;
+        
+        // Internal tracking
+        [HideInInspector] public List<Transform> usedSockets = new List<Transform>();
     }
+
 
     public class DynamicPuzzleManager : MonoBehaviour
     {
         [Header("Scene References")]
         [SerializeField] private Transform puzzleContainer;
         [SerializeField] private InteractableDoor exitDoor;
-        [SerializeField] private List<RoomDoorMapping> roomDoors = new List<RoomDoorMapping>();
+        [SerializeField] private List<DoorConnection> mapDoors = new List<DoorConnection>();
 
         [Header("Runtime Data")]
         public List<BasePuzzle> allPuzzles = new List<BasePuzzle>();
         public Dictionary<string, BasePuzzle> puzzleRegistry = new Dictionary<string, BasePuzzle>();
 
         public List<WallInscription> allInscriptions = new List<WallInscription>();
+
+        [Header("Spawn Sockets")]
+        [Tooltip("Map each room to a list of empty spawn point Transforms in your scene")]
+        [SerializeField] private List<RoomSockets> roomSpawnSockets = new List<RoomSockets>();
 
         [Header("Session Tracking")]
         private MysteryAPIService apiService;
@@ -296,21 +323,36 @@ namespace MysteryRooms.Game.Managers
             if (NetworkManager.Singleton != null && !NetworkManager.Singleton.IsServer) return;
 
             var solvedPuzzleData = currentMystery.puzzles.FirstOrDefault(p => p.id == solvedPuzzleId);
-            if (solvedPuzzleData != null && System.Enum.TryParse(solvedPuzzleData.position, out RoomType parsedRoomType))
+            if (solvedPuzzleData != null && solvedPuzzleData.unlocks != null)
             {
-                // Find ALL doors that match this room type instead of just the first one
-                var mappings = roomDoors.Where(m => m.roomType == parsedRoomType).ToList();
-                
-                foreach (var mapping in mappings)
+                foreach (string unlockString in solvedPuzzleData.unlocks)
                 {
-                    if (mapping.doorToOpen != null)
+                    if (unlockString.StartsWith("door_"))
                     {
-                        Debug.Log($"🚪 Opening door for room {parsedRoomType} due to solving {solvedPuzzleId}");
-                        mapping.doorToOpen.OpenDoor();
+                        // Safely try to convert the string from the AI into our Enum
+                        if (System.Enum.TryParse(unlockString, true, out DoorConnectionID parsedConnectionID))
+                        {
+                            var mapping = mapDoors.FirstOrDefault(m => m.connectionID == parsedConnectionID);
+                            if (mapping.physicalDoor != null)
+                            {
+                                Debug.Log($"🚪 Opening door: {parsedConnectionID} (Unlocked by puzzle {solvedPuzzleId})");
+                                mapping.physicalDoor.OpenDoor();
+                            }
+                            else
+                            {
+                                Debug.LogWarning($"⚠️ Puzzle {solvedPuzzleId} tried to open door '{parsedConnectionID}', but no physical door is assigned to it in DynamicPuzzleManager!");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"⚠️ Backend sent an invalid door ID: '{unlockString}'. This does not exist in the DoorConnectionID Enum!");
+                        }
                     }
                 }
             }
         }
+
+
 
         // This is called by the Server when a client (or host) solves a puzzle
         private void ReportPuzzleSolvedByPlayer(string puzzleID, string solverFirebaseUid)
