@@ -162,7 +162,9 @@ MonoBehaviour:
   sprintSpeed: 8
   gravity: -9.81
   mouseSensitivity: 2
+  joystickLookSensitivity: 180
   playerCamera: {fileID: 4509461010048324084}
+  inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!114 &4846059629024824909
 MonoBehaviour:
   m_ObjectHideFlags: 0

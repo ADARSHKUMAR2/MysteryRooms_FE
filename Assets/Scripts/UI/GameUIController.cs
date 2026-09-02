@@ -35,6 +35,10 @@ namespace MysteryRooms.UI
         private Dictionary<ItemType, GameObject> spawnedInventoryItems = new Dictionary<ItemType, GameObject>();
         private Dictionary<ulong, TextMeshProUGUI> playerScoreCards = new Dictionary<ulong, TextMeshProUGUI>();
 
+        [Header("Settings Panel")]
+        [SerializeField] private SettingsPanelUI settingsPanel;
+        [SerializeField] private Button settingsButton;
+
 
         private void Awake()
         {
@@ -46,6 +50,24 @@ namespace MysteryRooms.UI
             {
                 Destroy(gameObject);
             }
+
+            if (settingsButton != null && settingsPanel != null)
+            {
+                settingsButton.onClick.AddListener(() => settingsPanel.Open());
+                Debug.Log("✅ Settings button wired to Settings Panel");
+            }
+        }
+
+        public void OpenSettings()
+        {
+            if (settingsPanel != null)
+                settingsPanel.Open();
+        }
+
+        public void CloseSettings()
+        {
+            if (settingsPanel != null)
+                settingsPanel.Close();
         }
 
 
