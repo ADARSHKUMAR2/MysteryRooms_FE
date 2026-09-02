@@ -176,44 +176,58 @@ namespace MysteryRooms.Game.Managers
             }
         }
 
-        // ==========================================
+                // ==========================================
         // CLUE DISTRIBUTION LOGIC
         // ==========================================
         private void DistributeClues(List<ClueConfigData> clues)
         {
-            // We only care about inscription/visual clues for the walls
             var wallClues = clues.Where(c => c.type == "inscription" || c.type == "visual").ToList();
             
-            int inscriptionIndex = 0;
+            List<WallInscription> usedInscriptions = new List<WallInscription>();
+            int assignedCount = 0;
 
             foreach (var clue in wallClues)
             {
-                if (inscriptionIndex >= allInscriptions.Count)
+                string targetRoomString = clue.location?.ToLower().Trim();
+                WallInscription bestInscription = null;
+
+                if (!string.IsNullOrEmpty(targetRoomString) && System.Enum.TryParse(targetRoomString, out RoomType targetRoomEnum))
                 {
-                    Debug.LogWarning($"[DynamicPuzzleManager] Not enough Wall Inscriptions in scene for clue: {clue.id}");
-                    break;
+                    // Pass 1: Find an unused inscription with the EXACT matching RoomType enum
+                    bestInscription = allInscriptions.FirstOrDefault(i => 
+                        !usedInscriptions.Contains(i) && 
+                        i.roomLocation == targetRoomEnum);
                 }
 
-                // Get an unused Wall Inscription
-                WallInscription inscription = allInscriptions[inscriptionIndex];
-                
-                // Activate it and inject the AI text
-                inscription.gameObject.SetActive(true);
-                inscription.SetClueText(clue.content);
+                // Pass 2: Fallback! If no matching room was found, grab ANY unused inscription
+                if (bestInscription == null)
+                {
+                    bestInscription = allInscriptions.FirstOrDefault(i => !usedInscriptions.Contains(i));
+                    
+                    if (bestInscription != null)
+                    {
+                        Debug.LogWarning($"⚠️ No empty Wall Inscription found matching room '{targetRoomString}' for clue '{clue.id}'. Spawning in fallback location ({bestInscription.roomLocation}).");
+                    }
+                }
 
-                // Optional: You could use the clue.location (e.g., "entrance_hall") to 
-                // specifically pick a WallInscription that is physically in that room,
-                // but simply activating them in order works if you place them near their respective puzzles.
-                
-                Debug.Log($"📜 Assigned Clue to Wall: {clue.content.Substring(0, Mathf.Min(20, clue.content.Length))}...");
-                
-                inscriptionIndex++;
+                // If we STILL don't have one, we are completely out of inscriptions!
+                if (bestInscription == null)
+                {
+                    Debug.LogError($"❌ Ran out of empty Wall Inscriptions in the scene! Clue '{clue.id}' was lost.");
+                    continue;
+                }
+
+                // Activate it and inject the AI text
+                bestInscription.gameObject.SetActive(true);
+                bestInscription.SetClueText(clue.content);
+                usedInscriptions.Add(bestInscription);
+                assignedCount++;
+
+                Debug.Log($"📜 Placed Clue '{clue.id}' onto a wall in '{bestInscription.roomLocation}'!");
             }
             
-            Debug.Log($"[DynamicPuzzleManager] Assigned {inscriptionIndex} clues to walls out of {wallClues.Count} available.");
+            Debug.Log($"[DynamicPuzzleManager] Assigned {assignedCount} clues to walls out of {wallClues.Count} available.");
         }
-        // ==========================================
-
 
         private void StartSessionTracking()
         {

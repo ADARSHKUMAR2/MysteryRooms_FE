@@ -2,9 +2,13 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using MysteryRooms.Game.Data; // If using IInteractable
-
+using MysteryRooms.Game.Managers; 
 public class WallInscription : MonoBehaviour, IInteractable
 {
+    [Header("Location Data")]
+    [Tooltip("Which room is this inscription physically placed in?")]
+    public RoomType roomLocation;
+    
     [Header("Clue Data")]
     [TextArea(3, 10)]
     public string englishClueText; // Will be set by backend!
