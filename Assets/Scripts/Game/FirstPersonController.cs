@@ -17,16 +17,22 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Input Actions")]
     [SerializeField] private InputActionAsset inputActions;
+    
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
 
     private CharacterController characterController;
     private Vector3 velocity;
     private float cameraPitch = 0f;
     private bool isGamePaused = false;
+    private Vector3 lastMoveVector;
 
     // Input Action references
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction sprintAction;
+    private float _logTimer = 0f;
+    private const float LOG_INTERVAL = 0.5f;
 
     void Awake()
     {
@@ -62,6 +68,18 @@ public class FirstPersonController : MonoBehaviour
 
         if (playerCamera == null)
             playerCamera = Camera.main.transform;
+
+        Debug.Log("[FPC] Animator: " + (animator != null ? "YES -> " + animator.name : "NULL - assign in Inspector!"));
+        if (animator != null)
+        {
+            Debug.Log("[FPC] Controller: " + (animator.runtimeAnimatorController != null ? animator.runtimeAnimatorController.name : "NONE - no controller set!"));
+            var parms = animator.parameters;
+            string paramList = "";
+            foreach (var p in parms) paramList += "'" + p.name + "' (" + p.type + ")  ";
+            Debug.Log("[FPC] Animator parameters (" + parms.Length + "): " + paramList);
+        }
+        Debug.Log("[FPC] walkSpeed=" + walkSpeed + "  moveAction bindings=" + moveAction.bindings.Count);
+
     }
 
     void Update()
@@ -72,6 +90,24 @@ public class FirstPersonController : MonoBehaviour
         {
             HandleLook();
             HandleMovement();
+        }
+
+        UpdateAnimations();
+
+        _logTimer += Time.deltaTime;
+        if (_logTimer >= LOG_INTERVAL)
+        {
+            _logTimer = 0f;
+            Vector2 moveInput = moveAction.ReadValue<Vector2>();
+            Vector3 ccVel = characterController.velocity;
+            float hSpeed = new Vector3(ccVel.x, 0f, ccVel.z).magnitude;
+            float animSpeed = animator != null ? animator.GetFloat("Speed") : -1f;
+            string stateName = animator != null ? animator.GetCurrentAnimatorStateInfo(0).shortNameHash.ToString() : "no animator";
+            Debug.Log("[FPC] input=" + moveInput + "  CC.vel=" + ccVel + "  hSpeed=" + hSpeed.ToString("F2") + "  animSpeed=" + animSpeed.ToString("F2") + "  grounded=" + characterController.isGrounded + "  state=" + stateName + "  paused=" + isGamePaused);
+            if (moveInput.magnitude > 0.1f && hSpeed < 0.05f)
+                Debug.LogWarning("[FPC] Input received but CC velocity is ~0! Collider stuck or CC disabled?");
+            if (moveInput.magnitude > 0.1f && animSpeed < 0.05f && animator != null)
+                Debug.LogWarning("[FPC] Input received but animSpeed is ~0! Speed param missing or CC not moving.");
         }
     }
 
@@ -153,11 +189,12 @@ public class FirstPersonController : MonoBehaviour
     private void HandleMovement()
     {
         Vector2 inputDir = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
-
         float currentSpeed = sprintAction.IsPressed() ? sprintSpeed : walkSpeed;
 
         Vector3 move = transform.right * inputDir.x + transform.forward * inputDir.y;
-        characterController.Move(move * currentSpeed * Time.deltaTime);
+        lastMoveVector = move * currentSpeed; // Store the intended movement
+        
+        characterController.Move(lastMoveVector * Time.deltaTime);
 
         if (characterController.isGrounded && velocity.y < 0)
             velocity.y = -2f;
@@ -177,6 +214,19 @@ public class FirstPersonController : MonoBehaviour
         mouseSensitivity      = PlayerPrefs.GetFloat(SettingsPanelUI.PREF_MOUSE_SENS,    mouseSensitivity);
         joystickLookSensitivity = PlayerPrefs.GetFloat(SettingsPanelUI.PREF_JOYSTICK_SENS, joystickLookSensitivity);
         walkSpeed             = PlayerPrefs.GetFloat(SettingsPanelUI.PREF_WALK_SPEED,    walkSpeed);
+    }
+
+    private void UpdateAnimations()
+    {
+        if (animator == null) return;
+
+        // Use the intended movement speed, not CharacterController.velocity
+        float speed = lastMoveVector.magnitude;
+
+        Debug.Log($"[FPC] UpdateAnimations: intended speed={speed:F2}, CC velocity={characterController.velocity.magnitude:F2}, grounded={characterController.isGrounded}");
+
+        animator.SetFloat("Speed", speed);
+        animator.SetBool("IsGrounded", characterController.isGrounded);
     }
 
     public bool IsPaused() => isGamePaused;
