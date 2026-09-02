@@ -106,6 +106,9 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
         if (keypadUIPanel != null)
         {
             keypadUIPanel.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             
             // Optional: If this is a Screen Space overlay, you might want to unlock the player's mouse cursor here!
             // Cursor.lockState = CursorLockMode.None;
@@ -151,8 +154,8 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
             keypadUIPanel.SetActive(false);
             
             // Re-lock mouse cursor if needed
-            // Cursor.lockState = CursorLockMode.Locked;
-            // Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         
         // Reset state so they can interact again
