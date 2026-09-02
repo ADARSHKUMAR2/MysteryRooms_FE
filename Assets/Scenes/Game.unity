@@ -28584,6 +28584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 501042942}
   - component: {fileID: 501042943}
+  - component: {fileID: 501042944}
   m_Layer: 0
   m_Name: MirrorPuzzle_east_light
   m_TagString: Untagged
@@ -28673,6 +28674,32 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   targetCrystal: {fileID: 716376767}
+--- !u!114 &501042944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501042941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 55967496
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &501507258
 GameObject:
   m_ObjectHideFlags: 0
@@ -143388,6 +143415,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 506979189}
     - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: roomSpawnSockets.Array.data[3].availableSockets.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
       propertyPath: 'roomSpawnSockets.Array.data[0].availableSockets.Array.data[0]'
       value: 
       objectReference: {fileID: 266722845}
@@ -143455,6 +143486,10 @@ PrefabInstance:
       propertyPath: 'roomSpawnSockets.Array.data[3].availableSockets.Array.data[3]'
       value: 
       objectReference: {fileID: 557229744}
+    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
+      propertyPath: 'roomSpawnSockets.Array.data[3].availableSockets.Array.data[4]'
+      value: 
+      objectReference: {fileID: 1657620165}
     - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
       propertyPath: 'roomSpawnSockets.Array.data[4].availableSockets.Array.data[0]'
       value: 
@@ -143785,6 +143820,7 @@ Transform:
   - {fileID: 1075603542}
   - {fileID: 915640603}
   - {fileID: 557229744}
+  - {fileID: 1657620165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1655983931
@@ -143877,6 +143913,53 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655983931}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1657620164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1657620165}
+  - component: {fileID: 1657620166}
+  m_Layer: 0
+  m_Name: Socket_main_chamber_5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1657620165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657620164}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 2.27, y: 0, z: -0.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1655529196}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1657620166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657620164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e5a2bafe271e4571b1f3ce367ad569a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleSocketHelper
+  allowedPuzzleType: 7
+  gizmoColor: {r: 0.2, g: 0.8, b: 0.2, a: 0.5}
+  gizmoSize: {x: 1, y: 1.5, z: 1}
 --- !u!1 &1661640594
 GameObject:
   m_ObjectHideFlags: 0
