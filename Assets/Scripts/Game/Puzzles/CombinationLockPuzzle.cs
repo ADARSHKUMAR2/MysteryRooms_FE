@@ -119,17 +119,32 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     // Call this from the OnClick events of your UI Buttons (0-9)
     public void OnKeypadButtonPressed(string digit)
     {
+        Debug.Log($"[CombinationLock] 📥 Received digit: '{digit}'. Current Input before: '{currentInput}'");
+        
         // Don't allow typing more digits than the correct answer length
         if (currentInput.Length < correctCombination.Length)
         {
             currentInput += digit;
             UpdateDisplay();
+            Debug.Log($"[CombinationLock] ✅ Digit added. New Input: '{currentInput}'");
+            
+            // Optional: Auto-submit if they type the 4th number!
+            if (currentInput.Length == correctCombination.Length)
+            {
+                Debug.Log($"[CombinationLock] 🚀 Max length reached. Auto-submitting '{currentInput}'...");
+                OnSubmitPressed();
+            }
+        }
+        else
+        {
+            Debug.Log($"[CombinationLock] ⚠️ Digit ignored. Input is already full ({currentInput}). Press Clear or Submit.");
         }
     }
 
     // Call this from a "Clear" button on the UI
     public void OnClearPressed()
     {
+        Debug.Log("[CombinationLock] 🧹 Clear button pressed. Resetting input.");
         currentInput = "";
         UpdateDisplay();
     }
@@ -137,15 +152,24 @@ public class CombinationLockPuzzle : BasePuzzle, IInteractable
     // Call this from an "Enter/Submit" button on the UI
     public void OnSubmitPressed()
     {
-        if (string.IsNullOrEmpty(currentInput)) return;
+        if (string.IsNullOrEmpty(currentInput))
+        {
+            Debug.LogWarning("[CombinationLock] ⚠️ Submit pressed, but input is empty!");
+            return;
+        }
+
+        Debug.Log($"[CombinationLock] 📤 Submitting code to ServerRpc: '{currentInput}'");
 
         // Ask server to check combination
         if (IsSpawned) 
         {
             SubmitCombinationServerRpc(currentInput);
         }
+        else
+        {
+            Debug.LogError("[CombinationLock] ❌ Cannot submit: Network object is not spawned!");
+        }
     }
-
     // Call this from an "X" or "Close" button on the UI
     public void OnClosePressed()
     {
