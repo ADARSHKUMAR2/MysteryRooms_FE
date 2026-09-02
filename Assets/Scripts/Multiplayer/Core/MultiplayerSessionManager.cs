@@ -32,11 +32,15 @@ namespace MysteryRooms.Multiplayer.Core
         private ISession currentUnitySession;
         private object currentVoiceChannel;
         private int playersJoinedSinceStart = 0;
+        public int ConnectedPlayerCount => 
+        NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening
+        ? NetworkManager.Singleton.ConnectedClientsIds.Count
+        : CurrentSession?.currentPlayerCount ?? 0;
+
 
         private async void Start()
         {
             DontDestroyOnLoad(gameObject);
-            SubscribeToNetworkCallbacks();
             await InitializeUnityServices();
         }
 
@@ -110,6 +114,7 @@ namespace MysteryRooms.Multiplayer.Core
                 Status = ConnectionStatus.Connected;
                 Log($"✅ Session created and Host started!");
                 
+                SubscribeToNetworkCallbacks(); 
                 await SetupVoiceChatAsync();
                 OnSessionCreated?.Invoke(joinCode);
                 return joinCode;
@@ -163,6 +168,7 @@ namespace MysteryRooms.Multiplayer.Core
                 // Configure relay transport after joining
                 await ConfigureRelayTransport(currentUnitySession);
 
+                SubscribeToNetworkCallbacks(); 
                 await SetupVoiceChatAsync();
 
                 OnSessionJoined?.Invoke();
@@ -222,8 +228,17 @@ namespace MysteryRooms.Multiplayer.Core
         private void OnClientConnected(ulong clientId)
         {
             Log($"Client {clientId} connected");
+            if (CurrentSession != null)
+            {
+                CurrentSession.currentPlayerCount = NetworkManager.Singleton.ConnectedClientsIds.Count;
+                string pid = $"Player_{clientId}";
+                if (!CurrentSession.playerIds.Contains(pid))
+                    CurrentSession.playerIds.Add(pid);
+                playersJoinedSinceStart++;
+            }
             if (clientId != NetworkManager.Singleton.LocalClientId)
             {
+                playersJoinedSinceStart++;            // ✅ Only count actual remote joins
                 OnPlayerJoined?.Invoke($"Player_{clientId}");
             }
         }
@@ -233,9 +248,12 @@ namespace MysteryRooms.Multiplayer.Core
             Log($"Client {clientId} disconnected");
             if (clientId != NetworkManager.Singleton.LocalClientId)
             {
-                playersJoinedSinceStart++;
+                if (CurrentSession != null)
+                {
+                    CurrentSession.currentPlayerCount = NetworkManager.Singleton.ConnectedClientsIds.Count;
+                    CurrentSession.playerIds.Remove($"Player_{clientId}");
+                }
                 OnPlayerLeft?.Invoke($"Player_{clientId}");
-                Log($"{playersJoinedSinceStart} player(s) joined so far");
             }
             else
             {

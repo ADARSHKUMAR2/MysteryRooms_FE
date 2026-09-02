@@ -397,12 +397,16 @@ namespace MysteryRooms.Multiplayer.UI
         {
             Debug.Log($"📢 UI: Player joined - {playerId}");
             UpdatePlayerCount();
+            if (statusText != null)
+                statusText.text = $"{playerId} joined the lobby!";
         }
 
         private void OnPlayerLeft(string playerId)
         {
             Debug.Log($"📢 UI: Player left - {playerId}");
             UpdatePlayerCount();
+            if (statusText != null)
+                statusText.text = $"{playerId} left the lobby!";
         }
 
         #endregion
@@ -454,10 +458,12 @@ namespace MysteryRooms.Multiplayer.UI
 
         private void UpdatePlayerCount()
         {
-            if (sessionManager.CurrentSession != null && playerCountText != null)
-            {
-                playerCountText.text = $"Players: {sessionManager.CurrentSession.currentPlayerCount}/{sessionManager.CurrentSession.maxPlayers}";
-            }
+            if (playerCountText == null) return;
+
+            int current = sessionManager?.ConnectedPlayerCount ?? 0;
+            int max = sessionManager?.CurrentSession?.maxPlayers ?? 0;
+
+            playerCountText.text = $"Players: {current}/{max}";
         }
 
         #endregion
