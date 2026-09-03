@@ -25,6 +25,12 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private Transform bodyPivot;
     [SerializeField] private float bodyRotationSpeed = 10f;
 
+    [Header("Footstep Audio")]
+    [SerializeField] private AudioSource footstepAudioSource;
+    [SerializeField] private AudioClip footstepClip;
+    [SerializeField] private float walkStepInterval  = 0.5f;   // seconds between steps at walk speed
+    [SerializeField] private float sprintStepInterval = 0.35f; // seconds between steps at sprint speed
+    private float _footstepTimer = 0f;
     private CharacterController characterController;
     private Vector3 velocity;
     private float cameraPitch = 0f;
@@ -208,6 +214,7 @@ public class FirstPersonController : MonoBehaviour
 
         // Rotate body pivot toward movement direction (what remote players see)
         RotateBodyTowardMovement(move);
+        HandleFootsteps(inputDir);
     }
 
     private void RotateBodyTowardMovement(Vector3 horizontalMove)
@@ -226,6 +233,30 @@ public class FirstPersonController : MonoBehaviour
             targetRotation,
             bodyRotationSpeed * Time.deltaTime
         );
+    }
+
+    private void HandleFootsteps(Vector2 inputDir)
+    {
+        bool isMoving   = inputDir.sqrMagnitude > 0.01f;
+        bool isGrounded = characterController.isGrounded;
+        bool isSprinting = sprintAction.IsPressed();
+
+        if (isMoving && isGrounded)
+        {
+            _footstepTimer -= Time.deltaTime;
+            if (_footstepTimer <= 0f)
+            {
+                if (footstepAudioSource != null && footstepClip != null)
+                    footstepAudioSource.PlayOneShot(footstepClip);
+
+                _footstepTimer = isSprinting ? sprintStepInterval : walkStepInterval;
+            }
+        }
+        else
+        {
+            // Reset timer so first step plays immediately when walking starts
+            _footstepTimer = 0f;
+        }
     }
 
     // ─── Settings ─────────────────────────────────────────────────────────────
