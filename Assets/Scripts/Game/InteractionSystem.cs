@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using MysteryRooms.Multiplayer.Network;
+using UnityEngine.EventSystems;
 public class InteractionSystem : MonoBehaviour
 {
     [Header("Raycast Settings")]
@@ -73,11 +74,36 @@ public class InteractionSystem : MonoBehaviour
         // Check if E key was pressed
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
+            // CRITICAL FIX: Don't process E key if typing in an input field
+            if (IsTypingInInputField())
+            {
+                return;
+            }
+
             if (currentInteractable != null)
             {
                 currentInteractable.Interact();
             }
         }
+    }
+
+    /// <summary>
+    /// Check if the player is currently typing in a UI input field
+    /// </summary>
+    private bool IsTypingInInputField()
+    {
+        // Check if EventSystem exists and has a selected GameObject
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null)
+        {
+            // Check if the selected object is a TMP_InputField
+            TMP_InputField inputField = EventSystem.current.currentSelectedGameObject.GetComponent<TMP_InputField>();
+            if (inputField != null && inputField.isFocused)
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     private void ShowPrompt(string text)

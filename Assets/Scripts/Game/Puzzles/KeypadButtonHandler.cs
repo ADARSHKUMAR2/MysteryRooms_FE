@@ -34,7 +34,7 @@ public class KeypadButtonHandler : MonoBehaviour
         Button btn = GetComponent<Button>();
         btn.onClick.AddListener(OnButtonClicked);
         
-        Debug.Log($"[KeypadButton] ✅ Successfully wired up button '{gameObject.name}' (Type: {buttonType}, Value: {digitValue}) to {targetPuzzle.puzzleID}");
+        // Debug.Log($"[KeypadButton] ✅ Successfully wired up button '{gameObject.name}' (Type: {buttonType}, Value: {digitValue}) to {targetPuzzle.puzzleID}");
     }
 
     private void OnButtonClicked()
@@ -45,7 +45,7 @@ public class KeypadButtonHandler : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[KeypadButton] 🔘 Button Clicked! Type: {buttonType} | Value: '{digitValue}' | Object: {gameObject.name}");
+        // Debug.Log($"[KeypadButton] 🔘 Button Clicked! Type: {buttonType} | Value: '{digitValue}' | Object: {gameObject.name}");
 
         switch (buttonType)
         {
@@ -61,7 +61,7 @@ public class KeypadButtonHandler : MonoBehaviour
             case KeypadButtonType.Close:
                 // Note: The CombinationLock script we updated earlier doesn't have OnClosePressed anymore 
                 // because we moved to a physical 3D keypad. If you get errors here, you can remove this case!
-                Debug.LogWarning("[KeypadButton] Close button pressed, but physical keypads cannot be closed!");
+                // Debug.LogWarning("[KeypadButton] Close button pressed, but physical keypads cannot be closed!");
                 break;
         }
     }

@@ -73,6 +73,21 @@ namespace MysteryRooms.Authentication
                 Destroy(gameObject);
             }
         }
+
+        private void Start()
+        {
+            // Firebase tokens expire after 60 minutes.
+            // Refresh silently every 50 minutes so API calls never get a 401.
+            InvokeRepeating(nameof(RefreshTokenSilently), 50 * 60f, 50 * 60f);
+        }
+
+        private void RefreshTokenSilently()
+        {
+            if (currentUser == null) return;
+            Debug.Log("🔄 Auto-refreshing Firebase token...");
+            RefreshTokenAndStore();
+        }
+        
         #endregion
 
         #region Firebase Initialization
@@ -445,6 +460,36 @@ namespace MysteryRooms.Authentication
                 }
             }
         }
+
+        public void RefreshTokenAndStore(System.Action<string> onSuccess = null)
+        {
+            if (currentUser == null) return;
+
+            currentUser.TokenAsync(forceRefresh: true).ContinueWithOnMainThread(task =>
+            {
+                // BEFORE: task.IsCompletedSuccessfully  ← may not exist in Unity's .NET version
+                // AFTER:  !task.IsFaulted && !task.IsCanceled
+                if (!task.IsFaulted && !task.IsCanceled)
+                {
+                    string freshToken = task.Result;
+                    PlayerPrefs.SetString("FirebaseToken", freshToken);
+                    PlayerPrefs.Save();
+                    UserSession.Instance?.SetUserData(
+                        UserSession.Instance.UserId,
+                        UserSession.Instance.Username,
+                        UserSession.Instance.Email,
+                        freshToken
+                    );
+                    Debug.Log("🔄 Firebase token refreshed successfully");
+                    onSuccess?.Invoke(freshToken);
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Token refresh failed: " + task.Exception?.Message);
+                }
+            });
+        }
+
         #endregion
 
         #region Utility Methods

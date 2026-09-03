@@ -248,7 +248,7 @@ public class FirstPersonController : MonoBehaviour
         // Use the intended movement speed, not CharacterController.velocity
         float speed = lastMoveVector.magnitude;
 
-        Debug.Log($"[FPC] UpdateAnimations: intended speed={speed:F2}, CC velocity={characterController.velocity.magnitude:F2}, grounded={characterController.isGrounded}");
+        // Debug.Log($"[FPC] UpdateAnimations: intended speed={speed:F2}, CC velocity={characterController.velocity.magnitude:F2}, grounded={characterController.isGrounded}");
 
         animator.SetFloat("Speed", speed);
         animator.SetBool("IsGrounded", characterController.isGrounded);

@@ -117,4 +117,4 @@ MonoBehaviour:
     cardSprite: {fileID: 1572332988, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
   - cardId: Clubs_K
     cardSprite: {fileID: -723640659, guid: b0ad4232ec7124769b11a6094436cbfc, type: 3}
-  cardBackSprite: {fileID: 0}
+  cardBackSprite: {fileID: -5777897504942914823, guid: 7fe8de4f4e6ac4262ae6acc5fa033480, type: 3}
