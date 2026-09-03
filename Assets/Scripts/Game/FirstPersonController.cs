@@ -21,6 +21,10 @@ public class FirstPersonController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private Animator animator;
 
+    [Header("Body Rotation")]
+    [SerializeField] private Transform bodyPivot;
+    [SerializeField] private float bodyRotationSpeed = 10f;
+
     private CharacterController characterController;
     private Vector3 velocity;
     private float cameraPitch = 0f;
@@ -201,6 +205,27 @@ public class FirstPersonController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
+
+        // Rotate body pivot toward movement direction (what remote players see)
+        RotateBodyTowardMovement(move);
+    }
+
+    private void RotateBodyTowardMovement(Vector3 horizontalMove)
+    {
+        if (bodyPivot == null) return;
+
+        // Only rotate if we're actually moving
+        Vector3 flatMove = new Vector3(horizontalMove.x, 0f, horizontalMove.z);
+        if (flatMove.sqrMagnitude < 0.01f) return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(flatMove, Vector3.up);
+        // bodyPivot rotation is in LOCAL space relative to Player root,
+        // so we need world-space target converted to local
+        bodyPivot.rotation = Quaternion.Slerp(
+            bodyPivot.rotation,
+            targetRotation,
+            bodyRotationSpeed * Time.deltaTime
+        );
     }
 
     // ─── Settings ─────────────────────────────────────────────────────────────
