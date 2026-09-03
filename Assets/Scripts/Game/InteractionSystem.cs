@@ -12,6 +12,9 @@ public class InteractionSystem : MonoBehaviour
 
     [Header("UI References")]
     public TextMeshProUGUI interactionPromptText;
+    [Header("Interaction Audio")]
+    [SerializeField] private AudioSource interactionAudioSource;
+    [SerializeField] private AudioClip interactionSoundClip;
 
     private IInteractable currentInteractable;
     private SymbolButton currentSymbolButton;
@@ -83,6 +86,10 @@ public class InteractionSystem : MonoBehaviour
             if (currentInteractable != null)
             {
                 currentInteractable.Interact();
+                // Play interaction sound on every E press
+                if (interactionAudioSource != null && interactionSoundClip != null)
+                    interactionAudioSource.PlayOneShot(interactionSoundClip);
+
             }
         }
     }
