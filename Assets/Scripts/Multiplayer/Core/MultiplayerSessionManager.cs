@@ -14,6 +14,9 @@ namespace MysteryRooms.Multiplayer.Core
     {
         [Header("Configuration")]
         [SerializeField] private int maxPlayers = 4;
+        [SerializeField] private string defaultRelayRegion = "ap"; 
+
+        public string RelayRegion { get; set; } = null; 
 
         [Header("Debug")]
         [SerializeField] private bool enableDebugLogs = true;
@@ -90,7 +93,11 @@ namespace MysteryRooms.Multiplayer.Core
                     {
                         { "BackendShareCode", new SessionProperty(mysteryShareCode) }
                     }
-                }.WithRelayNetwork();
+                }.WithRelayNetwork(
+                    string.IsNullOrEmpty(RelayRegion) || RelayRegion == "auto"
+                        ? new RelayNetworkOptions()  // Auto QoS discovery
+                        : new RelayNetworkOptions(RelayRegion)  // Fixed region
+                );
                 
                 currentUnitySession = await MultiplayerService.Instance.CreateSessionAsync(sessionOptions);
                 

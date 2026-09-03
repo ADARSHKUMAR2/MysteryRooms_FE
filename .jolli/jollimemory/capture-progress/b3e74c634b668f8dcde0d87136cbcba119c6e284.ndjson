@@ -1,6 +1,0 @@
-{"step":"start","hash":"b3e74c634b668f8dcde0d87136cbcba119c6e284","ts":1788378363262}
-{"step":"diff","hash":"b3e74c634b668f8dcde0d87136cbcba119c6e284","ts":1788378363453,"data":{"filesChanged":5,"insertions":38,"deletions":14}}
-{"step":"references","hash":"b3e74c634b668f8dcde0d87136cbcba119c6e284","ts":1788378363501,"data":{"references":[],"notes":0}}
-{"step":"analyzing","hash":"b3e74c634b668f8dcde0d87136cbcba119c6e284","ts":1788378363501}
-{"step":"stored","hash":"b3e74c634b668f8dcde0d87136cbcba119c6e284","ts":1788378365640,"data":{"topics":0,"llmFailure":"No LLM provider available. Set an Anthropic API key (ANTHROPIC_API_KEY) or configure a Jolli Space API key (jolliApiKey)."}}
-{"step":"end","hash":"b3e74c634b668f8dcde0d87136cbcba119c6e284","ts":1788378365640,"terminal":true}

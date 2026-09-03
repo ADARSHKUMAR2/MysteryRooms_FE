@@ -73,7 +73,7 @@ public class FirstPersonController : MonoBehaviour
         if (playerCamera == null)
             playerCamera = Camera.main.transform;
 
-        Debug.Log("[FPC] Animator: " + (animator != null ? "YES -> " + animator.name : "NULL - assign in Inspector!"));
+        // Debug.Log("[FPC] Animator: " + (animator != null ? "YES -> " + animator.name : "NULL - assign in Inspector!"));
         if (animator != null)
         {
             Debug.Log("[FPC] Controller: " + (animator.runtimeAnimatorController != null ? animator.runtimeAnimatorController.name : "NONE - no controller set!"));
@@ -82,7 +82,7 @@ public class FirstPersonController : MonoBehaviour
             foreach (var p in parms) paramList += "'" + p.name + "' (" + p.type + ")  ";
             Debug.Log("[FPC] Animator parameters (" + parms.Length + "): " + paramList);
         }
-        Debug.Log("[FPC] walkSpeed=" + walkSpeed + "  moveAction bindings=" + moveAction.bindings.Count);
+        // Debug.Log("[FPC] walkSpeed=" + walkSpeed + "  moveAction bindings=" + moveAction.bindings.Count);
 
     }
 
@@ -107,7 +107,7 @@ public class FirstPersonController : MonoBehaviour
             float hSpeed = new Vector3(ccVel.x, 0f, ccVel.z).magnitude;
             float animSpeed = animator != null ? animator.GetFloat("Speed") : -1f;
             string stateName = animator != null ? animator.GetCurrentAnimatorStateInfo(0).shortNameHash.ToString() : "no animator";
-            Debug.Log("[FPC] input=" + moveInput + "  CC.vel=" + ccVel + "  hSpeed=" + hSpeed.ToString("F2") + "  animSpeed=" + animSpeed.ToString("F2") + "  grounded=" + characterController.isGrounded + "  state=" + stateName + "  paused=" + isGamePaused);
+            // Debug.Log("[FPC] input=" + moveInput + "  CC.vel=" + ccVel + "  hSpeed=" + hSpeed.ToString("F2") + "  animSpeed=" + animSpeed.ToString("F2") + "  grounded=" + characterController.isGrounded + "  state=" + stateName + "  paused=" + isGamePaused);
             if (moveInput.magnitude > 0.1f && hSpeed < 0.05f)
                 Debug.LogWarning("[FPC] Input received but CC velocity is ~0! Collider stuck or CC disabled?");
             if (moveInput.magnitude > 0.1f && animSpeed < 0.05f && animator != null)

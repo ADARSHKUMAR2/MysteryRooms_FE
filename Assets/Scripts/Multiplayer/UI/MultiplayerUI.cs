@@ -44,6 +44,10 @@ namespace MysteryRooms.Multiplayer.UI
         [Header("Replay Existing UI")]
         [SerializeField] private TMP_Dropdown recentMysteriesDropdown;
         [SerializeField] private Button replayMysteryButton;
+        [Header("Relay Settings")]
+        [SerializeField] private TMP_Dropdown relayRegionDropdown;
+        private string selectedRelayRegion = "ap";
+
         
         private List<MysteryConfigData> recentMysteriesCache = new List<MysteryConfigData>();
 
@@ -132,6 +136,36 @@ namespace MysteryRooms.Multiplayer.UI
             {
                 replayMysteryButton.onClick.AddListener(OnReplayMysteryClicked);
             }
+            
+            // Relay region dropdown
+            if (relayRegionDropdown != null)
+            {
+                relayRegionDropdown.ClearOptions();
+                relayRegionDropdown.AddOptions(new List<string> { "Auto (Slow)", "US", "Europe", "Asia" });
+                relayRegionDropdown.value = 1;  // Default to US
+                relayRegionDropdown.onValueChanged.AddListener(OnRelayRegionChanged);
+                OnRelayRegionChanged(1);  // Set initial value
+            }
+        }
+
+        private void OnRelayRegionChanged(int index)
+        {
+            selectedRelayRegion = index switch
+            {
+                0 => null,      // Auto (uses QoS - slow)
+                1 => "us-east1",      // US
+                2 => "europe-north1",      // Europe
+                3 => "asia-south1",      // Asia-Pacific
+                _ => null
+            };
+
+            Debug.Log($"Relay region changed to: {selectedRelayRegion ?? "Auto"}");
+    
+            // Set it on the session manager
+            if (sessionManager != null)
+            {
+                sessionManager.RelayRegion = selectedRelayRegion;
+            }
         }
 
         private void FetchRecentMysteries()
@@ -203,6 +237,12 @@ namespace MysteryRooms.Multiplayer.UI
                 return;
             }
 
+            // Set relay region before starting host flow
+            if (sessionManager != null)
+            {
+                sessionManager.RelayRegion = selectedRelayRegion;
+            }
+
             ShowLoadingPanel("Setting up existing mystery session...");
 
             // Call the new Host method!
@@ -237,6 +277,12 @@ namespace MysteryRooms.Multiplayer.UI
                 return;
             }
 
+            // Set relay region before starting host flow
+            if (sessionManager != null)
+            {
+                sessionManager.RelayRegion = selectedRelayRegion;
+            }
+            
             ShowLoadingPanel("Generating mystery and creating session...");
 
             // Start host flow
