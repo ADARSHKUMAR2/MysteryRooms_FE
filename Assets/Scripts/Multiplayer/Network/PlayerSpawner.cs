@@ -19,7 +19,7 @@ namespace MysteryRooms.Multiplayer.Network
                 NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
                 
                 // Also listen for clients that join late (after the scene is already loaded)
-                NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+                // NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
                 
             }
         }
@@ -38,6 +38,10 @@ namespace MysteryRooms.Multiplayer.Network
                 {
                     SpawnPlayerForClient(clientId);
                 }
+
+
+                // Only NOW subscribe for late joiners — avoids double-spawning the host
+                NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             }
         }
 

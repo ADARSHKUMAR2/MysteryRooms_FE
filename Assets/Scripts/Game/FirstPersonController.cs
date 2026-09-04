@@ -46,13 +46,15 @@ public class FirstPersonController : MonoBehaviour
 
     void Awake()
     {
-        var playerMap = inputActions.FindActionMap("Player", throwIfNotFound: true);
+        // Clone the asset so each player instance gets its own independent copy.
+        // Without this, Disable() on one instance disables the shared asset for ALL instances.
+        var clonedActions = Instantiate(inputActions);
+        var playerMap = clonedActions.FindActionMap("Player", throwIfNotFound: true);
 
         moveAction   = playerMap.FindAction("Move",   throwIfNotFound: true);
         lookAction   = playerMap.FindAction("Look",   throwIfNotFound: true);
         sprintAction = playerMap.FindAction("Sprint", throwIfNotFound: true);
 
-        // Apply any previously saved sensitivity settings immediately on spawn
         ApplySavedSettings();
     }
 
