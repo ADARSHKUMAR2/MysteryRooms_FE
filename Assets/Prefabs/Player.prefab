@@ -2652,6 +2652,7 @@ MonoBehaviour:
   interactionSystem: {fileID: 4846059629024824909}
   playerCamera: {fileID: 3998966648398151052}
   playerName: Player
+  animator: {fileID: 8533402450859035703}
 --- !u!114 &8339158095056631586
 MonoBehaviour:
   m_ObjectHideFlags: 0

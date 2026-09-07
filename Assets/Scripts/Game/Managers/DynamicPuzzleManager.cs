@@ -297,7 +297,10 @@ namespace MysteryRooms.Game.Managers
             if (randomizeSocketPlacement)
             {
                 // Shuffle the available sockets randomly
-                searchList = roomConfig.availableSockets.OrderBy(x => System.Guid.NewGuid()).ToList();
+                // Seed from the mystery ID so all clients produce the SAME shuffle
+                int seed = currentMystery.mystery_id.GetHashCode();
+                var rng = new System.Random(seed);
+                searchList = roomConfig.availableSockets.OrderBy(x => rng.Next()).ToList();
             }
             else
             {

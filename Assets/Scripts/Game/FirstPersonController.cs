@@ -288,4 +288,6 @@ public class FirstPersonController : MonoBehaviour
     }
 
     public bool IsPaused() => isGamePaused;
+
+    public float GetCurrentSpeed() => lastMoveVector.magnitude;
 }
