@@ -1,6 +1,14 @@
 ﻿<Solution>
+  <Project Path="MysteryRooms.Main.csproj" />
+  <Project Path="MysteryRooms.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="MysteryRooms.Game.Data.csproj" />
   <Project Path="Google.GoogleSignIn.csproj" />
+  <Project Path="MysteryRooms.Authentication.csproj" />
+  <Project Path="MysteryRooms.Config.csproj" />
+  <Project Path="MysteryRooms.Game.Services.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="MysteryRooms.Multiplayer.UI.Editor.csproj" />
   <Project Path="Firebase.App.Internal.csproj" />
+  <Project Path="MysteryRooms.Game.Interfaces.csproj" />
 </Solution>

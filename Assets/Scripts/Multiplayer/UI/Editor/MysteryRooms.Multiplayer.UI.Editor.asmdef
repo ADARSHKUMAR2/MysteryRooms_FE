@@ -1,0 +1,19 @@
+{
+    "name": "MysteryRooms.Multiplayer.UI.Editor",
+    "rootNamespace": "MysteryRooms.Multiplayer.UI.Editor",
+    "references": [
+        "MysteryRooms.Main",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
