@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: BackendConfig
   m_EditorClassIdentifier: KBC.Config::KBC.Config.BackendConfig
   localGatewayURL: http://192.168.1.7:8000
-  productionGatewayURL: https://mysteryrooms-auth-ppljpeuuvq-el.a.run.app
+  localAuthURL: http://localhost:8001
+  localGameURL: http://localhost:8002
+  productionGatewayURL: https://mysteryrooms-gateway-295626488640.asia-south1.run.app
+  productionAuthURL: https://mysteryrooms-auth-295626488640.asia-south1.run.app
+  productionGameURL: https://mysteryrooms-game-295626488640.asia-south1.run.app
   useProductionEnv: 1

@@ -14,7 +14,7 @@ namespace MysteryRooms.Game.Services
     {
         [SerializeField] private BackendConfig backendConfig;
 
-        private string GameServiceURL => $"{backendConfig.CurrentURL}/game";
+        private string GameServiceURL => $"{backendConfig.CurrentGameURL}/game";
 
         private void Awake()
         {

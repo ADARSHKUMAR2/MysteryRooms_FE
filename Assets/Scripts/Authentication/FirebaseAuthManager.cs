@@ -32,8 +32,7 @@ namespace MysteryRooms.Authentication
         [SerializeField] private MysteryRooms.Config.BackendConfig backendConfig;
 
         // And update the BackendURL property to read from the config:
-        private string BackendURL => backendConfig != null ? backendConfig.CurrentURL : "http://localhost:8000";
-
+        private string BackendURL => backendConfig != null ? backendConfig.CurrentAuthURL : "http://localhost:8001";
 
         #region Google Sign-In Configuration
         [Header("Google Sign-In Configuration")]
@@ -119,8 +118,8 @@ namespace MysteryRooms.Authentication
 
                     // --- ADD THIS TEMPORARILY FOR TESTING ---
                     #if UNITY_EDITOR
-                    auth.SignOut();
-                    Debug.Log("⚠️ FORCED SIGNOUT FOR TESTING");
+                    // auth.SignOut();
+                    // Debug.Log("⚠️ FORCED SIGNOUT FOR TESTING");
                     #endif
                     // ----------------------------------------
                     
