@@ -31,6 +31,7 @@ namespace MysteryRooms.Multiplayer.Core
         public event Action<string> OnConnectionFailed;
         public event Action<string> OnPlayerJoined;
         public event Action<string> OnPlayerLeft;
+        public event Action OnHostDisconnected;
 
         private ISession currentUnitySession;
         private object currentVoiceChannel;
@@ -210,6 +211,70 @@ namespace MysteryRooms.Multiplayer.Core
             await Task.CompletedTask;
         }
 
+        private void OnClientDisconnected(ulong clientId)
+        {
+            Log($"Client {clientId} disconnected");
+            
+            // Check if the disconnected client is the server/host
+            // ServerClientId is a static property on NetworkManager
+            if (clientId == NetworkManager.ServerClientId)
+            {
+                Log("⚠️ HOST HAS DISCONNECTED! Cleaning up...");
+                Status = ConnectionStatus.Disconnected;
+                CurrentSession = null;
+                
+                // Let clients know host disconnected before full shutdown
+                OnHostDisconnected?.Invoke();
+                
+                return;
+            }
+            
+            if (clientId != NetworkManager.Singleton.LocalClientId)
+            {
+                if (CurrentSession != null)
+                {
+                    CurrentSession.currentPlayerCount = NetworkManager.Singleton.ConnectedClientsIds.Count;
+                    CurrentSession.playerIds.Remove($"Player_{clientId}");
+                }
+                OnPlayerLeft?.Invoke($"Player_{clientId}");
+            }
+            else
+            {
+                Status = ConnectionStatus.Disconnected;
+                CurrentSession = null;
+            }
+        }
+
+
+        private void HandleHostDisconnect()
+        {
+            Log("🚨 Host disconnected - cleaning up session for clients");
+            
+            // Notify listeners that host left
+            OnHostDisconnected?.Invoke();
+            
+            // Clean up local state
+            Status = ConnectionStatus.Disconnected;
+            CurrentSession = null;
+            
+            // Shutdown network manager
+            if (NetworkManager.Singleton != null)
+            {
+                NetworkManager.Singleton.Shutdown();
+            }
+            
+            // Return to lobby scene
+            StartCoroutine(ReturnToLobbyAfterHostDisconnect());
+        }
+
+        private IEnumerator ReturnToLobbyAfterHostDisconnect()
+        {
+            // Wait a frame to let network cleanup happen
+            yield return new WaitForSeconds(1f);
+            
+            Log("Returning to lobby after host disconnect...");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
+        }
 
         private async Task SetupVoiceChatAsync()
         {
@@ -247,25 +312,6 @@ namespace MysteryRooms.Multiplayer.Core
             {
                 playersJoinedSinceStart++;            // ✅ Only count actual remote joins
                 OnPlayerJoined?.Invoke($"Player_{clientId}");
-            }
-        }
-
-        private void OnClientDisconnected(ulong clientId)
-        {
-            Log($"Client {clientId} disconnected");
-            if (clientId != NetworkManager.Singleton.LocalClientId)
-            {
-                if (CurrentSession != null)
-                {
-                    CurrentSession.currentPlayerCount = NetworkManager.Singleton.ConnectedClientsIds.Count;
-                    CurrentSession.playerIds.Remove($"Player_{clientId}");
-                }
-                OnPlayerLeft?.Invoke($"Player_{clientId}");
-            }
-            else
-            {
-                Status = ConnectionStatus.Disconnected;
-                CurrentSession = null;
             }
         }
 

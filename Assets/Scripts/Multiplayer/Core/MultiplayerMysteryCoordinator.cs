@@ -63,6 +63,7 @@ namespace MysteryRooms.Multiplayer.Core
                 sessionManager.OnSessionCreated += OnSessionCreatedHandler;
                 sessionManager.OnSessionJoined += OnSessionJoinedHandler;
                 sessionManager.OnConnectionFailed += OnConnectionFailedHandler;
+                sessionManager.OnHostDisconnected += OnHostDisconnectedHandler;
                 SceneManager.sceneLoaded += OnSceneLoaded;
             }
         }
@@ -336,6 +337,12 @@ namespace MysteryRooms.Multiplayer.Core
             OnError?.Invoke(errorMessage);
         }
 
+        private void OnHostDisconnectedHandler()
+        {
+            Debug.LogWarning("📢 Host has disconnected from the session!");
+            OnError?.Invoke("Host has left the game. Returning to lobby...");
+        }
+
         #endregion
 
         #region Cleanup
@@ -347,6 +354,7 @@ namespace MysteryRooms.Multiplayer.Core
                 sessionManager.OnSessionCreated -= OnSessionCreatedHandler;
                 sessionManager.OnSessionJoined -= OnSessionJoinedHandler;
                 sessionManager.OnConnectionFailed -= OnConnectionFailedHandler;
+                sessionManager.OnHostDisconnected -= OnHostDisconnectedHandler; 
                 SceneManager.sceneLoaded -= OnSceneLoaded;
             }
         }

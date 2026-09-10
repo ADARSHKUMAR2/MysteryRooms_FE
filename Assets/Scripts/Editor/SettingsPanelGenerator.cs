@@ -130,6 +130,16 @@ namespace MysteryRooms.Editor
                 new Color(0.3f, 0.3f, 0.3f, 1f)
             );
 
+            // Leave Game button (new!)
+            GameObject leaveGameBtn = CreateButton(
+                contentBox.transform,
+                "LeaveGameButton",
+                "🚪 Leave Game",
+                new Vector2(0, -120),
+                new Vector2(300, 50),
+                new Color(0.8f, 0.3f, 0.3f, 1f)
+            );
+
             // 9. Add the SettingsPanelUI component and wire everything automatically
             var settingsScript = panelRoot.AddComponent<MysteryRooms.UI.SettingsPanelUI>();
 
