@@ -4,6 +4,7 @@ using TMPro;
 using MysteryRooms.Multiplayer.Core;
 using MysteryRooms.Game.Data;
 using System.Collections.Generic;
+using MysteryRooms.Game.Services;
 
 namespace MysteryRooms.Multiplayer.UI
 {
@@ -171,27 +172,47 @@ namespace MysteryRooms.Multiplayer.UI
         private void FetchRecentMysteries()
         {
             if (recentMysteriesDropdown == null) return;
-            
-            recentMysteriesDropdown.ClearOptions();
-            recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Loading recent mysteries..."));
-            recentMysteriesDropdown.RefreshShownValue();
 
-            // Requires MysteryAPIService reference (you can grab it from mystery loader or add a reference)
+            // 1. Try to load from cache immediately
+            var cached = MysteryCacheService.LoadFromCache();
+            if (cached != null && cached.Count > 0)
+            {
+                recentMysteriesCache = cached;
+                PopulateRecentMysteriesDropdown();
+                Debug.Log($"<color=cyan>[UI] Loaded {cached.Count} mysteries instantly from local cache.</color>");
+            }
+            else
+            {
+                recentMysteriesDropdown.ClearOptions();
+                recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Loading recent mysteries..."));
+                recentMysteriesDropdown.RefreshShownValue();
+            }
+
+            // 2. Fetch fresh data from API in background
             var apiService = FindObjectOfType<MysteryRooms.Game.Services.MysteryAPIService>();
             if (apiService != null)
             {
                 StartCoroutine(apiService.GetRecentMysteries(
                     limit: 10,
-                    onSuccess: mysteries => 
+                    onSuccess: fetchedMysteries =>
                     {
-                        recentMysteriesCache = mysteries;
-                        PopulateRecentMysteriesDropdown();
+                        // 3. Only update UI if the data changed
+                        if (recentMysteriesCache == null || recentMysteriesCache.Count != fetchedMysteries.Count)
+                        {
+                            recentMysteriesCache = fetchedMysteries;
+                            PopulateRecentMysteriesDropdown();
+                            MysteryCacheService.SaveToCache(fetchedMysteries); // Save new cache
+                            Debug.Log($"<color=green>[UI] Background fetch found new mysteries. Dropdown updated.</color>");
+                        }
                     },
-                    onError: error => 
+                    onError: error =>
                     {
-                        recentMysteriesDropdown.ClearOptions();
-                        recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Failed to load mysteries"));
-                        recentMysteriesDropdown.RefreshShownValue();
+                        if (recentMysteriesCache == null || recentMysteriesCache.Count == 0)
+                        {
+                            recentMysteriesDropdown.ClearOptions();
+                            recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Failed to load mysteries"));
+                            recentMysteriesDropdown.RefreshShownValue();
+                        }
                     }
                 ));
             }

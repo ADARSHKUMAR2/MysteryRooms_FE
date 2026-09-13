@@ -245,15 +245,25 @@ namespace MysteryRooms.Game.Managers
 
                 StartCoroutine(apiService.StartSession(
                     request,
-                    session => 
+                    session =>
                     {
                         currentSessionId = session.session_id;
                         Debug.Log($"<color=green>Session Started: {currentSessionId}</color>");
-                        
+
+                        // Initialize the singleton that the Victory UI relies on!
+                        if (MysteryRooms.Game.Services.GameSessionManager.Instance != null)
+                        {
+                            MysteryRooms.Game.Services.GameSessionManager.Instance.InitSession(
+                                session.session_id, 
+                                currentMystery.mystery_id, 
+                                currentMystery
+                            );
+                        }
+
                         // Sync the session ID to clients
                         if (netPuzzleManager != null)
                         {
-                            netPuzzleManager.backendSessionId.Value = new FixedString64Bytes(currentSessionId);
+                            netPuzzleManager.backendSessionId.Value = new Unity.Collections.FixedString64Bytes(currentSessionId);
                         }
                     },
                     error => Debug.LogError($"Failed to start session: {error}")
@@ -496,6 +506,19 @@ namespace MysteryRooms.Game.Managers
                 player_id = solverFirebaseUid, // Uses the actual solver's UID!
                 time_elapsed_seconds = (int)(Time.time - sessionStartTime)
             };
+
+            // NEW: Register the solved puzzle locally so the Victory door knows it's unlocked
+            var solvedPuzzleData = currentMystery.puzzles.FirstOrDefault(p => p.id == puzzleID);
+            if (solvedPuzzleData != null)
+            {
+                if (MysteryRooms.Game.Services.GameSessionManager.Instance != null)
+                {
+                    MysteryRooms.Game.Services.GameSessionManager.Instance.MarkPuzzleSolved(
+                        puzzleID, 
+                        solvedPuzzleData.unlocks
+                    );
+                }
+            }
             
             StartCoroutine(apiService.UpdateSession(request, s => {}, e => {}));
         }
