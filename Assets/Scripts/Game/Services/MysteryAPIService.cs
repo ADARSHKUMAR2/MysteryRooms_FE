@@ -239,7 +239,7 @@ namespace MysteryRooms.Game.Services
             Action<List<MysteryConfigData>> onSuccess,
             Action<string> onError)
         {
-            string url = $"{GameServiceURL}/mysteries?limit={limit}";
+            string url = $"{GameServiceURL}/mysterises?limit={limit}";
 
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {

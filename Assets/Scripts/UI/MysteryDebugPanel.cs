@@ -30,7 +30,7 @@ namespace MysteryRooms.UI
         [SerializeField] private TMP_Dropdown recentMysteriesDropdown;
         [SerializeField] private Button replayMysteryButton;
         private List<MysteryConfigData> recentMysteriesCache = new List<MysteryConfigData>();
-
+        private bool isSearching = false;
 
         private void Start()
         {
@@ -61,6 +61,7 @@ namespace MysteryRooms.UI
             if (replayMysteryButton != null)
             {
                 replayMysteryButton.onClick.AddListener(OnReplayMysteryClicked);
+                replayMysteryButton.interactable = false;
             }
 
             if (mysteryLoader != null)
@@ -76,6 +77,7 @@ namespace MysteryRooms.UI
         {
             if (apiService == null) return;
             
+            if (replayMysteryButton != null) replayMysteryButton.interactable = false;
             SetStatus("Fetching recent mysteries...");
             
             StartCoroutine(apiService.GetRecentMysteries(
@@ -129,7 +131,9 @@ namespace MysteryRooms.UI
             if (selectedIndex >= 0 && selectedIndex < recentMysteriesCache.Count)
             {
                 MysteryConfigData selectedMystery = recentMysteriesCache[selectedIndex];
-                
+
+                isSearching = true;
+                if (replayMysteryButton != null) replayMysteryButton.interactable = false;
                 SetStatus($"Loading selected mystery: {selectedMystery.share_code}...");
                 mysteryLoader.OnJoinByCodeClicked(selectedMystery.share_code);
             }
@@ -147,6 +151,8 @@ namespace MysteryRooms.UI
                 return;
             }
 
+            isSearching = true;
+            if (replayMysteryButton != null) replayMysteryButton.interactable = false;
             SetStatus($"🔍 Searching for mystery code: {code}...");
             mysteryLoader.OnJoinByCodeClicked(code);
         }
@@ -173,6 +179,7 @@ namespace MysteryRooms.UI
 
         private void OnMysteryLoaded(MysteryConfigData mystery)
         {
+            isSearching = false;
             SetStatus("✅ Mystery loaded successfully!");
             
             if (mysteryInfoText != null)
@@ -232,6 +239,9 @@ namespace MysteryRooms.UI
 
         private void OnMysteryLoadFailed(string error)
         {
+            isSearching = false;
+            if (replayMysteryButton != null && recentMysteriesCache.Count > 0)
+                replayMysteryButton.interactable = true;
             SetStatus($"❌ Failed: {error}");
         }
 
