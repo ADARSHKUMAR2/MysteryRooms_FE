@@ -233,8 +233,11 @@ namespace MysteryRooms.Game.Managers
         {
             if (apiService == null || currentMystery == null) return;
 
-            // Only the server starts a NEW session
-            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+            // Run if we are the server OR if we are running solo (no NetworkManager active)
+            bool isSoloMode = NetworkManager.Singleton == null;
+            bool isServer = NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer;
+
+            if (isSoloMode || isServer)
             {
                 StartSessionRequest request = new StartSessionRequest
                 {
@@ -251,14 +254,18 @@ namespace MysteryRooms.Game.Managers
                         Debug.Log($"<color=green>Session Started: {currentSessionId}</color>");
 
                         // Initialize the singleton that the Victory UI relies on!
-                        if (MysteryRooms.Game.Services.GameSessionManager.Instance != null)
+                        // Auto-create if not in the scene
+                        if (MysteryRooms.Game.Services.GameSessionManager.Instance == null)
                         {
-                            MysteryRooms.Game.Services.GameSessionManager.Instance.InitSession(
-                                session.session_id, 
-                                currentMystery.mystery_id, 
-                                currentMystery
-                            );
+                            GameObject gsm = new GameObject("GameSessionManager");
+                            gsm.AddComponent<MysteryRooms.Game.Services.GameSessionManager>();
+                            Debug.Log("<color=orange>[DynamicPuzzleManager] Auto-created GameSessionManager!</color>");
                         }
+                        MysteryRooms.Game.Services.GameSessionManager.Instance.InitSession(
+                            session.session_id,
+                            currentMystery.mystery_id,
+                            currentMystery
+                        );
 
                         // Sync the session ID to clients
                         if (netPuzzleManager != null)
@@ -509,15 +516,12 @@ namespace MysteryRooms.Game.Managers
 
             // NEW: Register the solved puzzle locally so the Victory door knows it's unlocked
             var solvedPuzzleData = currentMystery.puzzles.FirstOrDefault(p => p.id == puzzleID);
-            if (solvedPuzzleData != null)
+            if (solvedPuzzleData != null && MysteryRooms.Game.Services.GameSessionManager.Instance != null)
             {
-                if (MysteryRooms.Game.Services.GameSessionManager.Instance != null)
-                {
-                    MysteryRooms.Game.Services.GameSessionManager.Instance.MarkPuzzleSolved(
-                        puzzleID, 
-                        solvedPuzzleData.unlocks
-                    );
-                }
+                MysteryRooms.Game.Services.GameSessionManager.Instance.MarkPuzzleSolved(
+                    puzzleID,
+                    solvedPuzzleData.unlocks
+                );
             }
             
             StartCoroutine(apiService.UpdateSession(request, s => {}, e => {}));
