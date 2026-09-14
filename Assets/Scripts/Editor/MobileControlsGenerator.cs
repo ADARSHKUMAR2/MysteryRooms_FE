@@ -23,8 +23,9 @@ public class MobileControlsGenerator : EditorWindow
         GUILayout.Space(10);
 
         EditorGUILayout.HelpBox(
-            "This will generate a Canvas with two Joysticks (Movement & Look) " +
-            "and an Interact button mapped to the 'E' key.\n\n" +
+            "This will generate a Canvas with two Joysticks (Movement & Look), " +
+            "an Interact button, a Hint button, and a Rotate Mirror button " +
+            "mapped to the 'E' key.\\n\\n" +
             "It uses Unity's New Input System 'On-Screen Controls' to fake keyboard/gamepad inputs.", 
             MessageType.Info
         );
@@ -70,11 +71,14 @@ public class MobileControlsGenerator : EditorWindow
         // 5. Create Hint Button ('H' Key)
         CreateButton(canvasObj.transform, "HintButton", new Vector2(-450, 600), "<Keyboard>/h", "Hint [H]");
 
-        // 6. Add the script that hides this on PC
+        // 6. Create Rotate Mirror Button (Custom - maps to a custom input action)
+        CreateRotateMirrorButton(canvasObj.transform, "RotateMirrorButton", new Vector2(-650, 600), "Rotate\nMirror");
+
+        // 7. Add the script that hides this on PC
         CreateMobileToggleScript(canvasObj);
 
         Selection.activeGameObject = canvasObj;
-        EditorUtility.DisplayDialog("Success", "Mobile Controls Generated!\n\nIf you want to test them in the Editor, temporarily disable the 'Mobile Control Toggle' script on the Canvas.", "Awesome!");
+        EditorUtility.DisplayDialog("Success", "Mobile Controls Generated!\\n\\nIf you want to test them in the Editor, temporarily disable the 'Mobile Control Toggle' script on the Canvas.", "Awesome!");
 #endif
     }
 
@@ -86,17 +90,9 @@ public class MobileControlsGenerator : EditorWindow
         bgObj.transform.SetParent(parent, false);
         
         RectTransform bgRect = bgObj.AddComponent<RectTransform>();
-        // Anchor to bottom corners based on X position
-        if (anchoredPos.x > 0)
-        {
-            bgRect.anchorMin = new Vector2(0, 0);
-            bgRect.anchorMax = new Vector2(0, 0);
-        }
-        else
-        {
-            bgRect.anchorMin = new Vector2(1, 0);
-            bgRect.anchorMax = new Vector2(1, 0);
-        }
+        // Anchor to bottom left
+        bgRect.anchorMin = new Vector2(0, 0);
+        bgRect.anchorMax = new Vector2(0, 0);
         bgRect.anchoredPosition = anchoredPos;
         bgRect.sizeDelta = new Vector2(300, 300);
 
@@ -160,6 +156,40 @@ public class MobileControlsGenerator : EditorWindow
         SerializedObject so = new SerializedObject(osBtn);
         so.FindProperty("m_ControlPath").stringValue = controlPath;
         so.ApplyModifiedProperties();
+    }
+
+    private void CreateRotateMirrorButton(Transform parent, string name, Vector2 anchoredPos, string label)
+    {
+        GameObject btnObj = new GameObject(name);
+        btnObj.transform.SetParent(parent, false);
+        
+        RectTransform btnRect = btnObj.AddComponent<RectTransform>();
+        btnRect.anchorMin = new Vector2(1, 0);
+        btnRect.anchorMax = new Vector2(1, 0);
+        btnRect.anchoredPosition = anchoredPos;
+        btnRect.sizeDelta = new Vector2(150, 150);
+
+        Image btnImg = btnObj.AddComponent<Image>();
+        btnImg.color = new Color(0.2f, 0.7f, 0.9f, 0.8f); // Cyan/blue color to differentiate
+
+        // Add Text
+        GameObject textObj = new GameObject("Text");
+        textObj.transform.SetParent(btnObj.transform, false);
+        RectTransform txtRect = textObj.AddComponent<RectTransform>();
+        txtRect.anchorMin = Vector2.zero; txtRect.anchorMax = Vector2.one;
+        txtRect.offsetMin = txtRect.offsetMax = Vector2.zero;
+        
+        TextMeshProUGUI tmp = textObj.AddComponent<TextMeshProUGUI>();
+        tmp.text = label;
+        tmp.color = Color.white;
+        tmp.alignment = TextAlignmentOptions.Center;
+        tmp.fontSize = 20;
+
+        // Add the MobileRotateMirrorButton component (custom script)
+        btnObj.AddComponent<MobileRotateMirrorButton>();
+        
+        // Start inactive - will be activated when mirror is picked up
+        btnObj.SetActive(false);
     }
 #endif
 

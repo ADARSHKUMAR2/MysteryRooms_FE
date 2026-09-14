@@ -9,7 +9,7 @@ public class MobileControlToggle : MonoBehaviour
                         Application.platform == RuntimePlatform.IPhonePlayer;
 
         // If we are in the editor, you can force them ON for testing by uncommenting this:
-        // isMobile = true;
+        isMobile = true;  // ← UNCOMMENT THIS TO TEST MOBILE CONTROLS IN EDITOR
 
         gameObject.SetActive(isMobile);
     }

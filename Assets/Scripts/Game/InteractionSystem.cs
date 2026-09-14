@@ -33,7 +33,7 @@ public class InteractionSystem : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactionRange, interactableLayer))
         {
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-            SymbolButton symbolButton = hit.collider.GetComponent<SymbolButton>(); // ADD THIS
+            SymbolButton symbolButton = hit.collider.GetComponent<SymbolButton>();
 
             if (interactable != null)
             {
@@ -54,9 +54,11 @@ public class InteractionSystem : MonoBehaviour
                     {
                         currentSymbolButton.OnHoverEnter();
                     }
-                    
-                    ShowPrompt(interactable.GetInteractionPrompt());
                 }
+                
+                // UPDATE PROMPT EVERY FRAME (even if it's the same interactable)
+                // This allows the prompt to change dynamically (e.g., mirror pick up/drop)
+                ShowPrompt(interactable.GetInteractionPrompt());
                 return;
             }
         }

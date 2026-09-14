@@ -43,6 +43,9 @@ public class FirstPersonController : MonoBehaviour
     private InputAction sprintAction;
     private float _logTimer = 0f;
     private const float LOG_INTERVAL = 0.5f;
+    // Mobile detection
+    private bool _isMobileDevice = false;
+    private Vector2 _lastMoveInput = Vector2.zero;
 
     void Awake()
     {
@@ -54,6 +57,10 @@ public class FirstPersonController : MonoBehaviour
         moveAction   = playerMap.FindAction("Move",   throwIfNotFound: true);
         lookAction   = playerMap.FindAction("Look",   throwIfNotFound: true);
         sprintAction = playerMap.FindAction("Sprint", throwIfNotFound: true);
+
+        // Detect if this is a mobile device
+        _isMobileDevice = Application.platform == RuntimePlatform.Android || 
+                        Application.platform == RuntimePlatform.IPhonePlayer;
 
         ApplySavedSettings();
     }
@@ -179,6 +186,33 @@ public class FirstPersonController : MonoBehaviour
     private void HandleLook()
     {
         Vector2 lookDelta = lookAction.ReadValue<Vector2>();
+        
+        // On mobile, filter out left stick input from camera control
+        // The left stick should ONLY control movement, not the camera
+        if (_isMobileDevice)
+        {
+            // Store the current move input
+            _lastMoveInput = moveAction.ReadValue<Vector2>();
+            
+            // If the look input matches the move input (same magnitude and direction),
+            // it's likely from the left joystick being miswired to the Look action.
+            // We ignore it by checking if look and move are similar.
+            float lookMagnitude = lookDelta.magnitude;
+            float moveMagnitude = _lastMoveInput.magnitude;
+            
+            // If both have significant input and are very similar, filter out the look
+            if (lookMagnitude > 0.1f && moveMagnitude > 0.1f)
+            {
+                // Calculate the angle between look and move vectors
+                float dotProduct = Vector2.Dot(lookDelta.normalized, _lastMoveInput.normalized);
+                // If they're pointing in almost the same direction (dot product > 0.95),
+                // this is likely the left stick being sent to look - ignore it
+                if (dotProduct > 0.95f)
+                {
+                    return; // Skip camera update for this frame
+                }
+            }
+        }
 
         // Gamepad / OnScreenStick outputs normalised values (magnitude <= 1).
         // Mouse outputs raw pixel deltas which are almost always > 1.
@@ -195,6 +229,7 @@ public class FirstPersonController : MonoBehaviour
 
         transform.Rotate(Vector3.up * lookDelta.x);
     }
+
 
     // ─── Movement ─────────────────────────────────────────────────────────────
 
