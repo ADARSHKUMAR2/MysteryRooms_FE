@@ -24,6 +24,7 @@ namespace MysteryRooms.Authentication
         private FirebaseAuth auth;
         private FirebaseUser currentUser;
         private string cachedGoogleEmail;
+        private bool isVerifyingToken = false;
         #endregion
 
         #region Backend Configuration
@@ -31,8 +32,7 @@ namespace MysteryRooms.Authentication
         [SerializeField] private MysteryRooms.Config.BackendConfig backendConfig;
 
         // And update the BackendURL property to read from the config:
-        private string BackendURL => backendConfig != null ? backendConfig.CurrentURL : "http://localhost:8000";
-
+        private string BackendURL => backendConfig != null ? backendConfig.CurrentAuthURL : "http://localhost:8001";
 
         #region Google Sign-In Configuration
         [Header("Google Sign-In Configuration")]
@@ -73,6 +73,21 @@ namespace MysteryRooms.Authentication
                 Destroy(gameObject);
             }
         }
+
+        private void Start()
+        {
+            // Firebase tokens expire after 60 minutes.
+            // Refresh silently every 50 minutes so API calls never get a 401.
+            InvokeRepeating(nameof(RefreshTokenSilently), 50 * 60f, 50 * 60f);
+        }
+
+        private void RefreshTokenSilently()
+        {
+            if (currentUser == null) return;
+            Debug.Log("🔄 Auto-refreshing Firebase token...");
+            RefreshTokenAndStore();
+        }
+        
         #endregion
 
         #region Firebase Initialization
@@ -100,6 +115,13 @@ namespace MysteryRooms.Authentication
                         WebClientId = webClientId
                     };
                     Debug.Log("✅ Google Sign-In configured");
+
+                    // --- ADD THIS TEMPORARILY FOR TESTING ---
+                    #if UNITY_EDITOR
+                    // auth.SignOut();
+                    // Debug.Log("⚠️ FORCED SIGNOUT FOR TESTING");
+                    #endif
+                    // ----------------------------------------
                     
                     // Check if user already signed in
                     if (auth.CurrentUser != null)
@@ -289,6 +311,13 @@ namespace MysteryRooms.Authentication
                 OnAuthenticationError?.Invoke("No user logged in");
                 return;
             }
+
+            if (isVerifyingToken) 
+            {
+                Debug.LogWarning("⚠️ Already verifying token, ignoring duplicate request.");
+                return;
+            }
+            isVerifyingToken = true;
             
             Debug.Log("🎫 Getting Firebase ID token...");
             
@@ -296,6 +325,7 @@ namespace MysteryRooms.Authentication
             {
                 if (task.IsCanceled || task.IsFaulted)
                 {
+                    isVerifyingToken = false;
                     Debug.LogError("❌ Failed to get Firebase token");
                     OnAuthenticationError?.Invoke("Failed to get authentication token");
                     return;
@@ -317,6 +347,10 @@ namespace MysteryRooms.Authentication
         {
             string url = $"{BackendURL}/auth/verify";
             PlayerPrefs.SetString("FirebaseToken", firebaseToken);
+
+            int maxRetries = 4;
+            int retryCount = 0;
+            bool isSuccess = false;
             
             // Create request body matching your backend's TokenVerifyRequest model
             var requestBody = new TokenVerifyRequest
@@ -329,75 +363,95 @@ namespace MysteryRooms.Authentication
             string json = JsonConvert.SerializeObject(requestBody);
             Debug.Log($"📤 Sending token to backend: {url}");
             
-            // Create UnityWebRequest
-            using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+            while (!isSuccess && retryCount <= maxRetries)
             {
-                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-                request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-                request.downloadHandler = new DownloadHandlerBuffer();
-                request.SetRequestHeader("Content-Type", "application/json");
-                
-                // Send request
-                yield return request.SendWebRequest();
-                
-                if (request.result == UnityWebRequest.Result.Success)
+                // Create UnityWebRequest
+                using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
                 {
-                    Debug.Log($"✅ Backend response received");
+                    byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+                    request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                    request.downloadHandler = new DownloadHandlerBuffer();
+                    request.SetRequestHeader("Content-Type", "application/json");
                     
-                    try
+                    // Send request
+                    yield return request.SendWebRequest();
+                    
+                    if (request.result == UnityWebRequest.Result.Success)
                     {
-                        // Parse user profile from backend
-                        UserProfile profile = JsonConvert.DeserializeObject<UserProfile>(request.downloadHandler.text);
+                        isSuccess = true;
+                        Debug.Log($"✅ Backend response received");
                         
-                        // Store locally for offline access
-                        SaveUserProfileLocally(profile);
-
-                        // --- NEW: Initialize UserSession ---
-                        if (UserSession.Instance == null)
+                        try
                         {
-                            GameObject sessionObj = new GameObject("UserSession");
-                            sessionObj.AddComponent<UserSession>();
-                        }
+                            // Parse user profile from backend
+                            UserProfile profile = JsonConvert.DeserializeObject<UserProfile>(request.downloadHandler.text);
+                            
+                            // Store locally for offline access
+                            SaveUserProfileLocally(profile);
 
-                        // Determine display name (fallback to email prefix if null)
-                        string displayName = !string.IsNullOrEmpty(profile.display_name) 
-                            ? profile.display_name 
-                            : profile.email.Split('@')[0];
+                            // --- NEW: Initialize UserSession ---
+                            if (UserSession.Instance == null)
+                            {
+                                GameObject sessionObj = new GameObject("UserSession");
+                                sessionObj.AddComponent<UserSession>();
+                            }
 
-                        // Store data in singleton so the Game scene can use it
-                        UserSession.Instance.SetUserData(
-                            userId: profile.firebase_uid, 
-                            username: displayName, 
-                            email: profile.email, 
-                            token: firebaseToken
-                        );
-                        // ------------------------------------
+                            // Determine display name (fallback to email prefix if null)
+                            string displayName = !string.IsNullOrEmpty(profile.display_name) 
+                                ? profile.display_name 
+                                : profile.email.Split('@')[0];
 
-                        // Notify listeners
-                        OnAuthenticationSuccess?.Invoke(profile);
+                            // Store data in singleton so the Game scene can use it
+                            UserSession.Instance.SetUserData(
+                                userId: profile.firebase_uid, 
+                                username: displayName, 
+                                email: profile.email, 
+                                token: firebaseToken
+                            );
+                            // ------------------------------------
+
+                            // Notify listeners
+                            OnAuthenticationSuccess?.Invoke(profile);
+                            
+                            Debug.Log($"🎮 User Profile Loaded:");
+                            Debug.Log($"   Email: {profile.email}");
+                            Debug.Log($"   Coins: {profile.coins}");
+                            Debug.Log($"   Games Played: {profile.games_played}");
+                            Debug.Log($"   Games Won: {profile.games_won}");
+
+                            // --- NEW: Load Game Scene ---
+                            Debug.Log("🚀 Loading Game Scene...");
+                            isVerifyingToken = false;
+                            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); // Ensure "Game" is in your Build Settings!
                         
-                        Debug.Log($"🎮 User Profile Loaded:");
-                        Debug.Log($"   Email: {profile.email}");
-                        Debug.Log($"   Coins: {profile.coins}");
-                        Debug.Log($"   Games Played: {profile.games_played}");
-                        Debug.Log($"   Games Won: {profile.games_won}");
-
-                        // --- NEW: Load Game Scene ---
-                        Debug.Log("🚀 Loading Game Scene...");
-                        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); // Ensure "Game" is in your Build Settings!
-                    
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogError($"❌ Failed to parse backend response: {e.Message}");
+                            OnAuthenticationError?.Invoke("Failed to load user profile");
+                        }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        Debug.LogError($"❌ Failed to parse backend response: {e.Message}");
-                        OnAuthenticationError?.Invoke("Failed to load user profile");
+                        Debug.LogError($"❌ Backend error: {request.error}");
+                        Debug.LogError($"   Response: {request.downloadHandler.text}");
+                        retryCount++;
+                        Debug.LogWarning($"⚠️ Backend error on attempt {retryCount}: {request.error}");
+                        
+                        if (retryCount < maxRetries) 
+                        {
+                            float waitTime = Mathf.Pow(2, retryCount); // 2s, 4s, 8s...
+                            Debug.Log($"⏳ Waiting {waitTime} seconds before retrying...");
+                            yield return new WaitForSeconds(waitTime);
+                        }
+                        else
+                        {
+                            Debug.LogError($"❌ Max retries reached. Final error: {request.error}");
+                            isVerifyingToken = false;
+                            OnAuthenticationError?.Invoke($"Backend error: {request.error}. Please try again later.");
+                            break; 
+                        }
                     }
-                }
-                else
-                {
-                    Debug.LogError($"❌ Backend error: {request.error}");
-                    Debug.LogError($"   Response: {request.downloadHandler.text}");
-                    OnAuthenticationError?.Invoke($"Backend error: {request.error}");
                 }
             }
         }
@@ -445,6 +499,36 @@ namespace MysteryRooms.Authentication
                 }
             }
         }
+
+        public void RefreshTokenAndStore(System.Action<string> onSuccess = null)
+        {
+            if (currentUser == null) return;
+
+            currentUser.TokenAsync(forceRefresh: true).ContinueWithOnMainThread(task =>
+            {
+                // BEFORE: task.IsCompletedSuccessfully  ← may not exist in Unity's .NET version
+                // AFTER:  !task.IsFaulted && !task.IsCanceled
+                if (!task.IsFaulted && !task.IsCanceled)
+                {
+                    string freshToken = task.Result;
+                    PlayerPrefs.SetString("FirebaseToken", freshToken);
+                    PlayerPrefs.Save();
+                    UserSession.Instance?.SetUserData(
+                        UserSession.Instance.UserId,
+                        UserSession.Instance.Username,
+                        UserSession.Instance.Email,
+                        freshToken
+                    );
+                    Debug.Log("🔄 Firebase token refreshed successfully");
+                    onSuccess?.Invoke(freshToken);
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Token refresh failed: " + task.Exception?.Message);
+                }
+            });
+        }
+
         #endregion
 
         #region Utility Methods

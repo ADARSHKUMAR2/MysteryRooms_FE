@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using MysteryRooms.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviour
@@ -11,61 +12,162 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Look Settings")]
     public float mouseSensitivity = 0.1f;
+    public float joystickLookSensitivity = 180f;
     public Transform playerCamera;
 
+    [Header("Input Actions")]
+    [SerializeField] private InputActionAsset inputActions;
+    
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
+    [Header("Body Rotation")]
+    [SerializeField] private Transform bodyPivot;
+    [SerializeField] private float bodyRotationSpeed = 10f;
+
+    [Header("Footstep Audio")]
+    [SerializeField] private AudioSource footstepAudioSource;
+    [SerializeField] private AudioClip footstepClip;
+    [SerializeField] private float walkStepInterval  = 0.5f;   // seconds between steps at walk speed
+    [SerializeField] private float sprintStepInterval = 0.35f; // seconds between steps at sprint speed
+    private float _footstepTimer = 0f;
     private CharacterController characterController;
     private Vector3 velocity;
     private float cameraPitch = 0f;
     private bool isGamePaused = false;
+    private Vector3 lastMoveVector;
+
+    // Input Action references
+    private InputAction moveAction;
+    private InputAction lookAction;
+    private InputAction sprintAction;
+    private float _logTimer = 0f;
+    private const float LOG_INTERVAL = 0.5f;
+    // Mobile detection
+    private bool _isMobileDevice = false;
+    private Vector2 _lastMoveInput = Vector2.zero;
+
+    void Awake()
+    {
+        // Clone the asset so each player instance gets its own independent copy.
+        // Without this, Disable() on one instance disables the shared asset for ALL instances.
+        var clonedActions = Instantiate(inputActions);
+        var playerMap = clonedActions.FindActionMap("Player", throwIfNotFound: true);
+
+        moveAction   = playerMap.FindAction("Move",   throwIfNotFound: true);
+        lookAction   = playerMap.FindAction("Look",   throwIfNotFound: true);
+        sprintAction = playerMap.FindAction("Sprint", throwIfNotFound: true);
+
+        // Detect if this is a mobile device
+        _isMobileDevice = Application.platform == RuntimePlatform.Android || 
+                        Application.platform == RuntimePlatform.IPhonePlayer;
+
+        ApplySavedSettings();
+    }
+
+    void OnEnable()
+    {
+        moveAction.Enable();
+        lookAction.Enable();
+        sprintAction.Enable();
+    }
+
+    void OnDisable()
+    {
+        moveAction.Disable();
+        lookAction.Disable();
+        sprintAction.Disable();
+    }
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
 
-        // Lock the cursor to the center of the screen and hide it
         LockCursor();
 
         if (playerCamera == null)
-        {
             playerCamera = Camera.main.transform;
+
+        // Debug.Log("[FPC] Animator: " + (animator != null ? "YES -> " + animator.name : "NULL - assign in Inspector!"));
+        if (animator != null)
+        {
+            Debug.Log("[FPC] Controller: " + (animator.runtimeAnimatorController != null ? animator.runtimeAnimatorController.name : "NONE - no controller set!"));
+            var parms = animator.parameters;
+            string paramList = "";
+            foreach (var p in parms) paramList += "'" + p.name + "' (" + p.type + ")  ";
+            Debug.Log("[FPC] Animator parameters (" + parms.Length + "): " + paramList);
         }
+        // Debug.Log("[FPC] walkSpeed=" + walkSpeed + "  moveAction bindings=" + moveAction.bindings.Count);
+
     }
 
     void Update()
     {
         HandlePauseInput();
 
-        // Only allow movement and looking if game is NOT paused
         if (!isGamePaused)
         {
-            HandleMouseLook();
+            HandleLook();
             HandleMovement();
         }
+
+        UpdateAnimations();
+
+        _logTimer += Time.deltaTime;
+        if (_logTimer >= LOG_INTERVAL)
+        {
+            _logTimer = 0f;
+            Vector2 moveInput = moveAction.ReadValue<Vector2>();
+            Vector3 ccVel = characterController.velocity;
+            float hSpeed = new Vector3(ccVel.x, 0f, ccVel.z).magnitude;
+            float animSpeed = animator != null ? animator.GetFloat("Speed") : -1f;
+            string stateName = animator != null ? animator.GetCurrentAnimatorStateInfo(0).shortNameHash.ToString() : "no animator";
+            // Debug.Log("[FPC] input=" + moveInput + "  CC.vel=" + ccVel + "  hSpeed=" + hSpeed.ToString("F2") + "  animSpeed=" + animSpeed.ToString("F2") + "  grounded=" + characterController.isGrounded + "  state=" + stateName + "  paused=" + isGamePaused);
+            if (moveInput.magnitude > 0.1f && hSpeed < 0.05f)
+                Debug.LogWarning("[FPC] Input received but CC velocity is ~0! Collider stuck or CC disabled?");
+            if (moveInput.magnitude > 0.1f && animSpeed < 0.05f && animator != null)
+                Debug.LogWarning("[FPC] Input received but animSpeed is ~0! Speed param missing or CC not moving.");
+        }
     }
+
+    // ─── Public API (called by SettingsPanelUI) ───────────────────────────────
+
+    /// <summary>
+    /// Lets external systems (e.g. SettingsPanelUI) pause or resume the player.
+    /// </summary>
+    public void SetPaused(bool paused)
+    {
+        isGamePaused = paused;
+
+        if (isGamePaused)
+            UnlockCursor();
+        else
+            LockCursor();
+    }
+
+    // ─── Pause (keyboard Escape) ──────────────────────────────────────────────
 
     private void HandlePauseInput()
     {
         if (Keyboard.current == null) return;
 
-        // Toggle pause when Escape is pressed
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            isGamePaused = !isGamePaused;
+            // If the settings panel is open, Escape should close it, not toggle pause.
+            // SettingsPanelUI.Close() will call SetPaused(false) itself.
+            SettingsPanelUI settingsPanel = FindFirstObjectByType<SettingsPanelUI>();
+            if (settingsPanel != null && settingsPanel.gameObject.activeSelf)
+            {
+                settingsPanel.Close();
+                return;
+            }
 
-            if (isGamePaused)
-            {
-                UnlockCursor();
-                Debug.Log("Game Paused - Cursor Unlocked");
-                // TODO: Show pause menu UI here
-            }
-            else
-            {
-                LockCursor();
-                Debug.Log("Game Resumed - Cursor Locked");
-                // TODO: Hide pause menu UI here
-            }
+            SetPaused(!isGamePaused);
+            Debug.Log(isGamePaused ? "Game Paused" : "Game Resumed");
         }
     }
+
+    // ─── Cursor ───────────────────────────────────────────────────────────────
 
     private void LockCursor()
     {
@@ -79,62 +181,148 @@ public class FirstPersonController : MonoBehaviour
         Cursor.visible = true;
     }
 
-    private void HandleMouseLook()
+    // ─── Look ─────────────────────────────────────────────────────────────────
+
+    private void HandleLook()
     {
-        // Check if mouse is available in new Input System
-        if (Mouse.current == null) return;
+        Vector2 lookDelta = lookAction.ReadValue<Vector2>();
+        
+        // On mobile, filter out left stick input from camera control
+        // The left stick should ONLY control movement, not the camera
+        if (_isMobileDevice)
+        {
+            // Store the current move input
+            _lastMoveInput = moveAction.ReadValue<Vector2>();
+            
+            // If the look input matches the move input (same magnitude and direction),
+            // it's likely from the left joystick being miswired to the Look action.
+            // We ignore it by checking if look and move are similar.
+            float lookMagnitude = lookDelta.magnitude;
+            float moveMagnitude = _lastMoveInput.magnitude;
+            
+            // If both have significant input and are very similar, filter out the look
+            if (lookMagnitude > 0.1f && moveMagnitude > 0.1f)
+            {
+                // Calculate the angle between look and move vectors
+                float dotProduct = Vector2.Dot(lookDelta.normalized, _lastMoveInput.normalized);
+                // If they're pointing in almost the same direction (dot product > 0.95),
+                // this is likely the left stick being sent to look - ignore it
+                if (dotProduct > 0.95f)
+                {
+                    return; // Skip camera update for this frame
+                }
+            }
+        }
 
-        // Get mouse delta from new Input System
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivity;
+        // Gamepad / OnScreenStick outputs normalised values (magnitude <= 1).
+        // Mouse outputs raw pixel deltas which are almost always > 1.
+        bool isJoystickInput = lookDelta.magnitude <= 1.0f && lookDelta.magnitude > 0f;
 
-        // Rotate the camera up/down (pitch)
-        cameraPitch -= mouseDelta.y;
-        cameraPitch = Mathf.Clamp(cameraPitch, -90f, 90f); 
+        if (isJoystickInput)
+            lookDelta *= joystickLookSensitivity * Time.deltaTime;
+        else
+            lookDelta *= mouseSensitivity;
+
+        cameraPitch -= lookDelta.y;
+        cameraPitch = Mathf.Clamp(cameraPitch, -90f, 90f);
         playerCamera.localRotation = Quaternion.Euler(cameraPitch, 0f, 0f);
 
-        // Rotate the player body left/right (yaw)
-        transform.Rotate(Vector3.up * mouseDelta.x);
+        transform.Rotate(Vector3.up * lookDelta.x);
     }
+
+
+    // ─── Movement ─────────────────────────────────────────────────────────────
 
     private void HandleMovement()
     {
-        // Check if keyboard is available in new Input System
-        if (Keyboard.current == null) return;
+        Vector2 inputDir = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
+        float currentSpeed = sprintAction.IsPressed() ? sprintSpeed : walkSpeed;
 
-        // Get keyboard input manually (W, A, S, D)
-        float moveX = 0f;
-        float moveZ = 0f;
-
-        if (Keyboard.current.dKey.isPressed) moveX += 1f;
-        if (Keyboard.current.aKey.isPressed) moveX -= 1f;
-        if (Keyboard.current.wKey.isPressed) moveZ += 1f;
-        if (Keyboard.current.sKey.isPressed) moveZ -= 1f;
-
-        // Normalize to prevent diagonal speed boost
-        Vector2 inputDir = new Vector2(moveX, moveZ).normalized;
-
-        // Determine current speed (Shift to sprint)
-        float currentSpeed = Keyboard.current.leftShiftKey.isPressed ? sprintSpeed : walkSpeed;
-
-        // Calculate movement direction relative to where the player is looking
         Vector3 move = transform.right * inputDir.x + transform.forward * inputDir.y;
+        lastMoveVector = move * currentSpeed; // Store the intended movement
         
-        // Apply horizontal movement
-        characterController.Move(move * currentSpeed * Time.deltaTime);
+        characterController.Move(lastMoveVector * Time.deltaTime);
 
-        // Apply gravity
         if (characterController.isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f; // Small downward force to keep grounded
-        }
+            velocity.y = -2f;
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
+
+        // Rotate body pivot toward movement direction (what remote players see)
+        RotateBodyTowardMovement(move);
+        HandleFootsteps(inputDir);
     }
 
-    // Public method so other scripts can check if game is paused
-    public bool IsPaused()
+    private void RotateBodyTowardMovement(Vector3 horizontalMove)
     {
-        return isGamePaused;
+        if (bodyPivot == null) return;
+
+        // Only rotate if we're actually moving
+        Vector3 flatMove = new Vector3(horizontalMove.x, 0f, horizontalMove.z);
+        if (flatMove.sqrMagnitude < 0.01f) return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(flatMove, Vector3.up);
+        // bodyPivot rotation is in LOCAL space relative to Player root,
+        // so we need world-space target converted to local
+        bodyPivot.rotation = Quaternion.Slerp(
+            bodyPivot.rotation,
+            targetRotation,
+            bodyRotationSpeed * Time.deltaTime
+        );
     }
+
+    private void HandleFootsteps(Vector2 inputDir)
+    {
+        bool isMoving   = inputDir.sqrMagnitude > 0.01f;
+        bool isGrounded = characterController.isGrounded;
+        bool isSprinting = sprintAction.IsPressed();
+
+        if (isMoving && isGrounded)
+        {
+            _footstepTimer -= Time.deltaTime;
+            if (_footstepTimer <= 0f)
+            {
+                if (footstepAudioSource != null && footstepClip != null)
+                    footstepAudioSource.PlayOneShot(footstepClip);
+
+                _footstepTimer = isSprinting ? sprintStepInterval : walkStepInterval;
+            }
+        }
+        else
+        {
+            // Reset timer so first step plays immediately when walking starts
+            _footstepTimer = 0f;
+        }
+    }
+
+    // ─── Settings ─────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Reads PlayerPrefs written by SettingsPanelUI and applies them.
+    /// Called in Awake so values are live from the first frame.
+    /// </summary>
+    private void ApplySavedSettings()
+    {
+        mouseSensitivity      = PlayerPrefs.GetFloat(SettingsPanelUI.PREF_MOUSE_SENS,    mouseSensitivity);
+        joystickLookSensitivity = PlayerPrefs.GetFloat(SettingsPanelUI.PREF_JOYSTICK_SENS, joystickLookSensitivity);
+        walkSpeed             = PlayerPrefs.GetFloat(SettingsPanelUI.PREF_WALK_SPEED,    walkSpeed);
+    }
+
+    private void UpdateAnimations()
+    {
+        if (animator == null) return;
+
+        // Use the intended movement speed, not CharacterController.velocity
+        float speed = lastMoveVector.magnitude;
+
+        // Debug.Log($"[FPC] UpdateAnimations: intended speed={speed:F2}, CC velocity={characterController.velocity.magnitude:F2}, grounded={characterController.isGrounded}");
+
+        animator.SetFloat("Speed", speed);
+        animator.SetBool("IsGrounded", characterController.isGrounded);
+    }
+
+    public bool IsPaused() => isGamePaused;
+
+    public float GetCurrentSpeed() => lastMoveVector.magnitude;
 }

@@ -5,6 +5,7 @@ using MysteryRooms.Game.Services;
 using MysteryRooms.Game.Managers;
 using MysteryRooms.Game.Data;
 using MysteryRooms.Multiplayer.Network;
+using UnityEngine.SceneManagement;
 
 namespace MysteryRooms.Multiplayer.Core
 {
@@ -35,6 +36,7 @@ namespace MysteryRooms.Multiplayer.Core
         // Events
         public event Action<MysteryConfigData> OnMysteryReady;
         public event Action<string> OnError;
+        private MysteryConfigData _pendingMystery;
 
         private void Awake()
         {
@@ -61,6 +63,8 @@ namespace MysteryRooms.Multiplayer.Core
                 sessionManager.OnSessionCreated += OnSessionCreatedHandler;
                 sessionManager.OnSessionJoined += OnSessionJoinedHandler;
                 sessionManager.OnConnectionFailed += OnConnectionFailedHandler;
+                sessionManager.OnHostDisconnected += OnHostDisconnectedHandler;
+                SceneManager.sceneLoaded += OnSceneLoaded;
             }
         }
 
@@ -142,7 +146,8 @@ namespace MysteryRooms.Multiplayer.Core
 
             // Step 3: Load the mystery into the scene
             Debug.Log("🎯 Step 3: Loading mystery into scene...");
-            mysteryLoader.LoadMysteryData(generatedMystery);
+            // mysteryLoader.LoadMysteryData(generatedMystery);
+            _pendingMystery = generatedMystery;
 
             NetworkedPuzzleManager.SetPendingBackendShareCode(generatedMystery.share_code);
 
@@ -155,7 +160,16 @@ namespace MysteryRooms.Multiplayer.Core
             Debug.Log("🎉 Host setup complete!");
         }
 
-                /// <summary>
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == "Game" && _pendingMystery != null)
+            {
+                mysteryLoader.LoadMysteryData(_pendingMystery);
+                _pendingMystery = null;
+            }
+        }
+
+        /// <summary>
         /// Host a multiplayer session using an EXISTING mystery from the database
         /// </summary>
         public void HostExistingMystery(MysteryConfigData oldMystery, int players)
@@ -194,7 +208,8 @@ namespace MysteryRooms.Multiplayer.Core
 
             // Step 2: Load the mystery into the scene
             Debug.Log("🎯 Loading existing mystery into scene...");
-            mysteryLoader.LoadMysteryData(oldMystery);
+            // mysteryLoader.LoadMysteryData(oldMystery);
+            _pendingMystery = oldMystery;
 
             NetworkedPuzzleManager.SetPendingBackendShareCode(oldMystery.share_code);
 
@@ -283,7 +298,8 @@ namespace MysteryRooms.Multiplayer.Core
 
             // Step 3: Load the mystery into the scene
             Debug.Log("🎯 Step 3: Loading mystery into scene...");
-            mysteryLoader.LoadMysteryData(fetchedMystery);
+            // mysteryLoader.LoadMysteryData(fetchedMystery);
+            _pendingMystery = fetchedMystery;
 
             isLoadingMystery = false;
             OnMysteryReady?.Invoke(fetchedMystery);
@@ -321,6 +337,12 @@ namespace MysteryRooms.Multiplayer.Core
             OnError?.Invoke(errorMessage);
         }
 
+        private void OnHostDisconnectedHandler()
+        {
+            Debug.LogWarning("📢 Host has disconnected from the session!");
+            OnError?.Invoke("Host has left the game. Returning to lobby...");
+        }
+
         #endregion
 
         #region Cleanup
@@ -332,6 +354,8 @@ namespace MysteryRooms.Multiplayer.Core
                 sessionManager.OnSessionCreated -= OnSessionCreatedHandler;
                 sessionManager.OnSessionJoined -= OnSessionJoinedHandler;
                 sessionManager.OnConnectionFailed -= OnConnectionFailedHandler;
+                sessionManager.OnHostDisconnected -= OnHostDisconnectedHandler; 
+                SceneManager.sceneLoaded -= OnSceneLoaded;
             }
         }
 

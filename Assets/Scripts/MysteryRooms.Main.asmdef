@@ -1,0 +1,28 @@
+{
+    "name": "MysteryRooms.Main",
+    "rootNamespace": "MysteryRooms",
+    "references": [
+        "MysteryRooms.Config",
+        "MysteryRooms.Authentication",
+        "MysteryRooms.Game.Data",
+        "MysteryRooms.Game.Services",
+        "MysteryRooms.Game.Interfaces",
+        "Unity.TextMeshPro",
+        "Unity.Netcode.Runtime",
+        "Unity.InputSystem",
+        "Unity.Services.Core",
+        "Unity.Services.Authentication",
+        "Unity.Services.Multiplayer",
+        "Unity.Services.Vivox",
+        "Unity.Collections"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

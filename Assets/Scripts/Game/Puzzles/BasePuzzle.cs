@@ -31,6 +31,10 @@ public abstract class BasePuzzle : NetworkBehaviour
     [Tooltip("Optional Light or GameObject that turns ON when puzzle is Unlocked, and OFF when Locked/Solved")]
     public GameObject puzzleHighlightLight;
 
+    [Header("Puzzle Audio")]
+    [SerializeField] private AudioSource puzzleAudioSource;
+    [SerializeField] private AudioClip puzzleSolvedClip;
+
     // Change this event to pass (puzzleID, clientId, firebaseUid)
     public event System.Action<string, ulong, string> OnPuzzleSolvedWithPlayer;
 
@@ -130,6 +134,9 @@ public abstract class BasePuzzle : NetworkBehaviour
             NetworkedScoreboard.Instance.IncrementPlayerScoreServerRpc(solverClientId);
         }
 
+        if (puzzleAudioSource != null && puzzleSolvedClip != null)
+            puzzleAudioSource.PlayOneShot(puzzleSolvedClip);
+
         // 2. Pass the data up the chain to DynamicPuzzleManager
         OnPuzzleSolvedWithPlayer?.Invoke(puzzleID, solverClientId, solverFirebaseUid);
     }
@@ -139,6 +146,13 @@ public abstract class BasePuzzle : NetworkBehaviour
     {
         currentState = newState;
         UpdateHighlightLight(); // Turn off light for all clients when solved!
+
+        // Play solved sound on ALL clients when puzzle is confirmed solved
+        if (newState == PuzzleState.Solved)
+        {
+            if (puzzleAudioSource != null && puzzleSolvedClip != null)
+                puzzleAudioSource.PlayOneShot(puzzleSolvedClip);
+        }   
     }
 
 

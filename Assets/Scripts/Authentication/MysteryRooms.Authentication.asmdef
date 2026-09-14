@@ -1,0 +1,19 @@
+{
+    "name": "MysteryRooms.Authentication",
+    "rootNamespace": "MysteryRooms.Authentication",
+    "references": [
+        "Unity.TextMeshPro",
+        "Firebase.App.Internal",
+        "Google.GoogleSignIn",
+        "MysteryRooms.Config"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -30,7 +30,7 @@ namespace MysteryRooms.UI
         [SerializeField] private TMP_Dropdown recentMysteriesDropdown;
         [SerializeField] private Button replayMysteryButton;
         private List<MysteryConfigData> recentMysteriesCache = new List<MysteryConfigData>();
-
+        private bool isSearching = false;
 
         private void Start()
         {
@@ -61,6 +61,7 @@ namespace MysteryRooms.UI
             if (replayMysteryButton != null)
             {
                 replayMysteryButton.onClick.AddListener(OnReplayMysteryClicked);
+                replayMysteryButton.interactable = false;
             }
 
             if (mysteryLoader != null)
@@ -75,9 +76,10 @@ namespace MysteryRooms.UI
         private void FetchRecentMysteries()
         {
             if (apiService == null) return;
-            
+
+            if (replayMysteryButton != null) replayMysteryButton.interactable = false;
             SetStatus("Fetching recent mysteries...");
-            
+
             StartCoroutine(apiService.GetRecentMysteries(
                 limit: 10,
                 onSuccess: (mysteries) =>
@@ -88,7 +90,18 @@ namespace MysteryRooms.UI
                 },
                 onError: (error) =>
                 {
-                    SetStatus($"Warning: Failed to fetch recent mysteries: {error}");
+                    Debug.LogWarning($"[MysteryDebugPanel] API fetch failed: {error}. Falling back to local data.");
+                    List<MysteryConfigData> fallback = MysteryCacheService.LoadFromCache();
+                    if (fallback != null && fallback.Count > 0)
+                    {
+                        recentMysteriesCache = fallback;
+                        PopulateDropdown();
+                        SetStatus("⚠️ Offline — showing saved mysteries.");
+                    }
+                    else
+                    {
+                        SetStatus("⚠️ No mysteries available. Generate one to get started!");
+                    }
                 }
             ));
         }
@@ -124,14 +137,19 @@ namespace MysteryRooms.UI
         private void OnReplayMysteryClicked()
         {
             if (recentMysteriesDropdown == null || recentMysteriesCache.Count == 0) return;
-            
+
             int selectedIndex = recentMysteriesDropdown.value;
             if (selectedIndex >= 0 && selectedIndex < recentMysteriesCache.Count)
             {
                 MysteryConfigData selectedMystery = recentMysteriesCache[selectedIndex];
-                
+
+                isSearching = true;
+                if (replayMysteryButton != null) replayMysteryButton.interactable = false;
                 SetStatus($"Loading selected mystery: {selectedMystery.share_code}...");
-                mysteryLoader.OnJoinByCodeClicked(selectedMystery.share_code);
+
+                // The full MysteryConfigData is already in memory from either the API
+                // or the local Resources fallback — load it directly, no API call needed.
+                mysteryLoader.LoadMysteryData(selectedMystery);
             }
         }
 
@@ -147,6 +165,8 @@ namespace MysteryRooms.UI
                 return;
             }
 
+            isSearching = true;
+            if (replayMysteryButton != null) replayMysteryButton.interactable = false;
             SetStatus($"🔍 Searching for mystery code: {code}...");
             mysteryLoader.OnJoinByCodeClicked(code);
         }
@@ -173,6 +193,7 @@ namespace MysteryRooms.UI
 
         private void OnMysteryLoaded(MysteryConfigData mystery)
         {
+            isSearching = false;
             SetStatus("✅ Mystery loaded successfully!");
             
             if (mysteryInfoText != null)
@@ -232,6 +253,9 @@ namespace MysteryRooms.UI
 
         private void OnMysteryLoadFailed(string error)
         {
+            isSearching = false;
+            if (replayMysteryButton != null && recentMysteriesCache.Count > 0)
+                replayMysteryButton.interactable = true;
             SetStatus($"❌ Failed: {error}");
         }
 

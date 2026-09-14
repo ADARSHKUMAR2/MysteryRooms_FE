@@ -1,0 +1,63 @@
+{
+  "mysteries": [
+    {
+      "mystery_id": "starter-mystery-001",
+      "share_code": "START1",
+      "room": "mummy_tomb",
+      "difficulty": 1,
+      "theme": "ancient_curse",
+      "objective": "Learn the ropes! Solve the basic puzzles to escape the tomb.",
+      "time_limit_seconds": 1800,
+      "twist": "No twists here, just a straightforward escape!",
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "puzzles": [
+        {
+          "id": "entrance_statue",
+          "type": "rotating_statue",
+          "position": "entrance_hall",
+          "config": {
+            "correctRotationSteps": 2
+          },
+          "dependencies": [],
+          "unlocks": [
+            "chest_lock"
+          ],
+          "hint": "Face the guardian statue towards the East."
+        },
+        {
+          "id": "chest_lock",
+          "type": "combination_lock",
+          "position": "main_chamber",
+          "config": {
+            "correctCombination": "314"
+          },
+          "dependencies": [
+            "entrance_statue"
+          ],
+          "unlocks": [
+            "victory"
+          ],
+          "hint": "The code is written on the scroll near the statue base."
+        }
+      ],
+      "clues": [
+        {
+          "id": "statue_clue",
+          "type": "inscription",
+          "location": "entrance_wall",
+          "content": "The guardian slumbers until he faces the rising sun (turn 2 times).",
+          "related_puzzle": "entrance_statue",
+          "requires_puzzle_solved": ""
+        },
+        {
+          "id": "chest_clue",
+          "type": "hidden_note",
+          "location": "statue_base",
+          "content": "A rusted lock guards the exit. The combination is 3-1-4.",
+          "related_puzzle": "chest_lock",
+          "requires_puzzle_solved": "entrance_statue"
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using MysteryRooms.Multiplayer.Network;
+using UnityEngine.EventSystems;
 public class InteractionSystem : MonoBehaviour
 {
     [Header("Raycast Settings")]
@@ -11,6 +12,9 @@ public class InteractionSystem : MonoBehaviour
 
     [Header("UI References")]
     public TextMeshProUGUI interactionPromptText;
+    [Header("Interaction Audio")]
+    [SerializeField] private AudioSource interactionAudioSource;
+    [SerializeField] private AudioClip interactionSoundClip;
 
     private IInteractable currentInteractable;
     private SymbolButton currentSymbolButton;
@@ -29,7 +33,7 @@ public class InteractionSystem : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactionRange, interactableLayer))
         {
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-            SymbolButton symbolButton = hit.collider.GetComponent<SymbolButton>(); // ADD THIS
+            SymbolButton symbolButton = hit.collider.GetComponent<SymbolButton>();
 
             if (interactable != null)
             {
@@ -50,9 +54,11 @@ public class InteractionSystem : MonoBehaviour
                     {
                         currentSymbolButton.OnHoverEnter();
                     }
-                    
-                    ShowPrompt(interactable.GetInteractionPrompt());
                 }
+                
+                // UPDATE PROMPT EVERY FRAME (even if it's the same interactable)
+                // This allows the prompt to change dynamically (e.g., mirror pick up/drop)
+                ShowPrompt(interactable.GetInteractionPrompt());
                 return;
             }
         }
@@ -73,11 +79,40 @@ public class InteractionSystem : MonoBehaviour
         // Check if E key was pressed
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
+            // CRITICAL FIX: Don't process E key if typing in an input field
+            if (IsTypingInInputField())
+            {
+                return;
+            }
+
             if (currentInteractable != null)
             {
                 currentInteractable.Interact();
+                // Play interaction sound on every E press
+                if (interactionAudioSource != null && interactionSoundClip != null)
+                    interactionAudioSource.PlayOneShot(interactionSoundClip);
+
             }
         }
+    }
+
+    /// <summary>
+    /// Check if the player is currently typing in a UI input field
+    /// </summary>
+    private bool IsTypingInInputField()
+    {
+        // Check if EventSystem exists and has a selected GameObject
+        if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null)
+        {
+            // Check if the selected object is a TMP_InputField
+            TMP_InputField inputField = EventSystem.current.currentSelectedGameObject.GetComponent<TMP_InputField>();
+            if (inputField != null && inputField.isFocused)
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     private void ShowPrompt(string text)

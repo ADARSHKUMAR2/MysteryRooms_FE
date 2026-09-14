@@ -19,6 +19,14 @@ namespace MysteryRooms.Multiplayer.Network
 
         [Header("Player Info")]
         [SerializeField] private string playerName = "Player";
+        [Header("Animation Sync")]
+        [SerializeField] private Animator animator;
+
+        private NetworkVariable<float> netSpeed = new NetworkVariable<float>(
+            0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+        private NetworkVariable<bool> netIsGrounded = new NetworkVariable<bool>(
+            true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         // Network variables (automatically synced across clients)
         private NetworkVariable<bool> isInteracting = new NetworkVariable<bool>();
@@ -45,6 +53,12 @@ namespace MysteryRooms.Multiplayer.Network
                 DisableRemotePlayerControls();
             }
 
+            if (!IsOwner)
+            {
+                netSpeed.OnValueChanged      += (_, val) => { if (animator) animator.SetFloat("Speed", val); };
+                netIsGrounded.OnValueChanged += (_, val) => { if (animator) animator.SetBool("IsGrounded", val); };
+            }
+
             Debug.Log($"NetworkedPlayer spawned. IsOwner: {IsOwner}, IsHost: {IsHost}, IsClient: {IsClient}");
         }
 
@@ -69,6 +83,17 @@ namespace MysteryRooms.Multiplayer.Network
             }
 
             Debug.Log("✅ Local player controls enabled");
+        }
+
+        private void Update()
+        {
+            if (!IsOwner || animator == null) return;
+
+            CharacterController cc = GetComponent<CharacterController>();
+            if (cc == null) return;
+
+            netSpeed.Value      = localController.GetCurrentSpeed();
+            netIsGrounded.Value = cc.isGrounded;
         }
 
         private void DisableRemotePlayerControls()

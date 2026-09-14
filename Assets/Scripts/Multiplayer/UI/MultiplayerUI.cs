@@ -4,6 +4,7 @@ using TMPro;
 using MysteryRooms.Multiplayer.Core;
 using MysteryRooms.Game.Data;
 using System.Collections.Generic;
+using MysteryRooms.Game.Services;
 
 namespace MysteryRooms.Multiplayer.UI
 {
@@ -44,6 +45,10 @@ namespace MysteryRooms.Multiplayer.UI
         [Header("Replay Existing UI")]
         [SerializeField] private TMP_Dropdown recentMysteriesDropdown;
         [SerializeField] private Button replayMysteryButton;
+        [Header("Relay Settings")]
+        [SerializeField] private TMP_Dropdown relayRegionDropdown;
+        private string selectedRelayRegion = "ap";
+
         
         private List<MysteryConfigData> recentMysteriesCache = new List<MysteryConfigData>();
 
@@ -132,32 +137,82 @@ namespace MysteryRooms.Multiplayer.UI
             {
                 replayMysteryButton.onClick.AddListener(OnReplayMysteryClicked);
             }
+            
+            // Relay region dropdown
+            if (relayRegionDropdown != null)
+            {
+                relayRegionDropdown.ClearOptions();
+                relayRegionDropdown.AddOptions(new List<string> { "Auto (Slow)", "US", "Europe", "Asia" });
+                relayRegionDropdown.value = 1;  // Default to US
+                relayRegionDropdown.onValueChanged.AddListener(OnRelayRegionChanged);
+                OnRelayRegionChanged(1);  // Set initial value
+            }
+        }
+
+        private void OnRelayRegionChanged(int index)
+        {
+            selectedRelayRegion = index switch
+            {
+                0 => null,      // Auto (uses QoS - slow)
+                1 => "us-east1",      // US
+                2 => "europe-north1",      // Europe
+                3 => "asia-south1",      // Asia-Pacific
+                _ => null
+            };
+
+            Debug.Log($"Relay region changed to: {selectedRelayRegion ?? "Auto"}");
+    
+            // Set it on the session manager
+            if (sessionManager != null)
+            {
+                sessionManager.RelayRegion = selectedRelayRegion;
+            }
         }
 
         private void FetchRecentMysteries()
         {
             if (recentMysteriesDropdown == null) return;
-            
-            recentMysteriesDropdown.ClearOptions();
-            recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Loading recent mysteries..."));
-            recentMysteriesDropdown.RefreshShownValue();
 
-            // Requires MysteryAPIService reference (you can grab it from mystery loader or add a reference)
+            // 1. Try to load from cache immediately
+            var cached = MysteryCacheService.LoadFromCache();
+            if (cached != null && cached.Count > 0)
+            {
+                recentMysteriesCache = cached;
+                PopulateRecentMysteriesDropdown();
+                Debug.Log($"<color=cyan>[UI] Loaded {cached.Count} mysteries instantly from local cache.</color>");
+            }
+            else
+            {
+                recentMysteriesDropdown.ClearOptions();
+                recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Loading recent mysteries..."));
+                recentMysteriesDropdown.RefreshShownValue();
+            }
+
+            // 2. Fetch fresh data from API in background
             var apiService = FindObjectOfType<MysteryRooms.Game.Services.MysteryAPIService>();
             if (apiService != null)
             {
                 StartCoroutine(apiService.GetRecentMysteries(
                     limit: 10,
-                    onSuccess: mysteries => 
+                    onSuccess: fetchedMysteries =>
                     {
-                        recentMysteriesCache = mysteries;
-                        PopulateRecentMysteriesDropdown();
+                        // 3. Only update UI if the data changed
+                        if (recentMysteriesCache == null || recentMysteriesCache.Count != fetchedMysteries.Count)
+                        {
+                            recentMysteriesCache = fetchedMysteries;
+                            PopulateRecentMysteriesDropdown();
+                            MysteryCacheService.SaveToCache(fetchedMysteries); // Save new cache
+                            Debug.Log($"<color=green>[UI] Background fetch found new mysteries. Dropdown updated.</color>");
+                        }
                     },
-                    onError: error => 
+                    onError: error =>
                     {
-                        recentMysteriesDropdown.ClearOptions();
-                        recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Failed to load mysteries"));
-                        recentMysteriesDropdown.RefreshShownValue();
+                        if (recentMysteriesCache == null || recentMysteriesCache.Count == 0)
+                        {
+                            recentMysteriesDropdown.ClearOptions();
+                            recentMysteriesDropdown.options.Add(new TMP_Dropdown.OptionData("Failed to load mysteries"));
+                            recentMysteriesDropdown.RefreshShownValue();
+                        }
                     }
                 ));
             }
@@ -203,6 +258,12 @@ namespace MysteryRooms.Multiplayer.UI
                 return;
             }
 
+            // Set relay region before starting host flow
+            if (sessionManager != null)
+            {
+                sessionManager.RelayRegion = selectedRelayRegion;
+            }
+
             ShowLoadingPanel("Setting up existing mystery session...");
 
             // Call the new Host method!
@@ -237,6 +298,12 @@ namespace MysteryRooms.Multiplayer.UI
                 return;
             }
 
+            // Set relay region before starting host flow
+            if (sessionManager != null)
+            {
+                sessionManager.RelayRegion = selectedRelayRegion;
+            }
+            
             ShowLoadingPanel("Generating mystery and creating session...");
 
             // Start host flow
@@ -397,12 +464,16 @@ namespace MysteryRooms.Multiplayer.UI
         {
             Debug.Log($"📢 UI: Player joined - {playerId}");
             UpdatePlayerCount();
+            if (statusText != null)
+                statusText.text = $"{playerId} joined the lobby!";
         }
 
         private void OnPlayerLeft(string playerId)
         {
             Debug.Log($"📢 UI: Player left - {playerId}");
             UpdatePlayerCount();
+            if (statusText != null)
+                statusText.text = $"{playerId} left the lobby!";
         }
 
         #endregion
@@ -454,10 +525,12 @@ namespace MysteryRooms.Multiplayer.UI
 
         private void UpdatePlayerCount()
         {
-            if (sessionManager.CurrentSession != null && playerCountText != null)
-            {
-                playerCountText.text = $"Players: {sessionManager.CurrentSession.currentPlayerCount}/{sessionManager.CurrentSession.maxPlayers}";
-            }
+            if (playerCountText == null) return;
+
+            int current = sessionManager?.ConnectedPlayerCount ?? 0;
+            int max = sessionManager?.CurrentSession?.maxPlayers ?? 0;
+
+            playerCountText.text = $"Players: {current}/{max}";
         }
 
         #endregion

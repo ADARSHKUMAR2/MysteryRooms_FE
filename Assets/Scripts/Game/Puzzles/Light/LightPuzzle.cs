@@ -19,9 +19,9 @@ public class LightPuzzle : BasePuzzle
     
     [Header("Target Receptor")]
     public Transform targetCrystal;   
-    private bool hasTriggeredSolve = false;
 
     private NetworkVariable<bool> isSolvedNet = new NetworkVariable<bool>(false);
+    private bool hasTriggeredSolve = false; // Prevents spamming the ServerRpc
 
     protected override void Start()
     {
@@ -49,7 +49,6 @@ public class LightPuzzle : BasePuzzle
         
         if (isSolvedNet.Value) OnSolvedStateChanged(false, true);
         
-        // Ensure beam is properly updated immediately for late joiners
         UpdateBeamState();
     }
 
@@ -59,7 +58,6 @@ public class LightPuzzle : BasePuzzle
         base.OnNetworkDespawn();
     }
 
-    // Override SetLocked so we can trigger the beam to turn on/off instantly
     public override void SetLocked(bool locked)
     {
         base.SetLocked(locked);
@@ -68,33 +66,31 @@ public class LightPuzzle : BasePuzzle
 
     private void Update()
     {
-        // Continuously cast the beam ONLY if we are unlocked/in-progress and not solved
         if (currentState == PuzzleState.Unlocked || currentState == PuzzleState.InProgress)
         {
+            if (lineRenderer != null && !lineRenderer.enabled)
+            {
+                lineRenderer.enabled = true; 
+            }
+            
             CastBeam();
         }
     }
 
-    /// <summary>
-    /// Handles turning the visual beam entirely on or off based on puzzle state
-    /// </summary>
     private void UpdateBeamState()
     {
         if (lineRenderer == null) return;
 
         if (currentState == PuzzleState.Locked)
         {
-            // Turn beam completely off
             lineRenderer.positionCount = 0;
             lineRenderer.enabled = false;
         }
         else
         {
-            // Turn beam on
             lineRenderer.enabled = true;
             if (isSolvedNet.Value)
             {
-                // If already solved, we still want to draw it, but green/gold
                 CastBeam(); 
             }
         }
@@ -111,9 +107,6 @@ public class LightPuzzle : BasePuzzle
         Vector3 currentDirection = emissionPoint.forward;
         bool hitTarget = false;
 
-        // DEBUG: Track what we hit
-        GameObject lastHitObject = null;
-
         for (int i = 0; i < maxBounces; i++)
         {
             Ray ray = new Ray(currentPosition, currentDirection);
@@ -122,7 +115,6 @@ public class LightPuzzle : BasePuzzle
             if (Physics.Raycast(ray, out hit, maxDistance, reflectiveLayer | obstacleLayer))
             {
                 beamPositions.Add(hit.point);
-                lastHitObject = hit.collider.gameObject;
 
                 if (targetCrystal != null && hit.collider.transform == targetCrystal)
                 {
@@ -150,28 +142,25 @@ public class LightPuzzle : BasePuzzle
         lineRenderer.positionCount = beamPositions.Count;
         lineRenderer.SetPositions(beamPositions.ToArray());
 
-        // LOGGING BLOCK
         if (hitTarget)
         {
             if (!isSolvedNet.Value && !hasTriggeredSolve)
             {
-                hasTriggeredSolve = true; // Stop it from running 60 times a second!
-                Debug.Log($"[{puzzleID}] 🎯 Target hit! Triggering ServerRpc...");
+                hasTriggeredSolve = true;
                 
-                // Change color locally instantly
+                // Change color locally instantly for feedback
                 if (lineRenderer != null)
                 {
                     lineRenderer.startColor = Color.green;
                     lineRenderer.endColor = Color.green;
                 }
                 
-                // Tell Server to unlock
                 if (IsSpawned) SubmitLightSolvedServerRpc();
             }
         }
-        else if (lastHitObject != null)
+        else if (!hitTarget && hasTriggeredSolve && !isSolvedNet.Value)
         {
-            // If the player moved the mirror AWAY before the server confirmed it, reset the lock
+            // If the player moved the mirror away before the server confirmed it
             hasTriggeredSolve = false;
             if (lineRenderer != null)
             {
@@ -184,21 +173,16 @@ public class LightPuzzle : BasePuzzle
     [ServerRpc(RequireOwnership = false)]
     private void SubmitLightSolvedServerRpc(ServerRpcParams rpcParams = default)
     {
-        Debug.Log($"[{puzzleID}] 📡 ServerRpc Received! Attempting to unlock...");
-        
         if (!isSolvedNet.Value)
         {
             isSolvedNet.Value = true;
-            Debug.Log($"[{puzzleID}] 🔓 Puzzle officially marked as solved on Server!");
             InvokeOnPuzzleSolved(rpcParams.Receive.SenderClientId, "unknown_firebase_id");
         }
     }
 
-
-
     private void OnSolvedStateChanged(bool prev, bool current)
     {
-        if (current && !prev) // Only log once when it actually flips from false to true!
+        if (current && !prev)
         {
             Debug.Log($"🎉 [{puzzleID}] Light beam connected! Puzzle solved.");
             
@@ -219,6 +203,7 @@ public class LightPuzzle : BasePuzzle
     {
         base.ResetPuzzle();
         if (IsServer) isSolvedNet.Value = false;
+        hasTriggeredSolve = false;
         
         if (lineRenderer != null)
         {

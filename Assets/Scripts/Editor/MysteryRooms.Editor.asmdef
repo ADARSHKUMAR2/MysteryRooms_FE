@@ -1,0 +1,20 @@
+{
+    "name": "MysteryRooms.Editor",
+    "rootNamespace": "MysteryRooms.Editor",
+    "references": [
+        "MysteryRooms.Main",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
