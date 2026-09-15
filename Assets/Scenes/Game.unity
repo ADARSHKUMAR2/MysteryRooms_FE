@@ -17336,6 +17336,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rotateMirrorButton: {fileID: 372768693}
+  ignoreGamePause: 1
 --- !u!65 &348945708
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82192,7 +82193,7 @@ Transform:
   m_GameObject: {fileID: 1086063620}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.05958, y: -0.72749996, z: -4.625}
+  m_LocalPosition: {x: 3.21, y: -0.72749996, z: -4.625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -106359,6 +106360,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rotateMirrorButton: {fileID: 0}
+  ignoreGamePause: 1
 --- !u!65 &1216915827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -124353,7 +124355,7 @@ Transform:
   m_GameObject: {fileID: 1416610300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.421579, y: -0.72749996, z: -4.625}
+  m_LocalPosition: {x: 3.072, y: -0.72749996, z: -0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -145243,6 +145245,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rotateMirrorButton: {fileID: 372768693}
+  ignoreGamePause: 1
 --- !u!65 &1555939083
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -152606,6 +152609,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rotateMirrorButton: {fileID: 0}
+  ignoreGamePause: 1
 --- !u!65 &1611912693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -159917,6 +159921,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rotateMirrorButton: {fileID: 0}
+  ignoreGamePause: 1
 --- !u!65 &1677530834
 BoxCollider:
   m_ObjectHideFlags: 0
