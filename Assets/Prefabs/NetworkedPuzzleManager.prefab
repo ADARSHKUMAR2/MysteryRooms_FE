@@ -250,6 +250,8 @@ MonoBehaviour:
     physicalDoor: {fileID: 0}
   - connectionID: 5
     physicalDoor: {fileID: 0}
+  - connectionID: 1
+    physicalDoor: {fileID: 0}
   allPuzzles: []
   allInscriptions: []
   roomSpawnSockets:
@@ -281,6 +283,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 0}
     usedSockets: []
   - roomType: 6
     availableSockets:
@@ -289,6 +292,12 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     usedSockets: []
+  - roomType: 4
+    availableSockets:
+    - {fileID: 0}
+    - {fileID: 0}
+    usedSockets: []
+  randomizeSocketPlacement: 1
 --- !u!114 &4326217751524259187
 MonoBehaviour:
   m_ObjectHideFlags: 0

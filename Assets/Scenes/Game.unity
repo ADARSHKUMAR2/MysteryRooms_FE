@@ -42693,6 +42693,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2942173090375034943, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125148513489193838, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125148513489193838, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125148513489193838, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6054137609006905485, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
       propertyPath: m_LocalPosition.x
       value: 97.2
@@ -42787,6 +42803,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8282464113191480755, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
       insertIndex: -1
       addedObject: {fileID: 653523546}
+    - targetCorrespondingSourceObject: {fileID: 2942173090375034943, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1534529938}
+    - targetCorrespondingSourceObject: {fileID: 2942173090375034943, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1534529937}
   m_SourcePrefab: {fileID: -5645937942226959685, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
 --- !u!4 &653523543 stripped
 Transform:
@@ -138793,6 +138815,54 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1534529933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2942173090375034943, guid: a428e2b50b74240889c7b5e1a953e070, type: 3}
+  m_PrefabInstance: {fileID: 653523542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1534529937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534529933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3648861039
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 0
+  m_InScenePlaced: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &1534529938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534529933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f6999451a454405b17d736f4f8c9a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MysteryRooms.Main::NetworkedDoor
+  ShowTopMostFoldoutHeaderGroup: 1
+  requiresInteraction: 0
+  openSpeed: 2
+  closedPosition: {x: 0, y: 0, z: 0}
+  openPosition: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1538757523
 GameObject:
   m_ObjectHideFlags: 0
@@ -153841,10 +153911,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2145184306}
     - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
-      propertyPath: roomSpawnSockets.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
       propertyPath: mapDoors.Array.data[0].physicalDoor
       value: 
       objectReference: {fileID: 275046741}
@@ -153869,17 +153935,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 506979189}
     - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
-      propertyPath: roomSpawnSockets.Array.data[5].roomType
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
-      propertyPath: roomSpawnSockets.Array.data[3].availableSockets.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
-      propertyPath: roomSpawnSockets.Array.data[5].availableSockets.Array.size
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: mapDoors.Array.data[6].physicalDoor
+      value: 
+      objectReference: {fileID: 1534529938}
     - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
       propertyPath: 'roomSpawnSockets.Array.data[0].availableSockets.Array.data[0]'
       value: 
@@ -153976,14 +154034,6 @@ PrefabInstance:
       propertyPath: 'roomSpawnSockets.Array.data[5].availableSockets.Array.data[1]'
       value: 
       objectReference: {fileID: 1613749920}
-    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
-      propertyPath: 'roomSpawnSockets.Array.data[5].availableSockets.Array.data[2]'
-      value: 
-      objectReference: {fileID: 726975925}
-    - target: {fileID: 7311903972575083571, guid: c5e009182805446e999fb4908073c6c7, type: 3}
-      propertyPath: 'roomSpawnSockets.Array.data[5].availableSockets.Array.data[3]'
-      value: 
-      objectReference: {fileID: 409984046}
     - target: {fileID: 7408908732434846873, guid: c5e009182805446e999fb4908073c6c7, type: 3}
       propertyPath: m_Name
       value: NetworkedPuzzleManager

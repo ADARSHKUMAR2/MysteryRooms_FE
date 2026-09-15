@@ -477,15 +477,28 @@ namespace MysteryRooms.Game.Managers
                         // Safely try to convert the string from the AI into our Enum
                         if (System.Enum.TryParse(unlockString, true, out DoorConnectionID parsedConnectionID))
                         {
-                            var mapping = mapDoors.FirstOrDefault(m => m.connectionID == parsedConnectionID);
-                            if (mapping.physicalDoor != null)
+                            // CHANGE 1: Use 'Where' to get ALL matches instead of just the first one
+                            var matchingDoors = mapDoors.Where(m => m.connectionID == parsedConnectionID).ToList();
+
+                            if (matchingDoors.Count > 0)
                             {
-                                Debug.Log($"🚪 Opening door: {parsedConnectionID} (Unlocked by puzzle {solvedPuzzleId})");
-                                mapping.physicalDoor.OpenDoor();
+                                // CHANGE 2: Loop through every matched door and open them all
+                                foreach (var mapping in matchingDoors)
+                                {
+                                    if (mapping.physicalDoor != null)
+                                    {
+                                        Debug.Log($"🚪 Opening door: {parsedConnectionID} (Unlocked by puzzle {solvedPuzzleId})");
+                                        mapping.physicalDoor.OpenDoor();
+                                    }
+                                    else
+                                    {
+                                        Debug.LogWarning($"⚠️ Puzzle {solvedPuzzleId} tried to open door '{parsedConnectionID}', but a physical door is not assigned to it in DynamicPuzzleManager!");
+                                    }
+                                }
                             }
                             else
                             {
-                                Debug.LogWarning($"⚠️ Puzzle {solvedPuzzleId} tried to open door '{parsedConnectionID}', but no physical door is assigned to it in DynamicPuzzleManager!");
+                                Debug.LogWarning($"⚠️ Puzzle {solvedPuzzleId} tried to open door '{parsedConnectionID}', but it could not be found in the mapDoors list!");
                             }
                         }
                         else
@@ -494,6 +507,7 @@ namespace MysteryRooms.Game.Managers
                         }
                     }
                 }
+
             }
         }
 
