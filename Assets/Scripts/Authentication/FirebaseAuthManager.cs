@@ -56,6 +56,12 @@ namespace MysteryRooms.Authentication
         /// Fired when logout is successful
         /// </summary>
         public event Action OnLogoutSuccess;
+
+        /// <summary>
+        /// Fired when initialization completes and no user is logged in
+        /// </summary>
+        public event Action OnRequireLogin;
+
         #endregion
 
         #region Unity Lifecycle
@@ -130,11 +136,18 @@ namespace MysteryRooms.Authentication
                         Debug.Log($"👤 User already signed in: {currentUser.Email}");
                         GetTokenAndVerifyWithBackend();
                     }
+                    else
+                    {
+                        // NO USER LOGGED IN - Show Login Screen
+                        Debug.Log("👤 No user currently signed in. Requiring login.");
+                        OnRequireLogin?.Invoke();
+                    }
                 }
                 else
                 {
                     Debug.LogError($"❌ Firebase dependency error: {dependencyStatus}");
                     OnAuthenticationError?.Invoke($"Firebase initialization failed: {dependencyStatus}");
+                    OnRequireLogin?.Invoke(); 
                 }
             });
         }
@@ -448,8 +461,15 @@ namespace MysteryRooms.Authentication
                         {
                             Debug.LogError($"❌ Max retries reached. Final error: {request.error}");
                             isVerifyingToken = false;
+                            // Sign out to clear the bad state if backend rejects the token completely
+                            if (request.responseCode == 401 || request.responseCode == 403) 
+                            {
+                                Logout(); 
+                            }
+                            
                             OnAuthenticationError?.Invoke($"Backend error: {request.error}. Please try again later.");
-                            break; 
+                            OnRequireLogin?.Invoke(); // Force UI to show login panel
+                            break;
                         }
                     }
                 }

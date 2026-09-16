@@ -4,7 +4,8 @@
     "references": [
         "MysteryRooms.Main",
         "Unity.TextMeshPro",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "MysteryRooms.Authentication"
     ],
     "includePlatforms": [
         "Editor"

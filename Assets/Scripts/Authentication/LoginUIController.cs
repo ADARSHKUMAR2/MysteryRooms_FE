@@ -59,11 +59,23 @@ namespace MysteryRooms.UI
         #region Unity Lifecycle
         void Start()
         {
+            // Initial setup - START BY HIDING LOGIN AND SHOWING LOADING
+            loginCanvasGroup.alpha = 0f; // Hide login card immediately
+            
+            // Move card off-screen so it can animate in later
+            Vector2 startPos = loginCard.anchoredPosition;
+            startPos.y = -1200f; 
+            loginCard.anchoredPosition = startPos;
+            
+            HideErrorToast();
+            ShowLoading("Checking Authentication...");
+
             // Subscribe to authentication events
             if (FirebaseAuthManager.Instance != null)
             {
                 FirebaseAuthManager.Instance.OnAuthenticationSuccess += OnLoginSuccess;
                 FirebaseAuthManager.Instance.OnAuthenticationError += OnLoginError;
+                FirebaseAuthManager.Instance.OnRequireLogin += OnRequireLogin;
             }
             
             // Setup button listeners
@@ -75,7 +87,7 @@ namespace MysteryRooms.UI
             
             // Initial setup
             SetLoginMode(true);
-            HideLoading();
+            // HideLoading();
             HideErrorToast();
 
             // Hide main menu if it exists
@@ -93,6 +105,7 @@ namespace MysteryRooms.UI
             {
                 FirebaseAuthManager.Instance.OnAuthenticationSuccess -= OnLoginSuccess;
                 FirebaseAuthManager.Instance.OnAuthenticationError -= OnLoginError;
+                FirebaseAuthManager.Instance.OnRequireLogin -= OnRequireLogin;
             }
         }
         #endregion
@@ -209,6 +222,21 @@ namespace MysteryRooms.UI
             // Animate out and load game scene
             StartCoroutine(TransitionToGameScene());
         }
+
+        /// <summary>
+        /// Called when Firebase initialization is done and NO user is logged in
+        /// </summary>
+        private void OnRequireLogin()
+        {
+            HideLoading();
+            SetLoginMode(true);
+            
+            // Animate UI in now that we know we need them to login
+            StartCoroutine(AnimateLoginCardIn());
+            
+            // Fade in the canvas group in case it was set to 0
+            loginCanvasGroup.alpha = 1f;
+        }
         
         /// <summary>
         /// Called when authentication fails
@@ -217,6 +245,13 @@ namespace MysteryRooms.UI
         {
             isProcessing = false;
             HideLoading();
+
+            // Ensure login card is visible if an error occurs
+            loginCanvasGroup.alpha = 1f;
+            if (loginCard.anchoredPosition.y < -1000f)
+            {
+                 StartCoroutine(AnimateLoginCardIn());
+            }
             
             Debug.LogError($"❌ Login error: {error}");
             ShowError(error);
