@@ -298,12 +298,20 @@ namespace MysteryRooms.Authentication
             {
                 auth.SignOut();
             }
-            
-            if (GoogleSignIn.DefaultInstance != null)
+
+            try 
             {
-                GoogleSignIn.DefaultInstance.SignOut();
+                // Wrap in try-catch because GoogleSignIn.DefaultInstance throws JNI exceptions in the Unity Editor
+                if (GoogleSignIn.DefaultInstance != null)
+                {
+                    GoogleSignIn.DefaultInstance.SignOut();
+                }
             }
-            
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Could not sign out of Google (expected behavior in Editor): {e.Message}");
+            }
+
             currentUser = null;
             ClearLocalData();
             Debug.Log("✅ User logged out from Firebase and Google");

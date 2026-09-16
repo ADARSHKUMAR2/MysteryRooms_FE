@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using MysteryRooms.Authentication;
 
 namespace MysteryRooms.UI
 {
@@ -16,6 +18,9 @@ namespace MysteryRooms.UI
         [SerializeField] private Button backFromSoloButton;
         [SerializeField] private Button backFromMultiButton;
 
+        [Header("Authentication")]
+        [SerializeField] private Button logoutButton; 
+
         private void Start()
         {
             // Set up button listeners
@@ -30,6 +35,9 @@ namespace MysteryRooms.UI
 
             if (backFromMultiButton != null)
                 backFromMultiButton.onClick.AddListener(ShowModeSelection);
+
+            if (logoutButton != null)
+            logoutButton.onClick.AddListener(LogoutUser);
 
             // Initialize default state (Show Selection, hide others)
             ShowModeSelection();
@@ -54,6 +62,20 @@ namespace MysteryRooms.UI
             modeSelectionPanel.SetActive(false);
             soloPanel.SetActive(false);
             multiplayerPanel.SetActive(true);
+        }
+
+        private void LogoutUser()
+        {
+            Debug.Log("Logging out...");
+            
+            // Call the existing Logout method on your Auth Manager
+            if (FirebaseAuthManager.Instance != null)
+            {
+                FirebaseAuthManager.Instance.Logout();
+            }
+
+            // Make sure your login scene is exactly named "Login" in Build Settings
+            SceneManager.LoadScene("Login"); 
         }
     }
 }

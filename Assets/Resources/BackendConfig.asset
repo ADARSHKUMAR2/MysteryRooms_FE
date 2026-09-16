@@ -18,4 +18,4 @@ MonoBehaviour:
   productionGatewayURL: https://mysteryrooms-gateway-295626488640.asia-south1.run.app
   productionAuthURL: https://mysteryrooms-auth-295626488640.asia-south1.run.app
   productionGameURL: https://mysteryrooms-game-295626488640.asia-south1.run.app
-  useProductionEnv: 0
+  useProductionEnv: 1

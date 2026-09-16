@@ -76,6 +76,13 @@ namespace MysteryRooms.UI
                 FirebaseAuthManager.Instance.OnAuthenticationSuccess += OnLoginSuccess;
                 FirebaseAuthManager.Instance.OnAuthenticationError += OnLoginError;
                 FirebaseAuthManager.Instance.OnRequireLogin += OnRequireLogin;
+
+                // If we returned to the Login scene (like after logging out), 
+                // manually check if we need to show the login screen!
+                if (!FirebaseAuthManager.Instance.IsUserLoggedIn())
+                {
+                    OnRequireLogin();
+                }
             }
             
             // Setup button listeners
