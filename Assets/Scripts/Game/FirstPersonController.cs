@@ -14,6 +14,7 @@ public class FirstPersonController : MonoBehaviour
     public float mouseSensitivity = 0.1f;
     public float joystickLookSensitivity = 180f;
     public Transform playerCamera;
+    [SerializeField] private bool enableCameraLook = true;
 
     [Header("Input Actions")]
     [SerializeField] private InputActionAsset inputActions;
@@ -43,9 +44,6 @@ public class FirstPersonController : MonoBehaviour
     private InputAction sprintAction;
     private float _logTimer = 0f;
     private const float LOG_INTERVAL = 0.5f;
-    // Mobile detection
-    private bool _isMobileDevice = false;
-    private Vector2 _lastMoveInput = Vector2.zero;
 
     void Awake()
     {
@@ -58,17 +56,18 @@ public class FirstPersonController : MonoBehaviour
         lookAction   = playerMap.FindAction("Look",   throwIfNotFound: true);
         sprintAction = playerMap.FindAction("Sprint", throwIfNotFound: true);
 
-        // Detect if this is a mobile device
-        _isMobileDevice = Application.platform == RuntimePlatform.Android || 
-                        Application.platform == RuntimePlatform.IPhonePlayer;
-
         ApplySavedSettings();
     }
 
     void OnEnable()
     {
         moveAction.Enable();
-        lookAction.Enable();
+
+        if (enableCameraLook)
+            lookAction.Enable();
+        else
+            lookAction.Disable();
+
         sprintAction.Enable();
     }
 
@@ -83,7 +82,14 @@ public class FirstPersonController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
 
+        // Keep the cursor available while testing the mobile controls in the Editor.
+        // On a real mobile device there is no desktop cursor, and normal desktop
+        // gameplay should still use a locked cursor for mouse look.
+#if UNITY_EDITOR
+        UnlockCursor();
+#else
         LockCursor();
+#endif
 
         if (playerCamera == null)
             playerCamera = Camera.main.transform;
@@ -104,6 +110,14 @@ public class FirstPersonController : MonoBehaviour
     void Update()
     {
         HandlePauseInput();
+
+        if (Time.frameCount % 30 == 0)
+        {
+            Debug.Log(
+                $"Move: {moveAction.ReadValue<Vector2>()} | " +
+                $"Look: {lookAction.ReadValue<Vector2>()}"
+            );
+        }
 
         if (!isGamePaused)
         {
@@ -185,34 +199,10 @@ public class FirstPersonController : MonoBehaviour
 
     private void HandleLook()
     {
+        if (!enableCameraLook)
+            return;
+
         Vector2 lookDelta = lookAction.ReadValue<Vector2>();
-        
-        // On mobile, filter out left stick input from camera control
-        // The left stick should ONLY control movement, not the camera
-        if (_isMobileDevice)
-        {
-            // Store the current move input
-            _lastMoveInput = moveAction.ReadValue<Vector2>();
-            
-            // If the look input matches the move input (same magnitude and direction),
-            // it's likely from the left joystick being miswired to the Look action.
-            // We ignore it by checking if look and move are similar.
-            float lookMagnitude = lookDelta.magnitude;
-            float moveMagnitude = _lastMoveInput.magnitude;
-            
-            // If both have significant input and are very similar, filter out the look
-            if (lookMagnitude > 0.1f && moveMagnitude > 0.1f)
-            {
-                // Calculate the angle between look and move vectors
-                float dotProduct = Vector2.Dot(lookDelta.normalized, _lastMoveInput.normalized);
-                // If they're pointing in almost the same direction (dot product > 0.95),
-                // this is likely the left stick being sent to look - ignore it
-                if (dotProduct > 0.95f)
-                {
-                    return; // Skip camera update for this frame
-                }
-            }
-        }
 
         // Gamepad / OnScreenStick outputs normalised values (magnitude <= 1).
         // Mouse outputs raw pixel deltas which are almost always > 1.
@@ -238,7 +228,18 @@ public class FirstPersonController : MonoBehaviour
         Vector2 inputDir = Vector2.ClampMagnitude(moveAction.ReadValue<Vector2>(), 1f);
         float currentSpeed = sprintAction.IsPressed() ? sprintSpeed : walkSpeed;
 
-        Vector3 move = transform.right * inputDir.x + transform.forward * inputDir.y;
+        // Keep movement strictly horizontal. If the player root is ever tilted,
+        // using transform.forward directly would make forward input move vertically
+        // and could make the camera appear to look up or down.
+        Vector3 forward = transform.forward;
+        forward.y = 0f;
+        forward.Normalize();
+
+        Vector3 right = transform.right;
+        right.y = 0f;
+        right.Normalize();
+
+        Vector3 move = right * inputDir.x + forward * inputDir.y;
         lastMoveVector = move * currentSpeed; // Store the intended movement
         
         characterController.Move(lastMoveVector * Time.deltaTime);

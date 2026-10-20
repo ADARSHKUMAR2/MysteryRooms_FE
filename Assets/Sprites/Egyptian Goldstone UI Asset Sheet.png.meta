@@ -1,0 +1,1479 @@
+fileFormatVersion: 2
+guid: eca15c46c34fc4407bbfd632d846eee4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6637538304375017857
+    second: Egyptian Goldstone UI Asset Sheet_0
+  - first:
+      213: -7658083853862172671
+    second: Egyptian Goldstone UI Asset Sheet_1
+  - first:
+      213: 495296204890370885
+    second: Egyptian Goldstone UI Asset Sheet_2
+  - first:
+      213: 6390426399053008610
+    second: Egyptian Goldstone UI Asset Sheet_3
+  - first:
+      213: -8851363100953215991
+    second: Egyptian Goldstone UI Asset Sheet_4
+  - first:
+      213: 3724749233884402653
+    second: Egyptian Goldstone UI Asset Sheet_5
+  - first:
+      213: -2586857853986137351
+    second: Egyptian Goldstone UI Asset Sheet_6
+  - first:
+      213: 4916940975330509916
+    second: Egyptian Goldstone UI Asset Sheet_7
+  - first:
+      213: -5898388320849127563
+    second: Egyptian Goldstone UI Asset Sheet_8
+  - first:
+      213: -8422919766998185507
+    second: Egyptian Goldstone UI Asset Sheet_9
+  - first:
+      213: 1214306588232834645
+    second: Egyptian Goldstone UI Asset Sheet_10
+  - first:
+      213: -7003746990036445457
+    second: Egyptian Goldstone UI Asset Sheet_11
+  - first:
+      213: 4710382218783196131
+    second: Egyptian Goldstone UI Asset Sheet_12
+  - first:
+      213: 5179770332633526065
+    second: Egyptian Goldstone UI Asset Sheet_13
+  - first:
+      213: 3046393212982099926
+    second: Egyptian Goldstone UI Asset Sheet_14
+  - first:
+      213: 3123823654680679607
+    second: Egyptian Goldstone UI Asset Sheet_15
+  - first:
+      213: -3740484118193477730
+    second: Egyptian Goldstone UI Asset Sheet_16
+  - first:
+      213: -5894095861715039932
+    second: Egyptian Goldstone UI Asset Sheet_17
+  - first:
+      213: 1465219208761087048
+    second: Egyptian Goldstone UI Asset Sheet_18
+  - first:
+      213: 4076985065455420296
+    second: Egyptian Goldstone UI Asset Sheet_19
+  - first:
+      213: 3808406425075483678
+    second: Egyptian Goldstone UI Asset Sheet_20
+  - first:
+      213: 5713619431935009325
+    second: Egyptian Goldstone UI Asset Sheet_21
+  - first:
+      213: -1498556161010637902
+    second: Egyptian Goldstone UI Asset Sheet_22
+  - first:
+      213: -8606808316460125189
+    second: Egyptian Goldstone UI Asset Sheet_23
+  - first:
+      213: 8155400412504104514
+    second: Egyptian Goldstone UI Asset Sheet_24
+  - first:
+      213: -656073625763285111
+    second: Egyptian Goldstone UI Asset Sheet_25
+  - first:
+      213: -1779097425569106356
+    second: Egyptian Goldstone UI Asset Sheet_26
+  - first:
+      213: -324000257266281526
+    second: Egyptian Goldstone UI Asset Sheet_27
+  - first:
+      213: -5195688256280992194
+    second: Egyptian Goldstone UI Asset Sheet_28
+  - first:
+      213: -7040834711184467471
+    second: Egyptian Goldstone UI Asset Sheet_29
+  - first:
+      213: -7628756639258653169
+    second: Egyptian Goldstone UI Asset Sheet_30
+  - first:
+      213: 4839750487649496020
+    second: Egyptian Goldstone UI Asset Sheet_31
+  - first:
+      213: 6433114356267568869
+    second: Egyptian Goldstone UI Asset Sheet_32
+  - first:
+      213: -3630836274006260525
+    second: Egyptian Goldstone UI Asset Sheet_33
+  - first:
+      213: -5605978386466182825
+    second: Egyptian Goldstone UI Asset Sheet_34
+  - first:
+      213: -1000910731152060665
+    second: Egyptian Goldstone UI Asset Sheet_35
+  - first:
+      213: 8899944199186255059
+    second: Egyptian Goldstone UI Asset Sheet_36
+  - first:
+      213: 352345508450362963
+    second: Egyptian Goldstone UI Asset Sheet_37
+  - first:
+      213: -8391399770035151297
+    second: Egyptian Goldstone UI Asset Sheet_38
+  - first:
+      213: -625324631871503078
+    second: Egyptian Goldstone UI Asset Sheet_39
+  - first:
+      213: 6378655171347841354
+    second: Egyptian Goldstone UI Asset Sheet_40
+  - first:
+      213: -535121939037116118
+    second: Egyptian Goldstone UI Asset Sheet_41
+  - first:
+      213: 4949270938411046064
+    second: Egyptian Goldstone UI Asset Sheet_42
+  - first:
+      213: -3305432243300914566
+    second: Egyptian Goldstone UI Asset Sheet_43
+  - first:
+      213: 4595861169848049434
+    second: Egyptian Goldstone UI Asset Sheet_44
+  - first:
+      213: 4913497365437999373
+    second: Egyptian Goldstone UI Asset Sheet_45
+  - first:
+      213: -2558640880194482371
+    second: Egyptian Goldstone UI Asset Sheet_46
+  - first:
+      213: -5244432694680661572
+    second: Egyptian Goldstone UI Asset Sheet_47
+  - first:
+      213: -6461074819147307300
+    second: Egyptian Goldstone UI Asset Sheet_48
+  - first:
+      213: 7538362529232674432
+    second: Egyptian Goldstone UI Asset Sheet_49
+  - first:
+      213: 7811260226838589869
+    second: Egyptian Goldstone UI Asset Sheet_50
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 774
+        width: 641
+        height: 189
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7eada0541ab2e3a0800000000000000
+      internalID: -6637538304375017857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 983
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10804662f4509b590800000000000000
+      internalID: -7658083853862172671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 791
+        width: 414
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 543f61f2645afd600800000000000000
+      internalID: 495296204890370885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 1096
+        y: 935
+        width: 39
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ee45d6b3fa5fa850800000000000000
+      internalID: 6390426399053008610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1238
+        y: 756
+        width: 248
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90cfeadf724a92580800000000000000
+      internalID: -8851363100953215991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 950
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd3961391b7f0b330800000000000000
+      internalID: 3724749233884402653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 811
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fa1ab0dc72a91cd0800000000000000
+      internalID: -2586857853986137351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 801
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c54432814cb7c3440800000000000000
+      internalID: 4916940975330509916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 733
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 577997cb217b42ea0800000000000000
+      internalID: -5898388320849127563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 737
+        width: 43
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd905743917cb1b80800000000000000
+      internalID: -8422919766998185507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 727
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55ed80888651ad010800000000000000
+      internalID: 1214306588232834645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 749
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe69a225831bdce90800000000000000
+      internalID: -7003746990036445457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 735
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e383eadba3ae5140800000000000000
+      internalID: 4710382218783196131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 741
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13f6ab68cad32e740800000000000000
+      internalID: 5179770332633526065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 701
+        width: 33
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6df75f99c76f64a20800000000000000
+      internalID: 3046393212982099926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 288
+        width: 523
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b4543e201d0a5b20800000000000000
+      internalID: 3123823654680679607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 734
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e97661f2381271cc0800000000000000
+      internalID: -3740484118193477730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 729
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4490062ca07f33ea0800000000000000
+      internalID: -5894095861715039932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 735
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84498487b11855410800000000000000
+      internalID: 1465219208761087048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 1132
+        y: 723
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8830b05f05c549830800000000000000
+      internalID: 4076985065455420296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 727
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1480fe377d2ad430800000000000000
+      internalID: 3808406425075483678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 695
+        width: 55
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d22614ee99ada4f40800000000000000
+      internalID: 5713619431935009325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 508
+        width: 957
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b3ecfa7c1f043be0800000000000000
+      internalID: -1498556161010637902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 711
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf3348fdf697e8880800000000000000
+      internalID: -8606808316460125189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 445
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24e916c477dcd2170800000000000000
+      internalID: 8155400412504104514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 433
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98770ed638825e6f0800000000000000
+      internalID: -656073625763285111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 1046
+        y: 437
+        width: 45
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c46342841506f47e0800000000000000
+      internalID: -1779097425569106356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 1268
+        y: 431
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac3128e8b7be08bf0800000000000000
+      internalID: -324000257266281526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 439
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e36e3b01f0535e7b0800000000000000
+      internalID: -5195688256280992194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 817
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f91c95522ee94e90800000000000000
+      internalID: -7040834711184467471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 1197
+        y: 429
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0ec5176146312690800000000000000
+      internalID: -7628756639258653169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 431
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4db2fd92d6f3a2340800000000000000
+      internalID: 4839750487649496020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 406
+        width: 27
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee4bc44c63074950800000000000000
+      internalID: 6433114356267568869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 32
+        width: 217
+        height: 234
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d4014255adac9dc0800000000000000
+      internalID: -3630836274006260525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 275
+        width: 33
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7596a28fb509332b0800000000000000
+      internalID: -5605978386466182825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 278
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f0ec93efc0c12f0800000000000000
+      internalID: -1000910731152060665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 27
+        width: 169
+        height: 253
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dc8b416814f28b70800000000000000
+      internalID: 8899944199186255059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 41
+        width: 219
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35663658f58c3e400800000000000000
+      internalID: 352345508450362963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 255
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3e92c26e52cb8b80800000000000000
+      internalID: -8391399770035151297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 259
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a154ff77f866257f0800000000000000
+      internalID: -625324631871503078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 27
+        width: 166
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4185e03519858850800000000000000
+      internalID: 6378655171347841354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 211
+        width: 9
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a29ac208e6dd298f0800000000000000
+      internalID: -535121939037116118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_42
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 220
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b4972532b75fa440800000000000000
+      internalID: 4949270938411046064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 1104
+        y: 223
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a2dec33eeb022d0800000000000000
+      internalID: -3305432243300914566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_44
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 127
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1fddc15267c7cf30800000000000000
+      internalID: 4595861169848049434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_45
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 98
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d09efbf22df303440800000000000000
+      internalID: 4913497365437999373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_46
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 59
+        width: 57
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3f073cfca1ed7cd0800000000000000
+      internalID: -2558640880194482371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_47
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 53
+        width: 6
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb15d1910480837b0800000000000000
+      internalID: -5244432694680661572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_48
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 15
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd6e0892fa6a556a0800000000000000
+      internalID: -6461074819147307300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_49
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 15
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08e5707c7c4ad9860800000000000000
+      internalID: 7538362529232674432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_50
+      rect:
+        serializedVersion: 2
+        x: 1118
+        y: 15
+        width: 21
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da1f9dc5acb276c60800000000000000
+      internalID: 7811260226838589869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Egyptian Goldstone UI Asset Sheet_51
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 457
+        width: 276
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24631ef5731e94d6d8110101f2feb317
+      internalID: -983194469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6260d45e57a824ce1a47c46ece34e24f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Egyptian Goldstone UI Asset Sheet_0: -6637538304375017857
+      Egyptian Goldstone UI Asset Sheet_1: -7658083853862172671
+      Egyptian Goldstone UI Asset Sheet_10: 1214306588232834645
+      Egyptian Goldstone UI Asset Sheet_11: -7003746990036445457
+      Egyptian Goldstone UI Asset Sheet_12: 4710382218783196131
+      Egyptian Goldstone UI Asset Sheet_13: 5179770332633526065
+      Egyptian Goldstone UI Asset Sheet_14: 3046393212982099926
+      Egyptian Goldstone UI Asset Sheet_15: 3123823654680679607
+      Egyptian Goldstone UI Asset Sheet_16: -3740484118193477730
+      Egyptian Goldstone UI Asset Sheet_17: -5894095861715039932
+      Egyptian Goldstone UI Asset Sheet_18: 1465219208761087048
+      Egyptian Goldstone UI Asset Sheet_19: 4076985065455420296
+      Egyptian Goldstone UI Asset Sheet_2: 495296204890370885
+      Egyptian Goldstone UI Asset Sheet_20: 3808406425075483678
+      Egyptian Goldstone UI Asset Sheet_21: 5713619431935009325
+      Egyptian Goldstone UI Asset Sheet_22: -1498556161010637902
+      Egyptian Goldstone UI Asset Sheet_23: -8606808316460125189
+      Egyptian Goldstone UI Asset Sheet_24: 8155400412504104514
+      Egyptian Goldstone UI Asset Sheet_25: -656073625763285111
+      Egyptian Goldstone UI Asset Sheet_26: -1779097425569106356
+      Egyptian Goldstone UI Asset Sheet_27: -324000257266281526
+      Egyptian Goldstone UI Asset Sheet_28: -5195688256280992194
+      Egyptian Goldstone UI Asset Sheet_29: -7040834711184467471
+      Egyptian Goldstone UI Asset Sheet_3: 6390426399053008610
+      Egyptian Goldstone UI Asset Sheet_30: -7628756639258653169
+      Egyptian Goldstone UI Asset Sheet_31: 4839750487649496020
+      Egyptian Goldstone UI Asset Sheet_32: 6433114356267568869
+      Egyptian Goldstone UI Asset Sheet_33: -3630836274006260525
+      Egyptian Goldstone UI Asset Sheet_34: -5605978386466182825
+      Egyptian Goldstone UI Asset Sheet_35: -1000910731152060665
+      Egyptian Goldstone UI Asset Sheet_36: 8899944199186255059
+      Egyptian Goldstone UI Asset Sheet_37: 352345508450362963
+      Egyptian Goldstone UI Asset Sheet_38: -8391399770035151297
+      Egyptian Goldstone UI Asset Sheet_39: -625324631871503078
+      Egyptian Goldstone UI Asset Sheet_4: -8851363100953215991
+      Egyptian Goldstone UI Asset Sheet_40: 6378655171347841354
+      Egyptian Goldstone UI Asset Sheet_41: -535121939037116118
+      Egyptian Goldstone UI Asset Sheet_42: 4949270938411046064
+      Egyptian Goldstone UI Asset Sheet_43: -3305432243300914566
+      Egyptian Goldstone UI Asset Sheet_44: 4595861169848049434
+      Egyptian Goldstone UI Asset Sheet_45: 4913497365437999373
+      Egyptian Goldstone UI Asset Sheet_46: -2558640880194482371
+      Egyptian Goldstone UI Asset Sheet_47: -5244432694680661572
+      Egyptian Goldstone UI Asset Sheet_48: -6461074819147307300
+      Egyptian Goldstone UI Asset Sheet_49: 7538362529232674432
+      Egyptian Goldstone UI Asset Sheet_5: 3724749233884402653
+      Egyptian Goldstone UI Asset Sheet_50: 7811260226838589869
+      Egyptian Goldstone UI Asset Sheet_51: -983194469
+      Egyptian Goldstone UI Asset Sheet_6: -2586857853986137351
+      Egyptian Goldstone UI Asset Sheet_7: 4916940975330509916
+      Egyptian Goldstone UI Asset Sheet_8: -5898388320849127563
+      Egyptian Goldstone UI Asset Sheet_9: -8422919766998185507
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
